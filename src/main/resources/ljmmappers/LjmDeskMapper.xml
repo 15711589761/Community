@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.ljmdao.LjmDeskMapper">
+    <resultMap id="deskLogin" type="com.smart.community.ljmbean.OwnerBean">
+        <result column="owner_id" property="ownerId"/>
+        <result column="owner_name" property="ownerName"/>
+        <result column="owner_tel" property="ownerTel"/>
+        <result column="owner_affiliation" property="ownerAffilation"/>
+        <result column="owner_status" property="ownerStatus"/>
+        <result column="owner_identity" property="ownerIdentity"/>
+        <result column="owner_car_number" property="ownerCarNum"/>
+        <result column="request_date" property="carRequestDate"/>
+        <result column="owner_room" property="ownerRoom"/>
+    </resultMap>
+<!--    前端登录验证-->
+    <select id="selectForDeskLogin" parameterType="com.smart.community.ljmbean.LoginBean" resultMap="deskLogin">
+        select * from (select o.*,c.owner_car_numbers,c.request_date from tbl_owner o left join tbl_owner_car c on o.owner_room = c.room_number )a,tbl_room r
+        where a.owner_room = r.room_number and r.room_number = #{loginName} and r.room_password = #{loginPassWord}
+    </select>
+    <resultMap id="deskMenu" type="com.smart.community.ljmbean.DeskMenuBean">
+        <result column="desk_menu_id" property="menuId"/>
+        <result column="desk_menu_name" property="menuName"/>
+        <result column="desk_menu_url" property="menuUrl"/>
+        <result column="desk_menu_parent" property="menuPid"/>
+    </resultMap>
+<!--    前端一级菜单获取-->
+    <select id="selectForGetDeskMenu" resultMap="deskMenu">
+       select * from tbl_desk_menu where desk_menu_parent = 0 and desk_menu_status = '启用'
+    </select>
+<!--    前端菜单精确查询-->
+    <select id="selectForGetSelectedMenu" parameterType="java.lang.Integer" resultType="com.smart.community.ljmbean.DeskMenuBean">
+        select desk_menu_id menuId,desk_menu_name menuName,desk_menu_url menuUrl from tbl_desk_menu where desk_menu_id = ${_parameter}
+    </select>
+    <!--    前端对应一级菜单下二级菜单查询-->
+    <select id="selectForGetDeskChildrenMenu" resultType="com.smart.community.ljmbean.DeskMenuBean">
+        select desk_menu_id menuId,desk_menu_name menuName,desk_menu_url menuUrl
+        from tbl_desk_menu where desk_menu_parent = #{menuParentId}
+    </select>
+    <resultMap id="forGetSuggestTable" type="com.smart.community.ljmbean.SuggestBean">
+        <result property="suggestId" column="suggest_id"/>
+        <result property="suggestDate" column="suggest_date"/>
+        <result property="suggestRoom" column="suggest_room"/>
+        <result property="suggestResult" column="suggest_result"/>
+        <result property="suggestStatus" column="suggest_status"/>
+        <result property="suggestRemark" column="suggest_remark"/>
+        <result property="suggestContent" column="suggest_content"/>
+        <result property="suggestPerson" column="suggest_person"/>
+        <result property="suggestPhone" column="suggest_phone"/>
+    </resultMap>
+<!--    投诉建议查询-->
+    <select id="selectForGetSuggestTable" parameterType="com.smart.community.ljmbean.TableSearchBean" resultMap="forGetSuggestTable">
+        select * from tbl_suggest
+        <where>
+            suggest_status = "展示"
+            <if test="startDate!=null and startDate!=''">
+               and suggest_date &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and suggest_date &lt;= #{endDate}
+            </if>
+            <if test="roomNum!=null and roomNum!=''">
+                and suggest_room = #{roomNum}
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+<!--    投诉建议添加-->
+    <insert id="insertToSuggestRecord" parameterType="com.smart.community.ljmbean.SuggestBean">
+        insert into tbl_suggest (suggest_content,suggest_date,suggest_room,suggest_status,suggest_remark,suggest_person,suggest_phone)
+        value (#{suggestContent},#{suggestDate},#{suggestRoom},#{suggestStatus},#{suggestRemark},#{suggestPerson},#{suggestPhone})
+    </insert>
+<!--    投诉建议修改-->
+    <update id="deleteToSuggestRecord" parameterType="java.lang.String">
+        update tbl_suggest set suggest_status = "已删除" where suggest_id = ${_parameter}
+    </update>
+</mapper>

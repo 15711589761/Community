@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.ljmdao.LjmBackstageLoginMapper">
+    <!--后台登入-->
+    <resultMap id="resultOfBackstageLogin" type="com.smart.community.ljmbean.StaffBean">
+        <result column="staff_id" property="staffId"/>
+        <result column="staff_job_number" property="staffJobNum"/>
+        <result column="staff_name" property="staffName"/>
+        <result column="staff_sex" property="staffSex"/>
+        <result column="staff_age" property="staffAge"/>
+        <result column="staff_tel" property="staffTel"/>
+        <result column="staff_address" property="staffAddress"/>
+        <result column="staff_join_date" property="staffJoinDate"/>
+        <result column="parameter_name" property="staffStatus"/>
+    </resultMap>
+    <select id="selectForBackstageLogin" parameterType="com.smart.community.ljmbean.LoginBean"
+            resultMap="resultOfBackstageLogin">
+        select * from tbl_staff s,tbl_parameter p where s.staff_status = p.parameter_id
+        and s.staff_job_number = #{loginName} and s.staff_password = #{loginPassWord}
+    </select>
+    <!--管理端和物业端的菜单获取-->
+    <select id="selectForGetBackstageMenu" resultType="com.smart.community.ljmbean.BackstageMenuBean">
+        select m.menu_id menuId,m.menu_name menuName,m.parent_menu menuPid,m.menu_url toUrl
+        from tbl_staff s,tbl_role_staff rs,tbl_role r,tbl_role_menu rm,tbl_staff_menu m
+        where s.staff_id = rs.staff_id and rs.role_id = r.role_id and r.role_id = rm.role_id and rm.menu_id = m.menu_id
+        and m.menu_status = 0 and s.staff_id = #{staffId}
+    </select>
+    <resultMap id="forGetRoles" type="com.smart.community.ljmbean.RoleBean">
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+    </resultMap>
+    <select id="selectForGetPersonRoles" parameterType="java.lang.Integer" resultMap="forGetRoles">
+        select r.* from tbl_role r,tbl_staff s,tbl_role_staff rs where s.staff_id = rs.staff_id and rs.role_id = r.role_id and s.staff_id = ${_parameter}
+    </select>
+</mapper>

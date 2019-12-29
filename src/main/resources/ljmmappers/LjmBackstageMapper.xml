@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.ljmdao.LjmBackstageMapper">
+<!--    后台菜单查询-->
+    <select id="selectForShowBackstageMenuTable" resultType="com.smart.community.ljmbean.BackstageMenuBean">
+        select m.menu_id menuId,m.menu_name menuName,m.parent_menu menuPid,m.menu_url toUrl,m.menu_status menuStatus from tbl_staff_menu m
+        <where>
+            <if test="menuPid!=null and menuPid!=''">
+                <choose>
+                    <when test="menuPid!= 0">
+                        parent_menu != 0
+                    </when>
+                    <otherwise>
+                        parent_menu = 0
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="menuName!=null and menuName!=''">
+                and menu_name like '%${menuName}%'
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+<!--    后台菜单查询记录数-->
+    <select id="selectForShowBackstageMenuCount" resultType="java.lang.Integer">
+        select count(*) from tbl_staff_menu m
+        <where>
+            <if test="menuPid!=null and menuPid!=''">
+                <choose>
+                    <when test="menuPid==0">
+                        parent_menu = 0
+                    </when>
+                    <otherwise>
+                        parent_menu != 0
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="menuName!=null and menuName!=''">
+                and menu_name like '%${menuName}%'
+            </if>
+        </where>
+    </select>
+<!--    后台菜单一级菜单-->
+    <select id="selectForBackstageDialogParentMenu" resultType="com.smart.community.ljmbean.BackstageMenuBean">
+         select m.menu_id menuId,m.menu_name menuName,m.parent_menu menuPid,m.menu_url toUrl from tbl_staff_menu m
+         where parent_menu = 0 and menu_status = 0
+    </select>
+<!--    后台菜单添加-->
+    <insert id="insertForBackstageAddMenuRecord" parameterType="java.util.Map">
+        insert into tbl_staff_menu (menu_name,parent_menu,menu_status,menu_url,menu_remark)
+        values (#{menuName},#{menuPid},0,#{menuUrl},#{menuRemark} )
+    </insert>
+<!--    后台菜单修改-->
+    <update id="updateForBackstageUpMenuRecord" parameterType="java.util.Map">
+        update tbl_staff_menu
+        <set>
+            <if test="menuName!=null and menuName!=''">
+                menu_name = #{menuName},
+            </if>
+            <if test="menuPid!=null and menuPid!=''">
+                parent_menu = #{menuPid},
+            </if>
+            <if test="menuUrl!=null and menuUrl!=''">
+                <choose>
+                    <when test="menuUrl != 0 ">
+                        menu_url = #{menuUrl},
+                    </when>
+                    <otherwise>
+                        menu_url = '',
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="menuRemark!=null and menuRemark!=''">
+                menu_remark = #{menuRemark}
+            </if>
+        </set>
+        where menu_id = ${menuId}
+    </update>
+<!--    后台菜单删除-->
+    <delete id="deleteForBackstageDelMenuRecord" parameterType="java.lang.String">
+        delete from tbl_staff_menu where menu_id = ${_parameter}
+    </delete>
+<!--    后台菜单禁用启用-->
+    <update id="updateForBackstageSetAble">
+        update tbl_staff_menu set menu_status = ${menuStatus} where menu_id = ${menuId}
+    </update>
+<!--    前端菜单查询-->
+    <select id="selectForShowDeskMenuTable" resultType="com.smart.community.ljmbean.DeskMenuBean">
+        select desk_menu_id menuId,desk_menu_name menuName,desk_menu_parent menuPid,desk_menu_url menuUrl,desk_menu_status menuStatus
+        from tbl_desk_menu
+        <where>
+            <if test="menuPid!=null and menuPid!=''">
+                <choose>
+                    <when test="menuPid!= 0">
+                        desk_menu_parent != 0
+                    </when>
+                    <otherwise>
+                        desk_menu_parent = 0
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="menuName!=null and menuName!=''">
+                and desk_menu_name like '%${menuName}%'
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+<!--    前端菜单记录数查询-->
+    <select id="selectForShowDeskMenuCount" resultType="java.lang.Integer">
+        select count(*) from tbl_desk_menu
+        <where>
+            <if test="menuPid!=null and menuPid!=''">
+                <choose>
+                    <when test="menuPid!= 0">
+                        desk_menu_parent != 0
+                    </when>
+                    <otherwise>
+                        desk_menu_parent = 0
+                    </otherwise>
+                </choose>
+            </if>
+            <if test="menuName!=null and menuName!=''">
+                and menu_name like '%${menuName}%'
+            </if>
+        </where>
+    </select>
+<!--    前端菜单添加-->
+    <insert id="insertForDeskAddMenuRecord" parameterType="java.util.Map">
+        insert into tbl_desk_menu (desk_menu_name,desk_menu_url,desk_menu_parent,desk_menu_status)
+        values (#{menuName},#{menuUrl},#{menuPid},'启用')
+    </insert>
+<!--    前端菜单路径修改-->
+    <update id="updateForDeskUpMenuRecord" parameterType="java.util.Map">
+        update tbl_desk_menu
+        <set>
+            <if test="menuName!=null and menuName!=''">
+                desk_menu_name = #{menuName},
+            </if>
+            <if test="menuUrl!=null and menuUrl!=''">
+                <choose>
+                    <when test="menuUrl != 0 ">
+                        desk_menu_url = #{menuUrl},
+                    </when>
+                    <otherwise>
+                        desk_menu_url = '',
+                    </otherwise>
+                </choose>
+            </if>
+        </set>
+        where desk_menu_id = ${menuId}
+    </update>
+<!--    前端菜单二级菜单删除-->
+    <delete id="deleteForDeskDelMenuRecord" parameterType="java.lang.String">
+        delete from tbl_desk_menu where desk_menu_id = ${_parameter}
+    </delete>
+<!--    前端菜单禁用启用-->
+    <update id="updateForDeskSetAble">
+        update tbl_desk_menu set desk_menu_status = #{menuStatus} where desk_menu_id = ${menuId}
+    </update>
+</mapper>

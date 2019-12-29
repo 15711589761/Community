@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.ljmdao.LjmVisitorMapper">
+    <!--访客信息查询-->
+    <resultMap id="resultOfGetVisitorTable" type="com.smart.community.ljmbean.VisitorBean">
+        <result column="visitor_id" property="visitorId"/>
+        <result column="visitor_name" property="visitorName"/>
+        <result column="visitor_identity" property="visitorIdentity"/>
+        <result column="visitor_origin" property="visitorOrigin"/>
+        <result column="visitor_room" property="visitorRoom"/>
+        <result column="staff_name" property="recorder"/>
+        <result column="staff_id" property="recorderId"/>
+        <result column="visitor_date" property="visitorDate"/>
+        <result column="visitor_time" property="visitorTime"/>
+    </resultMap>
+    <select id="selectForGetVisitorTable" parameterType="com.smart.community.ljmbean.TableSearchBean" resultMap="resultOfGetVisitorTable">
+        select * from tbl_visitor
+        <where>
+            <if test="startDate!=null and startDate!=''">
+                visitor_date &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and visitor_date &lt;= #{endDate}
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+    <select id="selectForGetVisitorCount" parameterType="com.smart.community.ljmbean.TableSearchBean" resultType="java.lang.Integer">
+        select count(*) from tbl_visitor
+        <where>
+            <if test="startDate!=null and startDate!=''">
+                visitor_date &gt;= #{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and visitor_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <!--添加访客记录-->
+    <insert id="insertForVisitor" parameterType="com.smart.community.ljmbean.VisitorBean">
+        insert into tbl_visitor (visitor_name,visitor_identity,visitor_origin,visitor_room,staff_name,staff_id,visitor_date,visitor_time)
+        value (#{visitorName},#{visitorIdentity},#{visitorOrigin},#{visitorRoom},#{recorder},#{recorderId},#{visitorDate},#{visitorTime})
+    </insert>
+    <!--清理访客记录-->
+    <delete id="deleteForClearVisitor">
+        delete from tbl_visitor where visitor_date &lt;= #{date}
+    </delete>
+</mapper>
