@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsySafeEventMapper">
+    <!--治安事件管理-->
+    <resultMap id="SafeEventMap" type="com.smart.community.wsyjavabean.Tbl_safeEvent">
+        <result property="safe_event_id" column="safe_event_id"/>
+        <result property="safe_event_title" column="safe_event_title"/>
+        <result property="safe_event_context" column="safe_event_context"/>
+        <result property="safe_event_date" column="safe_event_date"/>
+        <result property="safe_event_recorder" column="safe_event_recorder"/>
+    </resultMap>
+    <select id="findByEvent" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="SafeEventMap">
+        select safe_event_id,safe_event_title,safe_event_context,
+        safe_event_date,safe_event_recorder
+        from tbl_safe_event
+        <where>
+
+            <if test=" safe_event_title != null and safe_event_title != '' ">
+                and safe_event_title like '%${safe_event_title}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and safe_event_date &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and safe_event_date &lt;= #{endDate}
+            </if>
+        </where>
+        limit #{page} ,5
+    </select>
+    <select id="findEventPage" parameterType="com.smart.community.wsyjavabean.TableBean" resultType="java.lang.Integer">
+        select count(*) from tbl_safe_event
+        <where>
+
+            <if test=" safe_event_title != null and safe_event_title != '' ">
+                and safe_event_title like '%${safe_event_title}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and safe_event_date &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and safe_event_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <!--添加治安事件-->
+    <insert id="insetAddEvent" parameterType="com.smart.community.wsyjavabean.Tbl_safeEvent">
+        insert into tbl_safe_event(safe_event_title,safe_event_context,safe_event_date,safe_event_recorder)
+values(#{safe_event_title},#{safe_event_context},#{safe_event_date},#{safe_event_recorder})
+    </insert>
+
+    <!--修改治安事件-->
+    <update id="updateEvent" parameterType="com.smart.community.wsyjavabean.Tbl_safeEvent">
+        update tbl_safe_event
+        <set>
+            safe_event_title = #{safe_event_title},
+            safe_event_context = #{safe_event_context}
+        </set>
+        <where>
+            <if test="safe_event_title != null and safe_event_title != '' ">
+                and safe_event_id = #{safe_event_id}
+            </if>
+            <if test="safe_event_context != null and safe_event_context != '' ">
+                and safe_event_id = #{safe_event_id}
+            </if>
+        </where>
+    </update>
+
+    <!--删除治安事件-->
+    <delete id="deleteEvent">
+        delete from tbl_safe_event where safe_event_id = #{safe_event_id}
+    </delete>
+
+</mapper>

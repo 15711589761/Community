@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyLogMapper">
+    <!--仓库管理-->
+    <resultMap id="logMap" type="com.smart.community.wsyjavabean.Tbl_systemlog">
+        <result property="operation_id" column="operation_id"/>
+        <result property="operation_matter" column="operation_matter"/>
+        <result property="operation_person" column="operation_person"/>
+        <result property="operation_date" column="operation_date"/>
+        <result property="operation_time" column="operation_time"/>
+    </resultMap>
+    <select id="findByLog" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="logMap">
+        select operation_id,operation_matter,operation_person,
+        operation_date,operation_time
+        from tbl_system_log
+        <where>
+
+            <if test=" operation_person != null and operation_person != '' ">
+                and operation_person like '%${operation_person}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and operation_date &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and operation_date &lt;= #{endDate}
+            </if>
+            <if test=" startTime != null and startTime != '' ">
+                and operation_time &gt;= #{startTime}
+            </if>
+            <if test=" endTime != null and endTime != '' ">
+                and operation_time &lt;= #{endTime}
+            </if>
+
+        </where>
+        limit #{page} ,5
+    </select>
+    <select id="findLogPage" parameterType="com.smart.community.wsyjavabean.TableBean" resultType="java.lang.Integer">
+        select count(*) from tbl_system_log
+        <where>
+
+            <if test=" operation_person != null and operation_person != '' ">
+                and operation_person like '%${operation_person}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and operation_date &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and operation_date &lt;= #{endDate}
+            </if>
+            <if test=" startTime != null and startTime != '' ">
+                and operation_time &gt;= #{startTime}
+            </if>
+            <if test=" endTime != null and endTime != '' ">
+                and operation_time &lt;= #{endTime}
+            </if>
+
+        </where>
+
+    </select>
+    <!--添加日志-->
+    <insert id="saveLog" parameterType="com.smart.community.wsyjavabean.Tbl_systemlog">
+        insert into tbl_system_log(operation_matter,operation_person,
+        operation_date,operation_time)
+        values(#{operation_matter},#{operation_person},#{operation_date},#{operation_time})
+    </insert>
+
+
+<!--手动删除日志-->
+    <delete id="delLog">
+    delete from tbl_system_log where operation_id = #{operation_id}
+
+    </delete>
+
+<!--修改日志管理-->
+    <update id="updateLog" parameterType="com.smart.community.wsyjavabean.Tbl_systemlog">
+        update tbl_system_log
+        <set>
+            operation_matter = #{operation_matter},
+            operation_person = #{operation_person}
+        </set>
+        <where>
+            <if test="operation_matter != null and operation_matter != '' ">
+                and operation_id = #{operation_id}
+            </if>
+            <if test="operation_person != null and operation_person != '' ">
+                and operation_id = #{operation_id}
+            </if>
+        </where>
+    </update>
+
+
+
+</mapper>

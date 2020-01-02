@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyDeviceMapper">
+    <!--业主表-->
+    <resultMap id="DeviceMap" type="com.smart.community.wsyjavabean.Tbl_fire_tools">
+        <result property="fire_tools_id" column="fire_tools_id"/>
+        <result property="fire_tools_name" column="fire_tools_name"/>
+        <result property="fire_tools_classification" column="fire_tools_classification"/>
+        <result property="buy_date" column="buy_date"/>
+        <!--将房间表从业主表中取出-->
+<!--        <association property="tbl_room" javaType="com.smart.community.wsyjavabean.Tbl_room">-->
+<!--            <result property="room_id" column="room_id"></result>-->
+<!--            <result property="room_number" column="room_number"></result>-->
+<!--            <result property="room_status" column="room_status"></result>-->
+<!--        </association>-->
+    </resultMap>
+
+    <select id="findByDevice" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="DeviceMap">
+        select distinct
+        fire_tools_id,fire_tools_name,fire_tools_classification,buy_date
+        from tbl_fire_tools
+        <where>
+           <if test="fire_tools_name != null and fire_tools_name != '' ">
+                and fire_tools_name like '%${fire_tools_name}%'
+            </if>
+            <if test="fire_tools_classification != null and fire_tools_classification != '' ">
+                and fire_tools_classification = #{fire_tools_classification}
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and buy_date &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and buy_date &lt;= #{endDate}
+            </if>
+        </where>
+        limit ${page},5
+    </select>
+<!--设备管理总页数-->
+    <select id="findByDevicePage" parameterType="com.smart.community.wsyjavabean.TableBean"
+            resultType="java.lang.Integer">
+        select count(*) from tbl_fire_tools
+        <where>
+            <if test="fire_tools_name != null and fire_tools_name != '' ">
+                and fire_tools_name like '%${fire_tools_name}%'
+            </if>
+            <if test="fire_tools_classification != null and fire_tools_classification != '' ">
+                and fire_tools_classification = #{fire_tools_classification}
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and buy_date &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and buy_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <!--删除设备管理-->
+    <delete id="delDevice">
+      delete from tbl_fire_tools where fire_tools_id = #{fire_tools_id}
+    </delete>
+    <!--添加设备-->
+    <insert id="addDevice" parameterType="com.smart.community.wsyjavabean.Tbl_fire_tools">
+        insert into tbl_fire_tools(fire_tools_name,fire_tools_classification,buy_date)
+        values(#{fire_tools_name},#{fire_tools_classification},#{buy_date})
+    </insert>
+    <!--修改设备信息-->
+    <update id="updateDevice" parameterType="com.smart.community.wsyjavabean.Tbl_fire_tools">
+        update tbl_fire_tools
+        <set>
+            fire_tools_name = #{fire_tools_name},
+            fire_tools_classification = #{fire_tools_classification},
+
+        </set>
+        <where>
+            <if test="fire_tools_name != null and fire_tools_name != '' ">
+                and fire_tools_id = #{fire_tools_id}
+            </if>
+            <if test="fire_tools_classification != null and fire_tools_classification != '' ">
+                and fire_tools_id = #{fire_tools_id}
+            </if>
+
+        </where>
+
+    </update>
+
+
+</mapper>

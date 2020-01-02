@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyParameterMapper">
+    <!--参数表-->
+    <resultMap id="ParameterMapper" type="com.smart.community.wsyjavabean.Tbl_parameter">
+        <result property="parameter_id" column="parameter_id"></result>
+        <result property="parameter_name" column="parameter_name"></result>
+        <result property="parameter_remark" column="parameter_remark"></result>
+    </resultMap>
+
+    <select id="findByParameterId" parameterType="com.smart.community.wsyjavabean.TableBean"
+            resultMap="ParameterMapper">
+        select
+        parameter_id,
+        parameter_name,
+        parameter_remark
+        from
+        tbl_parameter
+        <where>
+            <if test="parameter_name != null and parameter_name != ''">
+                parameter_name = #{parameter_name}
+            </if>
+        </where>
+        limit #{page},5
+    </select>
+    <select id="findPageParameterId" parameterType="com.smart.community.wsyjavabean.TableBean"
+            resultType="java.lang.Integer">
+        select count(*) from tbl_parameter
+        <where>
+            <if test="parameter_name != null and parameter_name != '' ">
+                parameter_name = #{parameter_name}
+            </if>
+        </where>
+    </select>
+    <!--删除参数-->
+    <delete id="parmeterId">
+    delete from tbl_parameter where parameter_id = #{parameter_id}
+</delete>
+    <!--增加参数-->
+    <insert id="insertParmeter" parameterType="com.smart.community.wsyjavabean.Tbl_parameter">
+        insert into tbl_parameter(parameter_name,parameter_remark)
+values(#{parameter_name},#{parameter_remark})
+    </insert>
+    <!--修改参数-->
+    <update id="updateParmeter" parameterType="com.smart.community.wsyjavabean.Tbl_parameter">
+        update tbl_parameter
+        <set>
+            parameter_name = #{parameter_name},
+            parameter_remark = #{parameter_remark}
+        </set>
+        <where>
+            <if test="parameter_name != null and parameter_name != '' ">
+                and parameter_id = #{parameter_id}
+            </if>
+            <if test="parameter_remark != null and parameter_remark != '' ">
+                and parameter_id = #{parameter_id}
+            </if>
+        </where>
+    </update>
+
+
+</mapper>
