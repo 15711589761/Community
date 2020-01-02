@@ -32,7 +32,7 @@
 		var tableIns = table.render();
 		table.render({
 			elem: '#test'
-			,url:'<%=path%>findProcessesForTrim.action'
+			,url:'<%=path%>findProcessesForTrim.action?taskName=装修申请'
 			,title: '用户数据表'
 			,cols: [[
 				{field:'processTaskId', width:80, title:'任务ID'}
@@ -75,7 +75,6 @@
 			{
 				var agreeId = data.processTaskId
 				var agreeOb = {taskId:agreeId,isAgree:"同意"};
-				alert(agreeOb.toString());
 				$.ajax({
 					url:"<%=path%>completeTaskWhitParameter.action", //请求的url地址
 					dataType:"json", //返回格式为json
@@ -83,7 +82,7 @@
 					data:agreeOb, //参数值
 					type:"post", //请求方式
 					success:function(msg){
-						layer.msg("审核成功");
+						layer.msg(msg.msg);
 						table.reload('test');
 					},
 					error:function () {
@@ -95,7 +94,6 @@
 			{
 				var disagreeId = data.processTaskId
 				var disagreeOb = {taskId:disagreeId,isAgree:"不同意"};
-				alert(disagreeOb.toString());
 				$.ajax({
 					url:"<%=path%>completeTaskWhitParameter.action", //请求的url地址
 					dataType:"json", //返回格式为json

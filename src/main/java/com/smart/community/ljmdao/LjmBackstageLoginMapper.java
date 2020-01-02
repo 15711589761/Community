@@ -36,4 +36,20 @@ public interface LjmBackstageLoginMapper
 	 * @return 角色集合
 	 */
 	public RoleBean selectForGetPersonRoles (int staffId);
+
+	/**
+	 * 查询原密码是否正确
+	 * @param jobNum 工号
+	 * @param password 密码
+	 * @return int
+	 */
+	public int selectForExistStaff(@Param("jobNum")String jobNum , @Param("password")String password);
+
+	/**
+	 * 修改密码
+	 * @param password 密码
+	 * @param staffId 员工id
+	 * @return int
+	 */
+	public int updateForUpPassword(@Param("password")String password,@Param("staffId")int staffId);
 }

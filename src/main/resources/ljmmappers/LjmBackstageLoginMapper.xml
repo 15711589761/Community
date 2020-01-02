@@ -12,7 +12,7 @@
         <result column="staff_age" property="staffAge"/>
         <result column="staff_tel" property="staffTel"/>
         <result column="staff_address" property="staffAddress"/>
-        <result column="staff_join_date" property="staffJoinDate"/>
+        <result column="staff_entry_date" property="staffJoinDate"/>
         <result column="parameter_name" property="staffStatus"/>
     </resultMap>
     <select id="selectForBackstageLogin" parameterType="com.smart.community.ljmbean.LoginBean"
@@ -34,4 +34,10 @@
     <select id="selectForGetPersonRoles" parameterType="java.lang.Integer" resultMap="forGetRoles">
         select r.* from tbl_role r,tbl_staff s,tbl_role_staff rs where s.staff_id = rs.staff_id and rs.role_id = r.role_id and s.staff_id = ${_parameter}
     </select>
+    <select id="selectForExistStaff" resultType="java.lang.Integer">
+        select count(*) from tbl_staff where staff_job_number = #{jobNum} and staff_password = #{password}
+    </select>
+    <update id="updateForUpPassword">
+        update tbl_staff set staff_password = #{password} where staff_id = ${staffId}
+    </update>
 </mapper>

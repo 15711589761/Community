@@ -35,7 +35,7 @@
 		var table = layui.table;
 		table.render({
 			elem: '#test'
-			,url:'<%=path%>findProcessesForTrim.action'
+			,url:'<%=path%>findProcessesForTrim.action?taskName=装修申请'
 			,title: '用户数据表'
 			,cols: [[
 				{field:'processTaskId', width:80, title:'任务ID'}
@@ -66,6 +66,7 @@
 						type:"post", //请求方式
 						success:function(msg){
 							layer.closeAll();
+							layer.msg(msg.msg);
 							obj.del();
 						},
 						error:function () {
@@ -85,7 +86,7 @@
 					data:subOb, //参数值
 					type:"post", //请求方式
 					success:function(msg){
-						layer.msg("提交成功");
+						layer.msg(msg.msg);
 						table.reload('test');
 					},
 					error:function () {
@@ -129,6 +130,7 @@
 									type:"post", //请求方式
 									success:function(msg){
 										layer.closeAll();
+										layer.msg(msg.msg);
 										table.reload('test');
 									},
 									error:function () {

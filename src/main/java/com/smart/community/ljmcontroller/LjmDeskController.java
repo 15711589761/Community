@@ -263,4 +263,77 @@ public class LjmDeskController
 		}
 		return layuiTableBean;
 	}
+
+	/**
+	 * 前端修改界面
+	 * @return 界面
+	 */
+	@RequestMapping("/toDeskUpdatePassWord.view")
+	public ModelAndView toDeskUpdatePassWord()
+	{
+		return new ModelAndView("ljm_update_desk_password");
+	}
+
+	@RequestMapping("/updateDeskPassWord.action")
+	public ModelAndView updateDeskPassWord(String oldPass,String newPass,HttpServletRequest request)
+	{
+		ModelAndView modelAndView = new ModelAndView("ljm_update_desk_password");
+		List<OwnerBean> ownerBeans = (List) request.getSession().getAttribute("owners");
+		String roomNum = ownerBeans.get(0).getOwnerRoom();
+		int exist = deskService.selectForExistRoom(roomNum,oldPass);
+		if(exist>0)
+		{
+			int result = deskService.updateForUpDeskPassword(roomNum,newPass);
+			if (result>0)
+			{
+				modelAndView.addObject("message", "修改密码成功");
+			} else {
+				modelAndView.addObject("message","服务器忙，请重试");
+			}
+		} else {
+			modelAndView.addObject("message","原密码错误");
+		}
+		return modelAndView;
+	}
+
+	@RequestMapping("/toLookApplyHistory.view")
+	public ModelAndView toLookApplyHistory()
+	{
+		return new ModelAndView("ljm_look_apply_history");
+	}
+
+	@RequestMapping("/forShowApplyHistory.action")
+	@ResponseBody
+	public LayuiTableBean showApplyHistory(String page ,String limit ,HttpServletRequest request)
+	{
+		LayuiTableBean layuiTableBean = new LayuiTableBean();
+		List<OwnerBean> ownerBeans = (List) request.getSession().getAttribute("owners");
+		String roomNum = ownerBeans.get(0).getOwnerRoom();
+		List<ApplyRecordBean> recordBeans = deskService.selectForShowApplyTable(roomNum,page,limit);
+		if (recordBeans!=null)
+		{
+			layuiTableBean.setCode(0);
+			layuiTableBean.setData(recordBeans);
+			layuiTableBean.setCount(recordBeans.size());
+		} else {
+			layuiTableBean.setCode(1);
+			layuiTableBean.setMsg("服务器忙");
+		}
+		return layuiTableBean;
+	}
+
+	@RequestMapping("/deleteApplyHistory.action")
+	@ResponseBody
+	public LayuiTableBean deleteApplyHistory(String applyId)
+	{
+		LayuiTableBean layuiTableBean = new LayuiTableBean();
+		int result = deskService.deleteForApplyRecord(applyId);
+		if (result>0)
+		{
+			layuiTableBean.setMsg("删除成功");
+		} else {
+			layuiTableBean.setMsg("删除失败，请重试");
+		}
+		return layuiTableBean;
+	}
 }

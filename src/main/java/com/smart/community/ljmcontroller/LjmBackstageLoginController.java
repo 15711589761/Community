@@ -9,6 +9,7 @@ import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -114,5 +115,49 @@ public class LjmBackstageLoginController
 		return modelAndView;
 	}
 
+	/**
+	 * 跳转到修改密码的界面
+	 * @return 界面
+	 */
+	@RequestMapping("/toUpdatePassWord.view")
+	public ModelAndView toUpdatePassWordView()
+	{
+		return new ModelAndView("ljm_update_password");
+	}
+
+	/**
+	 * 跳转到基本资料的界面
+	 * @return 界面
+	 */
+	@RequestMapping("/toLookPersonMessage.view")
+	public ModelAndView toLookPersonMessage(HttpServletRequest request)
+	{
+		StaffBean staffBean = (StaffBean) request.getSession().getAttribute("staffBean");
+		ModelAndView modelAndView = new ModelAndView("ljm_backstage_staff_message");
+		modelAndView.addObject("staff",staffBean);
+		return modelAndView;
+	}
+
+	@RequestMapping("/updateBackstagePassWord.action")
+	@ResponseBody
+	public LayuiTableBean updateBackstagePassWord(String oldPass,String newPass,HttpServletRequest request)
+	{
+		StaffBean staffBean = (StaffBean) request.getSession().getAttribute("staffBean");
+		LayuiTableBean layuiTableBean = new LayuiTableBean();
+		int isExist = backstageLoginService.selectForExistStaff(staffBean.getStaffJobNum(),oldPass);
+		if (isExist>0)
+		{
+			int result = backstageLoginService.updateForUpPassword(newPass,staffBean.getStaffId());
+			if (result>0)
+			{
+				layuiTableBean.setMsg("修改成功");
+			} else {
+				layuiTableBean.setMsg("系统忙，请重试");
+			}
+		} else {
+			layuiTableBean.setMsg("原密码错误");
+		}
+		return layuiTableBean;
+	}
 
 }

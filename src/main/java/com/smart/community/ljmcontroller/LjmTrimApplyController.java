@@ -3,6 +3,8 @@ package com.smart.community.ljmcontroller;
 import com.smart.community.activiti.Activiti;
 import com.smart.community.ljmbean.*;
 import com.smart.community.ljmservice.LjmBackstageLoginService;
+import com.smart.community.ljmservice.LjmDeskService;
+import com.smart.community.tool.LjmTool;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +13,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author ljm
+ */
 @Controller
 public class LjmTrimApplyController
 {
@@ -22,6 +28,8 @@ public class LjmTrimApplyController
 	private Activiti trimActiviti;
 	@Resource
 	private LjmBackstageLoginService backstageLoginService;
+	@Resource
+	private LjmDeskService deskService;
 
 	/**
 	 * 业主装修申请页面
@@ -35,7 +43,7 @@ public class LjmTrimApplyController
 
 	/**
 	 * 创建启动流程实例
-	 * @return
+	 * @return 信息
 	 */
 	@RequestMapping("/createProcessesForTrim.action")
 	@ResponseBody
@@ -43,14 +51,28 @@ public class LjmTrimApplyController
 	{
 		List<OwnerBean> list = (List<OwnerBean>) request.getSession().getAttribute("owners");
 		String room = list.get(0).getOwnerRoom();
+		//参数设置，在启动时传入流程
 		Map<String,Object> map = new HashMap<>();
 		map.put("roomNum",room);map.put("applyName",applyName);map.put("applyPhone",applyPhone);
-		map.put("workDate",workDate);map.put("remark",remark);
-		ProcessInstance pi = trimActiviti.createActiviti("trimApply", "processes/TrimApply.bpmn","processes/TrimApply.png",map);
-		if (pi!=null)
+		map.put("workDate",workDate);map.put("remark",remark);map.put("serviceName","装修申请");
+		ApplyRecordBean recordBean = new ApplyRecordBean();
+		recordBean.setApplyName("装修申请");recordBean.setApplyRoom(room);recordBean.setApplyStatus("待提交");
+		recordBean.setApplyTime(LjmTool.getTodayDate());
+		int result = deskService.insertForApplyRecord(recordBean);
+		if (result > 0 )
 		{
+			String applyId = deskService.selectForGetLastApply(room);
+			map.put("applyId",applyId);
+			ProcessInstance pi = trimActiviti.createActiviti("trimApply", "processes/TrimApply.bpmn","processes/TrimApply.png",map);
+			if (pi!=null)
+			{
+				LayuiTableBean layuiTableBean = new LayuiTableBean();
+				layuiTableBean.setMsg("添加成功");
+				return layuiTableBean;
+			}
+		} else {
 			LayuiTableBean layuiTableBean = new LayuiTableBean();
-			layuiTableBean.setMsg("success");
+			layuiTableBean.setMsg("添加失败");
 			return layuiTableBean;
 		}
 		return null;
@@ -63,8 +85,9 @@ public class LjmTrimApplyController
 	 */
 	@RequestMapping("/findProcessesForTrim.action")
 	@ResponseBody
-	public LayuiTableBean findOwnerProcessesForTrim(HttpServletRequest request)
+	public LayuiTableBean findOwnerProcessesForTrim(HttpServletRequest request , String taskName)
 	{
+		System.out.println("tasKnAME:"+taskName);
 		List<ActivityTaskBean> activityTaskBeans;
 		LayuiTableBean layuiTableBean = new LayuiTableBean();
 		List<OwnerBean> list = (List<OwnerBean>) request.getSession().getAttribute("owners");
@@ -73,11 +96,27 @@ public class LjmTrimApplyController
 			RoleBean roleBean = backstageLoginService.getPersonRole(staffBean.getStaffId());
 			System.out.println(roleBean.getRoleName());
 			activityTaskBeans = trimActiviti.findPersonTask(roleBean.getRoleName());
-			layuiTableBean.setData(activityTaskBeans);
+			List<ActivityTaskBean> results = new ArrayList<>();
+			for (ActivityTaskBean activityTaskBean : activityTaskBeans)
+			{
+				if (taskName.equals(activityTaskBean.getServiceName()))
+				{
+					results.add(activityTaskBean);
+				}
+			}
+			layuiTableBean.setData(results);
 		} else if (list!=null&&list.size()>0){
 			String room = list.get(0).getOwnerRoom();
 			activityTaskBeans = trimActiviti.findPersonTask(room);
-			layuiTableBean.setData(activityTaskBeans);
+			List<ActivityTaskBean> results = new ArrayList<>();
+			for (ActivityTaskBean activityTaskBean : activityTaskBeans)
+			{
+				if (taskName.equals(activityTaskBean.getServiceName()))
+				{
+					results.add(activityTaskBean);
+				}
+			}
+			layuiTableBean.setData(results);
 		}
 		layuiTableBean.setCode(0);
 		return layuiTableBean;
@@ -92,9 +131,17 @@ public class LjmTrimApplyController
 	@ResponseBody
 	public LayuiTableBean deletePersonProcessesTask(String taskId)
 	{
-		trimActiviti.deleteProcessDefinition(taskId);
 		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		layuiTableBean.setMsg("success");
+		Map<String,Object> map = trimActiviti.getVariables(taskId);
+		String applyId = (String) map.get("applyId");
+		int result = deskService.deleteForApplyRecord(applyId);
+		if (result>0)
+		{
+			trimActiviti.deleteProcessDefinition(taskId);
+			layuiTableBean.setMsg("删除成功");
+		} else {
+			layuiTableBean.setMsg("系统忙，请重试");
+		}
 		return layuiTableBean;
 	}
 
@@ -105,79 +152,80 @@ public class LjmTrimApplyController
 	 */
 	@RequestMapping("/submitProcessesTask.action")
 	@ResponseBody
-	public LayuiTableBean submitOwnerProcessesTask(String taskId)
+	public LayuiTableBean submitOwnerProcessesTask(String taskId,HttpServletRequest request)
 	{
-		trimActiviti.completePersonTask(taskId);
-		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		layuiTableBean.setMsg("success");
-		return layuiTableBean;
+		List<OwnerBean> owners = (List) request.getSession().getAttribute("owners");
+		String status = "待受理";
+		Map<String,Object> map = trimActiviti.getVariables(taskId);
+		String applyId = (String) map.get("applyId");
+		int result = deskService.updateForApplyStatus(status,applyId);
+		if (result>0)
+		{
+			trimActiviti.completePersonTask(taskId);
+			LayuiTableBean layuiTableBean = new LayuiTableBean();
+			layuiTableBean.setMsg("提交成功");
+			return layuiTableBean;
+		}
+		return null;
 	}
 
 	/**
 	 * 装修审核页面跳转
 	 * @return ModelAndView
 	 */
-	@RequestMapping("/toCustomerTrim.action")
+	@RequestMapping("/toCustomerTrim.view")
 	public ModelAndView toCustomerTrim ()
 	{
 		return new ModelAndView("ljm_review_trim");
 	}
 
+	/**
+	 * 角色完成任务
+	 * @param taskId 任务id
+	 * @param isAgree 是否同意
+	 * @return 信息
+	 */
 	@RequestMapping("/completeTaskWhitParameter.action")
 	@ResponseBody
-	public LayuiTableBean returnTask(String taskId , String isAgree ,HttpServletRequest request)
+	public LayuiTableBean returnTask(String taskId , String isAgree,HttpServletRequest request)
 	{
-		System.out.println("带参数完成任务");
-		Map<String,Object> paramMap = new HashMap<>();
-		paramMap.put("message",isAgree);
-		trimActiviti.completePersonTask(taskId,paramMap);
-		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		layuiTableBean.setMsg("success");
-		layuiTableBean.setCode(0);
-		return layuiTableBean;
-	}
-
-	/**
-	 * 历史页面跳转
-	 * @return 界面
-	 */
-	@RequestMapping("/toFindProcessesForTrimHistory.view")
-	public ModelAndView toFindProcessesForTrimHistoryView()
-	{
-		return new ModelAndView("ljm_trim_apply_history");
-	}
-
-	/**
-	 * 查看某人的历史记录
-	 * @param roomNum 办理人
-	 * @param page page
-	 * @param limit limit
-	 * @return layui接口
-	 */
-	@RequestMapping("/findProcessesForTrimHistory.action")
-	@ResponseBody
-	public LayuiTableBean findProcessesForTrimHistory(String roomNum , String page, String limit)
-	{
-		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		if (null!=roomNum&&!"".equals(roomNum))
+		String status = "待受理";
+		StaffBean staff = (StaffBean) request.getSession().getAttribute("staffBean");
+		if (staff!=null)
 		{
-			int n = (Integer.parseInt(page)-1)*2;
-			int m = Integer.parseInt(limit);
-			List<ActivityTaskBean> list = trimActiviti.getHistoryRecord(roomNum,n,m);
-			int count = trimActiviti.getHistoryRecord(roomNum);
-			if (list!=null && list.size()>0)
+			RoleBean roleBean = backstageLoginService.getPersonRole(staff.getStaffId());
+			if ("客服".equals(roleBean.getRoleName()))
 			{
-				layuiTableBean.setCode(0);
-				layuiTableBean.setData(list);
-				layuiTableBean.setCount(count);
-			} else {
-				layuiTableBean.setCode(1);
-				layuiTableBean.setMsg("没有任务");
+				if ("同意".equals(isAgree))
+				{
+					status = "已受理，待审核";
+				} else {
+					status = "已受理，驳回，时间不合适";
+				}
+			} else if ("后勤".equals(roleBean.getRoleName())){
+				if ("同意".equals(isAgree))
+				{
+					status = "同意申请";
+				} else {
+					status = "否决申请";
+				}
 			}
+		}
+		Map<String,Object> map = trimActiviti.getVariables(taskId);
+		String applyId = (String) map.get("applyId");
+		int result = deskService.updateForApplyStatus(status,applyId);
+		LayuiTableBean layuiTableBean = new LayuiTableBean();
+		if (result>0)
+		{
+			Map<String,Object> paramMap = new HashMap<>();
+			paramMap.put("message",isAgree);
+			trimActiviti.completePersonTask(taskId,paramMap);
+			layuiTableBean.setMsg("成功");
+			layuiTableBean.setCode(0);
 		} else {
-			layuiTableBean.setCode(1);
-			layuiTableBean.setMsg("通过搜索办理人查询");
+			layuiTableBean.setMsg("系统忙，请重试");
 		}
 		return layuiTableBean;
 	}
+
 }

@@ -6,4 +6,15 @@
     <update id="updateForSuggestFeedback">
         update tbl_suggest set suggest_result = #{result} where suggest_id = ${suggestId}
     </update>
+    <resultMap id="forGetDispatchPerson" type="com.smart.community.ljmbean.DispatchPersonBean">
+        <result property="workId" column="accendant_id"/>
+        <result property="workPerson" column="accendant_name"/>
+        <result property="workTel" column="accendant_tel"/>
+    </resultMap>
+    <select id="selectForGetDispatchPersons" resultMap="forGetDispatchPerson">
+        select * from tbl_accendant
+    </select>
+    <select id="selectForGetDispatchPerson" resultMap="forGetDispatchPerson">
+        select * from tbl_accendant where accendant_id = ${_parameter}
+    </select>
 </mapper>

@@ -32,6 +32,18 @@ public class ActivityTaskBean
 	private String workPerson;
 	//工人联系方式
 	private String workPersonPhone;
+	//服务名称
+	private String serviceName;
+
+	public String getServiceName()
+	{
+		return serviceName;
+	}
+
+	public void setServiceName( String serviceName )
+	{
+		this.serviceName = serviceName;
+	}
 
 	public String getTaskEndTime()
 	{

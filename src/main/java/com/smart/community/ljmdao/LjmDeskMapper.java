@@ -56,4 +56,58 @@ public interface LjmDeskMapper
 	 * @return int
 	 */
 	public int deleteToSuggestRecord(String suggestId);
+
+	/**
+	 * 验证原密码
+	 * @param roomNum 室号
+	 * @param password 密码
+	 * @return int
+	 */
+	public int selectForGetDeskPassWord(@Param("roomNum")String roomNum,@Param("password")String password);
+
+	/**
+	 * 修改密码
+	 * @param roomNum 室号
+	 * @param password 密码
+	 * @return int
+	 */
+	public int updateForUpDeskPassword(@Param("roomNum")String roomNum,@Param("password")String password);
+
+	/**
+	 * 查看申请记录
+	 * @param roomNum 房间号
+	 * @param page 页数
+	 * @param limit 每页条数
+	 * @return 申请记录集合
+	 */
+	public List<ApplyRecordBean> selectForShowApplyTable (@Param("roomNum")String roomNum,@Param("page")int page,@Param("limit")int limit);
+
+	/**
+	 * 添加申请记录
+	 * @param applyRecordBean 记录信息
+	 * @return int
+	 */
+	public int insertForApplyRecord (ApplyRecordBean applyRecordBean);
+
+	/**
+	 * 修改申请状态
+	 * @param status 状态
+	 * @param applyId 申请id
+	 * @return int
+	 */
+	public int updateForApplyStatus(@Param("status")String status,@Param("applyId")String applyId);
+
+	/**
+	 * 删除申请记录
+	 * @param applyId 申请id
+	 * @return int
+	 */
+	public int deleteForApplyRecord(@Param("applyId")String applyId);
+
+	/**
+	 * 查询此人的所有申请
+	 * @param roomNum 房间号
+	 * @return 集合
+	 */
+	public List<ApplyRecordBean> selectForGetLastApply(@Param("roomNum")String roomNum);
 }

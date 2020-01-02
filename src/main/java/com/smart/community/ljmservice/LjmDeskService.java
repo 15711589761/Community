@@ -101,4 +101,83 @@ public class LjmDeskService
 	{
 		return deskMapper.deleteToSuggestRecord(suggestId);
 	}
+
+	/**
+	 * 验证原密码
+	 * @param roomNum 房间号
+	 * @param password 密码
+	 * @return int
+	 */
+	public int selectForExistRoom(String roomNum,String password)
+	{
+		return deskMapper.selectForGetDeskPassWord(roomNum ,password);
+	}
+
+	/**
+	 * 修改密码
+	 * @param roomNum 房间号
+	 * @param password 密码
+	 * @return int
+	 */
+	public int updateForUpDeskPassword(String roomNum,String password)
+	{
+		return deskMapper.updateForUpDeskPassword(roomNum,password);
+	}
+
+	/**
+	 * 查看申请记录
+	 * @param roomNum 房间号
+	 * @param n 页数
+	 * @param m 每页条数
+	 * @return 申请记录集合
+	 */
+	public List<ApplyRecordBean> selectForShowApplyTable(String roomNum,String n ,String m )
+	{
+		int limit = Integer.parseInt(m);
+		int page = (Integer.parseInt(n)-1)*limit;
+		return deskMapper.selectForShowApplyTable(roomNum,page,limit);
+	}
+
+	/**
+	 * 添加申请记录
+	 * @param applyRecordBean 记录信息
+	 * @return int
+	 */
+	public int insertForApplyRecord (ApplyRecordBean applyRecordBean)
+	{
+		return deskMapper.insertForApplyRecord(applyRecordBean);
+	}
+
+	/**
+	 * 修改申请状态
+	 * @param status 状态
+	 * @param applyId 申请id
+	 * @return int
+	 */
+	public int updateForApplyStatus(String status,String applyId)
+	{
+		return deskMapper.updateForApplyStatus(status,applyId);
+	}
+
+	/**
+	 * 删除申请记录
+	 * @param applyId 申请id
+	 * @return int
+	 */
+	public int deleteForApplyRecord(String applyId)
+	{
+		return deskMapper.deleteForApplyRecord(applyId);
+	}
+
+	/**
+	 * 查询此人的所有申请
+	 * @param roomNum 房间号
+	 * @return 集合
+	 */
+	public String selectForGetLastApply(String roomNum)
+	{
+		List<ApplyRecordBean> list = deskMapper.selectForGetLastApply(roomNum);
+		String applyId = list.get(list.size()-1).getApplyId();
+		return applyId;
+	}
 }

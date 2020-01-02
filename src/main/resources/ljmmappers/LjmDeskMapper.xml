@@ -16,7 +16,7 @@
     </resultMap>
 <!--    前端登录验证-->
     <select id="selectForDeskLogin" parameterType="com.smart.community.ljmbean.LoginBean" resultMap="deskLogin">
-        select * from (select o.*,c.owner_car_numbers,c.request_date from tbl_owner o left join tbl_owner_car c on o.owner_room = c.room_number )a,tbl_room r
+        select * from (select o.*,c.owner_car_numbers,c.request_date from tbl_owner o left join tbl_owner_car c on o.owner_room = c.owner_room )a,tbl_room r
         where a.owner_room = r.room_number and r.room_number = #{loginName} and r.room_password = #{loginPassWord}
     </select>
     <resultMap id="deskMenu" type="com.smart.community.ljmbean.DeskMenuBean">
@@ -75,4 +75,32 @@
     <update id="deleteToSuggestRecord" parameterType="java.lang.String">
         update tbl_suggest set suggest_status = "已删除" where suggest_id = ${_parameter}
     </update>
+<!--    验证旧密码-->
+    <select id="selectForGetDeskPassWord" resultType="java.lang.Integer">
+        select count(*) from tbl_room where room_number = #{roomNum} and room_password = #{password}
+    </select>
+<!--    修改密码-->
+    <update id="updateForUpDeskPassword">
+        update tbl_room set room_password = #{password} where room_number = #{roomNum}
+    </update>
+<!--    查看历史申请-->
+    <select id="selectForShowApplyTable" resultType="com.smart.community.ljmbean.ApplyRecordBean">
+        select apply_id applyId,apply_name applyName,apply_time applyTime,apply_status applyStatus,apply_room applyRoom from tbl_apply_record where apply_room = #{roomNum} limit ${page},${limit}
+    </select>
+<!--    添加申请记录-->
+    <insert id="insertForApplyRecord" parameterType="com.smart.community.ljmbean.ApplyRecordBean">
+        insert into tbl_apply_record (apply_name,apply_time,apply_status,apply_room)
+        values (#{applyName},#{applyTime},#{applyStatus},#{applyRoom})
+    </insert>
+<!--    修改申请状态-->
+    <update id="updateForApplyStatus">
+        update tbl_apply_record set apply_status = #{status} where apply_id = #{applyId}
+    </update>
+<!--    删除申请记录-->
+    <delete id="deleteForApplyRecord">
+        delete from tbl_apply_record where apply_id = ${applyId}
+    </delete>
+    <select id="selectForGetLastApply" resultType="com.smart.community.ljmbean.ApplyRecordBean">
+        select apply_id applyId from tbl_apply_record where apply_room = #{roomNum}
+    </select>
 </mapper>

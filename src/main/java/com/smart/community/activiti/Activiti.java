@@ -85,6 +85,7 @@ public class Activiti
 				activityTaskBean.setProcessTaskId(myTask.getId());
 				activityTaskBean.setTaskName(myTask.getName());
 				activityTaskBean.setTaskCreateTime(new SimpleDateFormat("yyyy-mm-dd").format(myTask.getCreateTime()));
+				System.out.println(myTask.getCreateTime());
 				activityTaskBean.setProcessAssignee(myTask.getAssignee());
 				activityTaskBean.setProcessDefinitionId(myTask.getProcessDefinitionId());
 				activityTaskBean.setProcessInstanceId(myTask.getProcessInstanceId());
@@ -93,7 +94,8 @@ public class Activiti
 				activityTaskBean.setRemark((String)map.get("remark"));
 				activityTaskBean.setMessage((String) map.get("message"));
 				activityTaskBean.setWorkPerson((String)map.get("workPerson"));
-				activityTaskBean.setWorkPersonPhone((String)map.get("workPersonPhone"));
+				activityTaskBean.setWorkPersonPhone((String)map.get("workTel"));
+				activityTaskBean.setServiceName((String)map.get("serviceName"));
 				activityTaskBeans.add(activityTaskBean);
 			}
 		}
