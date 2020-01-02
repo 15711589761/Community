@@ -4,6 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <mappers>
+        <!--@auto:魏书源-->
+        <mapper resource="wsymappers/WsySafeEventMapper.xml"/>
+        <mapper resource="wsymappers/WsyMapper.xml"/>
+        <mapper resource="wsymappers/WsyParameterMapper.xml"/>
+        <mapper resource="wsymappers/WsyWarehouseMapper.xml"/>
+        <mapper resource="wsymappers/WsyLogMapper.xml"/>
+        <mapper resource="wsymappers/WsyPurchase.xml"/>
+        <mapper resource="wsymappers/WsyOntractMapper.xml"/>
+        <mapper resource="wsymappers/WsyDeviceMapper.xml"/>
         <mapper resource="ljmmappers/LjmBackstageLoginMapper.xml"/>
         <mapper resource="ljmmappers/LjmVisitorMapper.xml"/>
         <mapper resource="ljmmappers/LjmDeskMapper.xml"/>

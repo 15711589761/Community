@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyOntractMapper">
+    <!--合同管理-->
+    <resultMap id="OntractMap" type="com.smart.community.wsyjavabean.Tbl_ontract">
+        <result property="ontract_id" column="ontract_id"/>
+        <result property="ontract_name" column="ontract_name"/>
+        <result property="ontract_uploadPath" column="ontract_uploadPath"/>
+        <result property="ontract_downPath" column="ontract_downPath"/>
+        <result property="ontract_time" column="ontract_time"/>
+
+    </resultMap>
+
+    <select id="findByOntract" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="OntractMap">
+        select ontract_id,ontract_name,ontract_uploadPath,ontract_time
+        from tbl_ontract
+       <where>
+        <if test=" ontract_name != null and ontract_name != '' ">
+            and ontract_name like '%${ontract_name}%'
+        </if>
+        <if test=" startDate != null and startDate != '' ">
+            and ontract_time &gt;= #{startDate}
+        </if>
+        <if test=" endDate != null and endDate != '' ">
+            and ontract_time &lt;= #{endDate}
+        </if>
+    </where>
+        limit ${page},5
+    </select>
+    <!--合同管理分页-->
+    <select id="findByOntractPage" parameterType="com.smart.community.wsyjavabean.TableBean"
+            resultType="java.lang.Integer">
+        select count(*) from tbl_ontract
+
+      <where>
+            <if test=" ontract_name != null and ontract_name != '' ">
+                and ontract_name like '%${ontract_name}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and ontract_time &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and ontract_time &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <!--合同删除-->
+    <delete id="delOntract">
+      delete from tbl_ontract where ontract_id = #{ontract_id}
+    </delete>
+    <!--上传合同-->
+    <insert id="addOntract" parameterType="com.smart.community.wsyjavabean.Tbl_ontract">
+        insert into tbl_ontract(ontract_name,ontract_uploadPath,ontract_time)
+        values(#{ontract_name},#{ontract_uploadPath},#{ontract_time})
+    </insert>
+
+
+    <select id="findontractId" parameterType="java.lang.Integer"
+    resultType="com.smart.community.wsyjavabean.Tbl_ontract">
+        select * from tbl_ontract where ontract_id=#{ontract_id}
+    </select>
+
+</mapper>

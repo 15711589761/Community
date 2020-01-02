@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyMapper">
+    <!--业主表-->
+    <resultMap id="MyMap" type="com.smart.community.wsyjavabean.Tbl_owner">
+        <result property="owner_id" column="owner_id"/>
+        <result property="owner_name" column="owner_name"/>
+        <result property="owner_room" column="owner_room"/>
+        <result property="owner_tel" column="owner_tel"/>
+        <result property="owner_affiliation" column="owner_affiliation"/>
+        <result property="owner_status" column="owner_status"/>
+        <result property="owner_identity" column="owner_identity"/>
+        <!--将房间表从业主表中取出-->
+        <association property="tbl_room" javaType="com.smart.community.wsyjavabean.Tbl_room">
+            <result property="room_id" column="room_id"></result>
+            <result property="room_number" column="room_number"></result>
+            <result property="room_status" column="room_status"></result>
+        </association>
+    </resultMap>
+
+    <select id="findByOwner" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="MyMap">
+        select distinct
+        a.owner_id,a.owner_name,a.owner_room,a.owner_tel,a.owner_affiliation,a.owner_status,a.owner_identity
+        from tbl_owner a,tbl_room b
+        <where>
+            a.owner_room=b.room_number
+            <if test="owner_name != null and owner_name != '' ">
+                and owner_name like '%${owner_name}%'
+            </if>
+            <if test="owner_tel != null and owner_tel != '' ">
+                and owner_tel = #{owner_tel}
+            </if>
+            <if test="owner_status != null and owner_status != '' ">
+                and owner_status = #{owner_status}
+            </if>
+            <if test="owner_identity != null and owner_identity != '' ">
+                and owner_identity = #{owner_identity}
+            </if>
+        </where>
+        limit ${page},5
+    </select>
+    <!--业主表分页-->
+    <select id="findByOwnerPage" parameterType="com.smart.community.wsyjavabean.TableBean"
+            resultType="java.lang.Integer">
+        select count(*) from tbl_owner a,tbl_room b
+        <where>
+            a.owner_room=b.room_number
+            <if test="owner_name != null and owner_name != '' ">
+                and owner_name like '%${owner_name}'
+            </if>
+            <if test="owner_tel != null and owner_tel != '' ">
+                and owner_tel = #{owner_tel}
+            </if>
+            <if test="owner_status != null and owner_status != '' ">
+                and owner_status = #{owner_status}
+            </if>
+            <if test="owner_identity != null and owner_identity != '' ">
+                and owner_identity = #{owner_identity}
+            </if>
+        </where>
+    </select>
+    <!--删除业主-->
+    <delete id="delOwner">
+      delete from tbl_owner where owner_id = #{owner_id}
+    </delete>
+    <!--增加业主-->
+    <insert id="addOwner" parameterType="com.smart.community.wsyjavabean.Tbl_owner">
+        insert into tbl_owner(owner_name,owner_room,owner_tel,owner_affiliation,owner_status,owner_identity)
+        values(#{owner_name},#{owner_room},#{owner_tel},#{owner_affiliation},#{owner_status},#{owner_identity})
+    </insert>
+    <!--修改业主信息-->
+    <update id="updateOwner" parameterType="com.smart.community.wsyjavabean.Tbl_owner">
+        update tbl_owner
+        <set>
+            owner_name = #{owner_name},
+            owner_room = #{owner_room},
+            owner_tel = #{owner_tel},
+            owner_affiliation = #{owner_affiliation},
+            owner_status = #{owner_status},
+            owner_identity = #{owner_identity}
+        </set>
+        <where>
+            <if test="owner_name != null and owner_name != '' ">
+                and owner_id = #{owner_id}
+            </if>
+            <if test="owner_room != null and owner_room != '' ">
+                and owner_id = #{owner_id}
+            </if>
+            <if test="owner_tel != null and owner_tel != '' ">
+                and owner_id = #{owner_id}
+            </if>
+            <if test="owner_affiliation != null and owner_affiliation != '' ">
+                and owner_id = #{owner_id}
+            </if>
+            <if test="owner_status != null and owner_status != '' ">
+                and owner_id = #{owner_id}
+            </if>
+            <if test="owner_identity != null and owner_identity != '' ">
+                and owner_id = #{owner_id}
+            </if>
+        </where>
+
+    </update>
+
+
+</mapper>

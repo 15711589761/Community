@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyWarehouseMapper">
+    <!--仓库管理-->
+    <resultMap id="WarehouseMap" type="com.smart.community.wsyjavabean.Tbl_warehouse">
+        <result property="manifest_id" column="manifest_id"/>
+        <result property="manifest_number" column="manifest_number"/>
+        <result property="manifest_name" column="manifest_name"/>
+        <result property="manifest_quantity" column="manifest_quantity"/>
+    </resultMap>
+    <select id="findByWarehouse" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="WarehouseMap">
+        select manifest_id,manifest_number,manifest_name,
+        manifest_quantity
+        from tbl_warehouse
+        <where>
+
+            <if test=" manifest_number != null and manifest_number != '' ">
+                and manifest_number like '%${manifest_number}%'
+            </if>
+            <if test=" manifest_name != null and manifest_name != '' ">
+                and manifest_name like '%${manifest_name}%'
+            </if>
+
+        </where>
+        limit #{page} ,5
+    </select>
+    <select id="findWarehousePage" parameterType="com.smart.community.wsyjavabean.TableBean" resultType="java.lang.Integer">
+        select count(*) from tbl_warehouse
+        <where>
+
+            <if test=" manifest_number != null and manifest_number != '' ">
+                and manifest_number like '%${manifest_number}%'
+            </if>
+            <if test=" manifest_name != null and manifest_name != '' ">
+                and manifest_name like '%${manifest_name}%'
+            </if>
+
+        </where>
+
+    </select>
+    <!--仓库物品-->
+    <insert id="addWarehouse" parameterType="com.smart.community.wsyjavabean.Tbl_warehouse">
+        insert into tbl_warehouse(manifest_number,manifest_name,
+        manifest_quantity)
+values(#{manifest_number},#{manifest_name},#{manifest_quantity})
+    </insert>
+
+
+    <update id="updateWarehouse" parameterType="com.smart.community.wsyjavabean.Tbl_warehouse">
+        update tbl_warehouse
+        <set>
+            manifest_quantity = #{manifest_quantity}
+
+        </set>
+        <where>
+            <if test="manifest_quantity != null and manifest_quantity != '' ">
+                and manifest_id = #{manifest_id}
+            </if>
+
+        </where>
+    </update>
+    <select id="findByquantity" parameterType="com.smart.community.wsyjavabean.TableBean" resultType="java.lang.Integer">
+     select manifest_quantity from tbl_warehouse
+     where manifest_id = #{manifest_id}
+    </select>
+
+
+
+</mapper>
