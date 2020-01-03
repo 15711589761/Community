@@ -1,13 +1,10 @@
 package com.smart.community.wsycontroller;
 
 import com.smart.community.wsyaspects.Log;
-import com.smart.community.wsydao.WsySafeEventMapper;
 import com.smart.community.wsyjavabean.TableBean;
 import com.smart.community.wsyjavabean.Tbl_safeEvent;
 import com.smart.community.wsyservice.WsySafeEventService;
-import com.smart.community.wsyservice.WsyService;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;

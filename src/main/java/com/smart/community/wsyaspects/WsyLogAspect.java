@@ -103,14 +103,10 @@ public class WsyLogAspect
 					}
 					if (isSameMethod)
 					{
+
 						operationName = method.getAnnotation(Log.class).operationName();
 						operationType = method.getAnnotation(Log.class).operationType();
-//						operation_matter = method.getAnnotation(Log.class).operation_matter();
-//						operation_person = method.getAnnotation(Log.class).operation_person();
-//						operation_date = method.getAnnotation(Log.class).operation_date();
-//						operation_time = method.getAnnotation(Log.class).operation_time();
-
-						Tbl_systemlog tbl_systemlog = new Tbl_systemlog();
+                        Tbl_systemlog tbl_systemlog = new Tbl_systemlog();
 						tbl_systemlog.setOperation_matter(operationName);
 						tbl_systemlog.setOperation_person(operationType);
 						Date date = new Date();

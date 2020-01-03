@@ -26,11 +26,15 @@ public class WsyService
 			tableBean.setOwner_status(owner_status);
 			tableBean.setOwner_identity(owner_identity);
 			List<Tbl_owner> list = wsyMapper.findByOwner(tableBean);
+//			for(Tbl_owner tbl_owner : list){
+//				System.out.println("客户管理..."+tbl_owner.toString());
+//			}
 
 		tableBean.setCount(0);
 		tableBean.setCount(wsyMapper.findByOwnerPage(tableBean));//计算页数
-
+			System.out.println("客户管理。。。"+list);
 		tableBean.setData(list);//将list（表格数据）传到界面
+
 
 		return tableBean;
 
