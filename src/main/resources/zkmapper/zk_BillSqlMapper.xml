@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.zkdao.zk_BillMapper">
+    <resultMap id="bill" type="Zk_BillBean">
+        <id property="billid" column="bill_id"/>
+        <result property="payee" column="bill_payee"/>
+        <result property="payer" column="bill_payer"/>
+        <result property="billDate" column="bill_details"/>
+        <result property="details" column="bill_date"/>
+        <result property="money" column="bill_money"/>
+        <result property="orderNo" column="bill_order_number"/>
+    </resultMap>
+    <insert id="addBill" parameterType="Zk_BillBean">
+        insert tbl_bill(bill_payee,bill_payer,bill_details,bill_date,bill_money,bill_order_number,bill_state)
+        values (#{payee},#{payer},#{billDate},#{details},#{money},#{orderNo},3)
+    </insert>
+    <select id="findBill" parameterType="ParameterBean" resultMap="bill">
+        select *
+        from tbl_bill
+        <where>
+            bill_state = 3
+            <if test="name!=null and name!=''">
+                and bill_payer like '%${name}%'
+            </if>
+            <if test="beginDate!=null and beginDate!=''">
+                and bill_date &gt;= #{beginDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and bill_date &lt;= #{endDate}
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+    <select id="countBill" parameterType="ParameterBean" resultType="java.lang.Integer">
+        select count(*)
+        from tbl_bill
+        <where>
+            bill_state = 3
+            <if test="name!=null and name!=''">
+                and bill_payer like '%${name}%'
+            </if>
+            <if test="beginDate!=null and beginDate!=''">
+                and bill_date &gt;= #{beginDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and bill_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="billCount" resultType="Zk_EcharsBean">
+        SELECT bill_date billname,SUM(bill_money) record from tbl_bill where bill_state = 3 GROUP BY bill_date
+    </select>
+
+    <update id="setBillState">
+        UPDATE tbl_bill set bill_state = 4 where bill_id = #{_parameter}
+    </update>
+</mapper>
