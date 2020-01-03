@@ -21,6 +21,7 @@
         <mapper resource="ljmmappers/LjmDeskMapper.xml"/>
         <mapper resource="ljmmappers/LjmCustomerMapper.xml"/>
         <mapper resource="ljmmappers/LjmBackstageMapper.xml"/>
+        <!--@auto:ven-->
         <mapper resource="venMappers/AccendantSql.xml"/>
         <mapper resource="venMappers/JobNumber.xml"/>
         <mapper resource="venMappers/ResumeSqlMapper.xml"/>
