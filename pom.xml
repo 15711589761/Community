@@ -140,16 +140,11 @@
             <version>1.2.48</version>
         </dependency>
         <!-- base64需要改依赖 -->
-        <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.12</version>
         </dependency>
-
-        <!-- excel结束 -->
-
-
         <!--    aliPay    -->
         <dependency>
             <groupId>com.alipay.sdk</groupId>
