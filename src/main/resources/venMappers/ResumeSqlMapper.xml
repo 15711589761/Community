@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.venmapper.ResumeMapper">
+    <resultMap type="com.smart.community.venjavabean.ResumeBean" id="ResumeBeanMap">
+        <result column="resume_id" property="resumeId"/>
+        <result column="resume_title" property="resumeTitle"/>
+        <result column="resume_url" property="resumeUrl"/>
+        <result column="applicant_name" property="applicantName"/>
+        <result column="applicant_tel" property="applicantTel"/>
+        <result column="upload_date" property="uploadDate"/>
+
+    </resultMap>
+
+
+    <!-- 查询文件数据结果集-->
+    <select id="getResumeData" parameterType="com.smart.community.venjavabean.ConditionBean" resultMap="ResumeBeanMap">
+
+        SELECT *
+        from tbl_resume
+        <where>
+            <if test="startDate!=null and startDate!=''">
+                and upload_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and upload_date &lt;=#{endDate}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and applicant_name like '%${userName}%'
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+    <!-- 查询文件数据记录数-->
+    <select id="countResumeData" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultType="java.lang.Integer">
+        SELECT count(*)
+        from tbl_resume
+        <where>
+            <if test="startDate!=null and startDate!=''">
+                and upload_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and upload_date &lt;=#{endDate}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and applicant_name like '%${userName}%'
+            </if>
+        </where>
+    </select>
+<!--获取文件对象-->
+    <select id="getResumeById" resultMap="ResumeBeanMap">
+        select * from tbl_resume where resume_id=#{resumeId}
+    </select>
+<!--    删除数据库文件信息-->
+    <delete id="delResume">
+                delete  from tbl_resume where resume_id=#{resumeId}
+    </delete>
+
+</mapper>

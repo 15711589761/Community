@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyPurchaseMapper">
+    <!--采购管理-->
+    <resultMap id="PurchaseMap" type="com.smart.community.wsyjavabean.Tbl_purchase">
+        <result property="purchase_id" column="purchase_id"/>
+        <result property="purchase_name" column="purchase_name"/>
+        <result property="purchase_model" column="purchase_model"/>
+        <result property="purchase_quantity" column="purchase_quantity"/>
+        <result property="purchase_price" column="purchase_price"/>
+        <result property="applicant" column="applicant"/>
+        <result property="applicant_time" column="applicant_time"/>
+        <result property="reviewer" column="reviewer"/>
+        <result property="reviewer_status" column="reviewer_status"/>
+    </resultMap>
+    <select id="findPurchase" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="PurchaseMap">
+        select purchase_id,purchase_name,purchase_model,
+        purchase_quantity,purchase_price,applicant,applicant_time,
+        reviewer,reviewer_status
+        from tbl_purchase
+        <where>
+
+            <if test=" purchase_name != null and purchase_name != '' ">
+                and purchase_name like '%${purchase_name}%'
+           </if>
+            <if test=" purchase_model != null and purchase_model != '' ">
+                and purchase_model like '%${purchase_model}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and applicant_time &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and applicant_time &lt;= #{endDate}
+            </if>
+        </where>
+        limit #{page} ,5
+    </select>
+    <select id="findPurchasePage" parameterType="com.smart.community.wsyjavabean.TableBean" resultType="java.lang.Integer">
+        select count(*) from tbl_purchase
+        <where>
+
+            <if test=" purchase_name != null and purchase_name != '' ">
+                and purchase_name like '%${purchase_name}%'
+            </if>
+            <if test=" purchase_model != null and purchase_model != '' ">
+                and purchase_model like '%${purchase_model}%'
+            </if>
+            <if test=" startDate != null and startDate != '' ">
+                and applicant_time &gt;= #{startDate}
+            </if>
+            <if test=" endDate != null and endDate != '' ">
+                and applicant_time &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <!--添加治安事件-->
+<!--    <insert id="insetAddEvent" parameterType="com.smart.community.wsyjavabean.Tbl_safeEvent">-->
+<!--        insert into tbl_safe_event(safe_event_title,safe_event_context,safe_event_date,safe_event_recorder)-->
+<!--values(#{safe_event_title},#{safe_event_context},#{safe_event_date},#{safe_event_recorder})-->
+<!--    </insert>-->
+
+    <!--修改采购信息-->
+    <update id="updatePurchase" parameterType="com.smart.community.wsyjavabean.Tbl_purchase">
+        update tbl_purchase
+        <set>
+            purchase_name = #{purchase_name},
+            purchase_model = #{purchase_model},
+            purchase_quantity = #{purchase_quantity},
+            purchase_price = #{purchase_price}
+         </set>
+        <where>
+            <if test="purchase_name != null and purchase_name != '' ">
+                and purchase_id = #{purchase_id}
+            </if>
+            <if test="purchase_model != null and purchase_model != '' ">
+                and purchase_id = #{purchase_id}
+            </if>
+            <if test="purchase_quantity != null and purchase_quantity != '' ">
+                and purchase_id = #{purchase_id}
+            </if>
+            <if test="purchase_price != null and purchase_price != '' ">
+                and purchase_id = #{purchase_id}
+            </if>
+        </where>
+    </update>
+
+    <!--删除采购信息-->
+    <delete id="deletePurchase">
+        delete from tbl_purchase where purchase_id = #{purchase_id}
+    </delete>
+
+</mapper>

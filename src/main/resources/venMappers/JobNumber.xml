@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.venmapper.JobNumberMapper">
+
+    <resultMap type="com.smart.community.venjavabean.JobNumberBean" id="jobNumberBeanMap">
+        <result column="job_id" property="numberId"/>
+        <result column="job_number" property="jobNumber"/>
+        <result column="status" property="status"/>
+        <result column="attributable" property="attributable"/>
+    </resultMap>
+
+    <select id="getJobNumberData" parameterType="com.smart.community.venjavabean.ConditionBean" resultMap="jobNumberBeanMap">
+
+        SELECT A.*,B.staff_name as  attributable FROM tbl_jobnumber A LEFT JOIN tbl_staff B ON A.job_number=B.staff_job_number
+        <where>
+            <if test="status!=null and status!=''">
+                A.status=#{status}
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+
+    <select id="countJobNumberData" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tbl_jobnumber
+        <where>
+            <if test="status!=null and status!=''">
+                status=#{status}
+            </if>
+        </where>
+    </select>
+
+    <select id="getNoJobNumberStaffList" resultType="com.smart.community.venjavabean.StaffBean">
+      select a.staff_id as staffId,a.staff_name as staffName from tbl_staff a where a.staff_status=1 and not exists
+      (select 1 from tbl_jobnumber b where a.staff_job_number=b.job_number)
+    </select>
+
+    <delete id="delJobNumberById" >
+        delete  from tbl_jobnumber where  job_id=${jobNumberId}
+    </delete>
+
+    <update id="setStaffJobNumberByStaffId" parameterType="com.smart.community.venjavabean.AjaxInfoBean" >
+        update  tbl_staff set staff_job_number=#{jobNumber} where staff_id =#{staffId}
+    </update>
+
+    <update id="updateJobNumberByJobNumber" parameterType="com.smart.community.venjavabean.AjaxInfoBean" >
+        update  tbl_jobnumber set status=1 where job_number=#{jobNumber}
+    </update>
+
+    <select id="countJobNumber" resultType="java.lang.Integer">
+            SELECT COUNT(*) from tbl_jobnumber
+    </select>
+
+    <select id="getTheLastJobNumber" resultType="java.lang.String">
+    select job_number from tbl_jobnumber order by job_id DESC limit 1;
+    </select>
+
+    <insert id="addJobNumber" parameterType="java.util.List" >
+        insert into tbl_jobnumber
+        (job_number,status)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item},0
+            )
+        </foreach>
+    </insert>
+
+</mapper>
