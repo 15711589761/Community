@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.zkdao.zk_FacilityMapper">
+    <resultMap id="facility" type="Zk_FacilityBean">
+        <id property="facilityID" column="facility_id"></id>
+        <result property="facilityName" column="facility_name"></result>
+        <result property="facilityNum" column="facility_num"></result>
+        <result property="facilityBuyDate" column="facility_buy_date"></result>
+    </resultMap>
+    <select id="findFacility" resultMap="facility" parameterType="ParameterBean">
+        select *
+        from tbl_facility
+        <where>
+            <if test="name!=null and name!=''">
+                and facility_name like '%${name}%'
+            </if>
+            <if test="beginDate!=null and beginDate!=''">
+                and facility_buy_date &gt;= #{beginDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and facility_buy_date &lt;= #{endDate}
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+    <select id="countFacility" resultType="java.lang.Integer" parameterType="ParameterBean">
+        select COUNT(*)
+        from tbl_facility
+        <where>
+            <if test="name!=null and name!=''">
+                and facility_name like '%${name}%'
+            </if>
+            <if test="beginDate!=null and beginDate!=''">
+                and facility_buy_date &gt;= #{beginDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and facility_buy_date &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+    <update id="setFacilityNum" parameterType="Zk_FacilityBean">
+        update tbl_facility
+        set facility_num = #{facilityNum}
+        where facility_id=#{facilityID}
+    </update>
+    <delete id="delFacility">
+        delete from tbl_facility
+        where facility_id=#{_parameter}
+    </delete>
+    <insert id="addFacility" parameterType="Zk_FacilityBean">
+        insert tbl_facility(facility_name,facility_num,facility_buy_date)
+        values (#{facilityName},#{facilityNum},#{facilityBuyDate})
+    </insert>
+</mapper>

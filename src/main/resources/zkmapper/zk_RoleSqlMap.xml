@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.zkdao.zk_RoleMapper">
+    <resultMap id="role" type="Zk_RoleBean">
+        <id property="roleId" column="role_id"/>
+        <result property="roleName" column="role_name"/>
+    </resultMap>
+    <select id="findRole" parameterType="ParameterBean" resultMap="role">
+        select *
+        from tbl_role
+        <where>
+        <if test="name!=null and name!=''">
+            and role_name like '%${name}%'
+        </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+    <select id="countRole" parameterType="ParameterBean" resultType="java.lang.Integer">
+        select count(*)
+        from tbl_role
+        <where>
+            <if test="name!=null and name!=''">
+                and role_name like '%${name}%'
+            </if>
+        </where>
+    </select>
+    <resultMap id="menu" type="Zk_TreeBean">
+        <id property="id" column="menu_id"/>
+        <result property="title" column="menu_name"/>
+        <result property="parent" column="parent_menu"/>
+    </resultMap>
+    <select id="findAllMenu" resultMap="menu">
+        select menu_id,menu_name,parent_menu
+        from tbl_staff_menu
+    </select>
+
+    <select id="findRoleMenu" resultMap="menu" parameterType="java.lang.String">
+        select a.menu_id,a.menu_name,a.parent_menu
+        from tbl_staff_menu a,tbl_role_menu b
+        where b.role_id=#{_parameter}
+        and a.menu_id=b.menu_id
+    </select>
+    
+    <delete id="delRoleMenu">
+        delete from tbl_role_menu
+        where role_id=#{_parameter}
+    </delete>
+    
+    <insert id="addRoleMenu">
+        insert into tbl_role_menu(role_id,menu_id) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{roleid},#{item})
+        </foreach>
+    </insert>
+    
+    <update id="setRoleName" parameterType="ParameterBean">
+        update tbl_role set role_name=#{name}
+        where role_id=#{roomNum}
+    </update>
+    
+    <select id="byRoleNameFind" resultMap="role">
+        select *
+        from tbl_role
+        where  role_name = #{_parameter}
+    </select>
+
+    <insert id="addRole">
+        insert into tbl_role(role_name) values(#{_parameter})
+    </insert>
+</mapper>
