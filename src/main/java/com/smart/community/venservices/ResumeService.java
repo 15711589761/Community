@@ -26,7 +26,6 @@ public class ResumeService
 		return tableBean;
 	}
 
-
 	public ResumeBean getResumeById(int resumeId){
 
 		return resumeMapper.getResumeById(resumeId);

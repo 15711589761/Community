@@ -125,7 +125,7 @@
 		});
 
 		//监听事件
-		table.on('ventool(jobNumberData)', function(obj){
+		table.on('tool(jobNumberData)', function(obj){
 			var data = obj.data;
 			if(obj.event === 'set'){
 				var ob = {

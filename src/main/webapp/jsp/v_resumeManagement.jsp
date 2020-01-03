@@ -76,7 +76,7 @@
 			})
 		});
 		//监听事件
-		table.on('ventool(resumeData)', function(obj){
+		table.on('tool(resumeData)', function(obj){
 			var data = obj.data;
 			if(obj.event === 'del'){
 				layer.confirm('真的执行此操作吗?', function(index){

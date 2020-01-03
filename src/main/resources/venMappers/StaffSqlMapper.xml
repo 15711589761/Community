@@ -190,7 +190,7 @@
      FROM
      tbl_role a
      LEFT JOIN tbl_role_staff b ON a.role_id = b.role_id
-     LEFT JOIN tbl_staff d ON d.staff_id = b.staff_id
+     LEFT JOIN tbl_staff d ON d.staff_id = b.staff_id and d.staff_status=1
      GROUP BY  roleName
      ORDER BY roleNumber
     </select>

@@ -31,7 +31,7 @@
 	<form class="layui-form layui-form-pane" lay-filter="example">
 
 		<div class="layui-form-item">
-			<label class="layui-form-label">当前最新工号:</label>
+			<label class="layui-form-label">最新工号:</label>
 			<div class="layui-input-block">
 				<input style="color: #f37719" readonly="readonly" type="text" name="lastJobNumber" id="lastJobNumber"  autocomplete="off" class="layui-input">
 			</div>

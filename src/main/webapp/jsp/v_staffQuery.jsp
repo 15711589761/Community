@@ -92,12 +92,8 @@
 
 			});
 		});
-
-		$('#setJobNumber').on('click', function () {
-			alert("你好！！！")
-		});
 		//监听事件
-		table.on('ventool(saffData)', function(obj){
+		table.on('tool(saffData)', function(obj){
 			var data = obj.data;
 			if(obj.event === 'dimission'){
 				layer.confirm('真的执行此操作吗?', function(index){
@@ -212,6 +208,7 @@
 
 	<a class="layui-btn layui-btn-xs" lay-event="edit">修改</a>
 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="dimission">离职</a>
+
 </script>
 
 </body>

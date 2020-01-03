@@ -108,11 +108,11 @@
 					if (msg.identify === "del"){
 						if (msg.resultMsg === "success")
 						{
-							layer.msg("执行成功！");
+							layer.msg("删除成功！");
 							table.reload("staffData")
 
 						} else {
-							layer.msg("执行失败!请重新操作");
+							layer.msg("删除失败!请重新操作");
 						}
 					}
 				},
@@ -151,7 +151,7 @@
 </script>
 
 <script type="text/html" id="barDemo">
-	<a class="layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 
 </body>

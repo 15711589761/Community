@@ -98,7 +98,7 @@
 		});
 
 		//监听事件
-		table.on('ventool(accendantData)', function (obj) {
+		table.on('tool(accendantData)', function (obj) {
 			var data = obj.data;
 			if (obj.event === 'edit') {
 				layer.open({

@@ -25,7 +25,6 @@ public class JobNumberController
 	/**
 	 * 跳转到工号管理界面
 	 */
-
 	@RequestMapping(value = "/toJobNumberManagement")
 	public ModelAndView toManagingPeople()
 	{

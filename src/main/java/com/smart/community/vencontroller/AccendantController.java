@@ -20,12 +20,8 @@ public class AccendantController
 	private AccendantService accendantService;
 
 	/**
-	 * 跳转到工号管理界面
+	 * 跳转到维修人员管理界面
 	 */
-
-
-/**跳转到维修人员管理界面*/
-
 	@RequestMapping(value = "/toAccendantManagement")
 	public ModelAndView toManagingPeople()
 	{
