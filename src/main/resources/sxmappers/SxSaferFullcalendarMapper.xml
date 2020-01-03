@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.community.sxdao.SxMapper">
+    <!--  查询保安信息  -->
+    <resultMap id="WorkerMap" type="com.smart.community.sxbean.SaferScheduling">
+        <result property="staffId" column="id"/>
+        <result property="staffName" column="name"/>
+        <result property="staffNumber" column="jobnum"/>
+        <result property="staffAddress" column="address"/>
+        <result property="staffJoinDate" column="joindate"/>
+    </resultMap>
+        <select id="saferFullcalendar" resultMap="WorkerMap">
+            SELECT tbl_staff.staff_id as id,tbl_staff.staff_name as name,tbl_staff.staff_job_number as jobnum,tbl_staff.staff_address as address,tbl_staff.staff_entry_date as joindate
+            from tbl_staff,tbl_role,tbl_role_staff
+            WHERE tbl_role.role_id=tbl_role_staff.role_id
+            and tbl_role_staff.staff_id=tbl_staff.staff_id
+            AND tbl_role_staff.role_id=3
+            AND tbl_staff.staff_status=1
+        </select>
+        <!--  被排班的员工班次信息  -->
+    <resultMap id="SaferFullMap" type="com.smart.community.sxbean.Fullcalendar">
+        <result property="staffId" column="id"/>
+        <result property="roleNAME" column="staff"/>
+        <result property="staffName" column="name"/>
+        <result property="workDate" column="date"/>
+        <result property="workTime" column="time"/>
+        <result property="workId" column="workid"/>
+    </resultMap>
+        <select id="SaferFullenlendarDate" resultMap="SaferFullMap">
+            SELECT tbl_staff.staff_name as name,
+            tbl_role.role_name as staff ,
+            tbl_work_schedule.staff_id as id,
+            tbl_work_schedule.work_date as date,
+            tbl_work_time.work_time as time,
+            tbl_work_schedule.work_time_id as workid
+            from tbl_role,tbl_role_staff, tbl_staff, tbl_work_schedule, tbl_work_time
+            where tbl_work_time.work_time_id = tbl_work_schedule.work_time_id
+            and tbl_work_schedule.staff_id=tbl_staff.staff_id
+            and  tbl_role.role_id=tbl_role_staff.role_id
+            and tbl_staff.staff_id=tbl_role_staff.staff_id
+            and tbl_role.role_id=3
+            and tbl_staff.staff_id=#{getID}
+    </select>
+        <!--  进行人员排班  -->
+    <resultMap id="check" type="com.smart.community.sxbean.WorkTime">
+        <result property="getId" column="getId"/>
+        <result property="workDate" column="workDate"/>
+        <result property="workTime" column="workTime"/>
+    </resultMap>
+    <select id="checkInsert" resultMap="check">
+            SELECT tbl_work_schedule.staff_id as getId,
+            tbl_work_schedule.work_date as workTime
+            from tbl_work_schedule
+            where tbl_work_schedule.staff_id = #{getId}
+            and tbl_work_schedule.work_date = #{workTime}
+
+    </select>
+    <insert id="insertSaferFullenlendar" parameterType="com.smart.community.sxbean.WorkTime">
+        INSERT into tbl_work_schedule (tbl_work_schedule.staff_id,tbl_work_schedule.work_date,tbl_work_schedule.work_time_id)VALUES(#{getId},#{workTime},#{workDate})
+    </insert>
+        <!--    删除排班信息    -->
+    <delete id="deleteSaferFullenlendar" parameterType="com.smart.community.sxbean.WorkTime">
+       DELETE FROM tbl_work_schedule WHERE tbl_work_schedule.staff_id = #{getId} and tbl_work_schedule.work_date = #{workDate} and tbl_work_schedule.work_time_id = #{workTime}
+    </delete>
+
+</mapper>
