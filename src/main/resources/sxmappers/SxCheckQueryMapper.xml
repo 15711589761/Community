@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.community.sxdao.SxCheckMapper">
+    <resultMap id="checkMap" type="com.smart.community.sxbean.CheckFacility">
+        <result property="facilityId" column="facilityId"/>
+        <result property="checkDate" column="checkDate"/>
+        <result property="examineName" column="examineName"/>
+        <result property="checkStatus" column="checkStatus"/>
+        <result property="checkPrincipal" column="checkPrincipal"/>
+    </resultMap>
+        <select id="CheckInfo" resultMap="checkMap">
+          SELECT  tbl_facility_check.facility_check_id AS facilityId,
+          tbl_facility_check.facility_check_date AS checkDate,
+          tbl_facility_check.facility_check_status AS checkStatus,
+          tbl_facility_check.facility_check_principal AS checkPrincipal,
+          tbl_facility_examine.facility_examine_name AS examineName
+          FROM tbl_facility_check  ,tbl_facility_examine
+          where tbl_facility_check.facility_examine_id = tbl_facility_examine.facility_examine_id
+          ORDER BY tbl_facility_check.facility_check_date DESC
+        </select>
+    <insert id="insertCheckInfo" parameterType="com.smart.community.sxbean.CheckAdd">
+       insert into tbl_facility_check (tbl_facility_check.facility_check_date,tbl_facility_check.facility_check_principal,tbl_facility_check.facility_check_status,tbl_facility_check.facility_examine_id
+        )VALUES(#{checkDate},#{checkPrincipal},#{checkStatus},#{examineId})
+    </insert>
+
+
+</mapper>

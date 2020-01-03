@@ -3,7 +3,6 @@ package com.smart.community.ljmservice;
 import com.smart.community.ljmbean.*;
 import com.smart.community.ljmdao.LjmDeskMapper;
 import com.smart.community.tool.LjmTool;
-import com.sun.tools.javadoc.Start;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

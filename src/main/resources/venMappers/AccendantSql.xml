@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.venmapper.AccendantMapper">
+
+    <resultMap type="com.smart.community.venjavabean.AccendantBean" id="accendantBeanMap">
+
+        <result column="accendant_id" property="accendantId"/>
+        <result column="accendant_name" property="accendantName"/>
+        <result column="accendant_tel" property="accendantTel"/>
+        <result column="accendant_age" property="accendantAge"/>
+        <result column="accendant_sex" property="accendantSex"/>
+
+    </resultMap>
+
+    <select id="getAccendantData" parameterType="com.smart.community.venjavabean.ConditionBean" resultMap="accendantBeanMap">
+
+     SELECT * FROM tbl_accendant
+        <where>
+            <if test="userSex!=null and userSex!=''">
+                accendant_sex=#{userSex}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and accendant_name like '%${userName}%'
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+
+    <select id="countAccendantData" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tbl_accendant
+        <where>
+            <if test="userSex!=null and userSex!=''">
+                accendant_sex=#{userSex}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and accendant_name like '%${userName}%'
+            </if>
+        </where>
+    </select>
+
+    <insert id="addAccendant" parameterType="com.smart.community.venjavabean.AccendantBean" >
+      INSERT INTO tbl_accendant (accendant_name, accendant_tel, accendant_age, accendant_sex)
+      VALUES (#{accendantName},#{accendantTel},#{accendantAge},#{accendantSex});
+    </insert>
+
+    <delete id="delAccendant">
+        delete  from tbl_accendant where  accendant_id=${accendantId}
+    </delete>
+
+    <update id="updateAccendantById" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+        UPDATE tbl_accendant
+        <set>
+            <if test="accendantName!= null and accendantName != '' ">
+                accendant_name = #{accendantName},
+            </if>
+            <if test="accendantAge!= null and accendantAge!= '' ">
+                accendant_age = #{accendantAge},
+            </if>
+            <if test="accendantSex != null and accendantSex!=''">
+                accendant_sex = #{accendantSex},
+            </if>
+            <if test="accendantTel != null and accendantTel!=''">
+                accendant_tel = #{accendantTel},
+            </if>
+        </set>
+        WHERE accendant_id = #{accendantId};
+    </update>
+
+</mapper>

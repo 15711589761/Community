@@ -6,6 +6,7 @@ import com.smart.community.ljmservice.LjmBackstageLoginService;
 import com.smart.community.ljmservice.LjmCustomerService;
 import com.smart.community.ljmservice.LjmDeskService;
 import com.smart.community.tool.LjmTool;
+import com.smart.community.tool.MessageSend;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -154,6 +155,9 @@ public class LjmDispatchController
 			paramMap.put("workPerson", dispatchPersonBean.getWorkPerson());
 			paramMap.put("workTel", dispatchPersonBean.getWorkTel());
 			dispatchActiviti.completePersonTask(taskId, paramMap);
+			String sendMsg = "【智慧社区】亲爱的用户用户,欢迎使用智能社区服务,您的"+map.get("serviceName")+"的反馈结果为："+status;
+			String phone = (String) map.get("applyPhone");
+			MessageSend.send("44962","b3cb27bee6dbb9f1d717950da9fbd627",phone,sendMsg);
 			layuiTableBean.setMsg("success");
 			layuiTableBean.setCode(0);
 		}else {

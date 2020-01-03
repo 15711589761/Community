@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.venmapper.StaffMapper">
+
+    <resultMap type="com.smart.community.venjavabean.StaffBean" id="staffBeanMap">
+
+        <result column="staff_id" property="staffId"/>
+        <result column="staff_name" property="staffName"/>
+        <result column="staff_job_number" property="jobNumber"/>
+        <result column="staff_password" property="staffPass"/>
+        <result column="staff_sex" property="staffSex"/>
+        <result column="staff_age" property="staffAge"/>
+        <result column="staff_tel" property="staffTel"/>
+        <result column="staff_address" property="staffAddress"/>
+        <result column="staff_entry_date" property="entryDate"/>
+        <result column="staff_status" property="statusId"/>
+        <result column="staff_termdate" property="staffTermDate"/>
+        <result column="staff_birthday" property="staffBirthday"/>
+        <result column="status" property="status"/>
+
+    </resultMap>
+
+
+    <!-- 查询用户结果集-->
+    <select id="getStaffData" parameterType="com.smart.community.venjavabean.ConditionBean" resultMap="staffBeanMap">
+
+        SELECT
+        a.*, b.parameter_name as status
+        FROM
+        tbl_staff a,
+        tbl_parameter b
+        <where>
+            a.staff_status = b.parameter_id
+            and a.staff_status!=2
+            <if test="startDate!=null and startDate!=''">
+                and a.staff_entry_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.staff_entry_date &lt;=#{endDate}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and a.staff_name like '%${userName}%'
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+    <!-- 查询用户结果集总数目 -->
+    <select id="countStaffData" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultType="java.lang.Integer">
+        SELECT count(*)
+        from tbl_staff
+        <where>
+            staff_status!=2
+            <if test="startDate!=null and startDate!=''">
+                and staff_entry_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and staff_entry_date &lt;=#{endDate}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and staff_name like '%${userName}%'
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询用户结果集-->
+    <select id="getSeparatingEmploy" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultMap="staffBeanMap">
+
+        SELECT
+        a.*, b.parameter_name as status
+        FROM
+        tbl_staff a,
+        tbl_parameter b
+        <where>
+            a.staff_status = b.parameter_id
+            and a.staff_status=2
+            <if test="startDate!=null and startDate!=''">
+                and a.staff_termdate &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.staff_termdate &lt;=#{endDate}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and a.staff_name like '%${userName}%'
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+
+    <!-- 查询用户结果集总数目 -->
+    <select id="countSeparatingEmployData" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultType="java.lang.Integer">
+        SELECT count(*)
+        from tbl_staff
+        <where>
+            staff_status=2
+            <if test="startDate!=null and startDate!=''">
+                and staff_termdate &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and staff_termdate &lt;=#{endDate}
+            </if>
+            <if test="userName!=null and userName!=''">
+                and staff_name like '%${userName}%'
+            </if>
+        </where>
+    </select>
+
+    <update id="staffdimission" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+    update tbl_staff set  staff_status=2,staff_job_number='',staff_termdate = #{staffTermDate} where staff_id=#{targetId}
+    </update>
+
+    <update id="updateJobNumber" >
+    update tbl_jobnumber set status=0 where job_number=#{jobNumber}
+    </update>
+
+
+    <delete id="delRoleStaff">
+        delete  from tbl_role_staff where  staff_id=${staffId}
+    </delete>
+
+    <delete id="delSeparatingEmploy">
+        delete  from tbl_staff where  staff_id=${staffId}
+    </delete>
+
+    <resultMap type="com.smart.community.venjavabean.RoleBean" id="roleBeanMap">
+
+        <result column="role_id" property="roleId"/>
+        <result column="role_name" property="roleName"/>
+
+    </resultMap>
+
+    <select id="getRoleList" resultMap="roleBeanMap">
+        select * from tbl_role ;
+    </select>
+
+    <!--    插入对象-->
+    <insert id="addStaff" useGeneratedKeys="true" keyProperty="staffId"
+            parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+        INSERT INTO tbl_staff (staff_name, staff_password, staff_sex, staff_age, staff_tel, staff_address, staff_entry_date, staff_status,staff_birthday,face_code)
+        VALUES (#{staffName},#{staffPass},#{staffSex},#{staffAge},#{staffTel},#{staffAddress},#{entryDate},1, #{staffBirthday},#{faceCode,typeHandler=org.apache.ibatis.type.BlobTypeHandler})
+    </insert>
+
+    <insert id="roleAllocation" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+        INSERT INTO tbl_role_staff (role_id, staff_id)
+        VALUES (#{roleId},#{staffId});
+    </insert>
+
+
+    <update id="updateStaffInFoById" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+        UPDATE tbl_staff
+        <set>
+            <if test="staffName!= null and staffName != '' ">
+                staff_name = #{staffName},
+            </if>
+            <if test="staffSex!= null and staffSex!= '' ">
+                staff_sex = #{staffSex},
+            </if>
+            <if test="staffAge != null and staffAge!=''">
+                staff_age = #{staffAge},
+            </if>
+            <if test="staffBirthday != null and staffBirthday!=''">
+                staff_birthday = #{staffBirthday},
+            </if>
+            <if test="staffAddress != null and staffAddress!=''">
+                staff_address = #{staffAddress},
+            </if>
+            <if test="entryDate != null and entryDate!=''">
+                staff_entry_date = #{entryDate},
+            </if>
+        </set>
+        WHERE staff_id = #{staffId};
+    </update>
+
+    <resultMap type="com.smart.community.venjavabean.PostCountBean" id="postCountMap">
+
+        <result column="roleName" property="roleName"/>
+        <result column="roleNumber" property="roleNumber"/>
+
+    </resultMap>
+
+    <select id="postCountBeanList" resultMap="postCountMap">
+     SELECT
+     a.role_name AS roleName,
+     COUNT(d.staff_id)AS roleNumber
+     FROM
+     tbl_role a
+     LEFT JOIN tbl_role_staff b ON a.role_id = b.role_id
+     LEFT JOIN tbl_staff d ON d.staff_id = b.staff_id and d.staff_status=1
+     GROUP BY  roleName
+     ORDER BY roleNumber
+    </select>
+
+
+</mapper>
