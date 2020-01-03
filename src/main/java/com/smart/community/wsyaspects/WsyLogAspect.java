@@ -65,7 +65,6 @@ public class WsyLogAspect
 //		 String operation_time= "";//日志操作时间
 		try
 		{
-
 			Class<?>[] logType = null;
 			boolean isSameMethod = true;
 			for (Method method : methods)
@@ -109,14 +108,12 @@ public class WsyLogAspect
 //						operation_person = method.getAnnotation(Log.class).operation_person();
 //						operation_date = method.getAnnotation(Log.class).operation_date();
 //						operation_time = method.getAnnotation(Log.class).operation_time();
-
 						Tbl_systemlog tbl_systemlog = new Tbl_systemlog();
 						tbl_systemlog.setOperation_matter(operationName);
 						tbl_systemlog.setOperation_person(operationType);
 						Date date = new Date();
 						SimpleDateFormat dayFormatter = new SimpleDateFormat("yyyy-MM-dd");
 						SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm:ss");
-
 						tbl_systemlog.setOperation_date(dayFormatter.format(date));
 						tbl_systemlog.setOperation_time(timeFormatter.format(date));
 						int insertlog = wsyLogService.addLog(tbl_systemlog);
@@ -127,24 +124,16 @@ public class WsyLogAspect
 						{
 							System.out.println("日志添加失败");
 						}
-
-
 					}
 //					System.out.println("操作日志..." + operation_matter);
 //					System.out.println("操作人员..." + operation_person);
 //					System.out.println("操作日期..." + operation_date);
 //					System.out.println("操作时间..." + operation_time);
 				}
-
-
 			}
-
-
 		} catch (Exception ex)
 		{
 			ex.printStackTrace();
 		}
-
-
 	}
 }
