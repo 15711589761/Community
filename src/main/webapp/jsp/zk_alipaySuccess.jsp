@@ -11,7 +11,7 @@
 	<script type="text/javascript" src=<%=path + "/layui/layui.js"%>></script>
 </head>
 <body>
-<form class="layui-form layui-form-pane" action="payforJsp">
+<form class="layui-form layui-form-pane" action="deskLogin.action">
 	<div class="layui-form-item">
 		<div class="layui-input-block">
 			<h1 style="color: green;">购买成功</h1>
@@ -39,7 +39,7 @@
 	</div>
 	<div class="layui-form-item">
 		<div class="layui-input-block">
-			<button class="layui-btn">返回缴费界面</button>
+			<button class="layui-btn">返回首页</button>
 		</div>
 	</div>
 </form>

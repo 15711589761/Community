@@ -54,9 +54,9 @@
 
 
 	//单击获取点击的经纬度
-	map.addEventListener("click", function (e) {
-		alert(e.point.lng + "," + e.point.lat);
-	});
+	// map.addEventListener("click", function (e) {
+	// 	alert(e.point.lng + "," + e.point.lat);
+	// });
 
 	var geolocation = new BMap.Geolocation();
 	geolocation.getCurrentPosition(function (r) {
@@ -64,7 +64,7 @@
 			var mk = new BMap.Marker(r.point);
 			map.addOverlay(mk);
 			map.panTo(r.point);
-			alert('您的位置：'+r.point.lng+','+r.point.lat);
+			// alert('您的位置：'+r.point.lng+','+r.point.lat);
 
 			var p1 = new BMap.Point(r.point.lng, r.point.lat);
 			var p2 = new BMap.Point(118.185284, 24.48284);

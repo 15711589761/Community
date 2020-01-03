@@ -44,6 +44,13 @@
 		</div>
 	</div>
 </form>
+<form class="layui-form layui-form-pane" action="deskLogin.action">
+	<div class="layui-form-item">
+		<div class="layui-input-block">
+			<button class="layui-btn">返回首页</button>
+		</div>
+	</div>
+</form>
 </body>
 <script>
 	layui.use(['upload', 'form', 'layer'], function () {
