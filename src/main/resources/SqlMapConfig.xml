@@ -26,6 +26,7 @@
         <mapper resource="venMappers/JobNumber.xml"/>
         <mapper resource="venMappers/ResumeSqlMapper.xml"/>
         <mapper resource="venMappers/StaffSqlMapper.xml"/>
+        <mapper resource="venMappers/NoticeSql.xml"/>
         <mapper resource="zkmapper/zk_FacilitySqlMap.xml"/>
         <mapper resource="zkmapper/zk_owner_CarSqlMapper.xml"/>
         <mapper resource="zkmapper/zk_RoleSqlMap.xml"/>

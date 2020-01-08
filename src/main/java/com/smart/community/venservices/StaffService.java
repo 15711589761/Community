@@ -17,6 +17,11 @@ public class StaffService
 	@Resource
 	private StaffMapper mapper;
 
+	/**
+	 * 查询在职人员数据
+	 * @param condition 查询条件对象
+	 * @return layui表格数据对象
+	 */
 	public TableBean queryStaff(ConditionBean condition){
 
 		TableBean tableBean = new TableBean();
@@ -27,6 +32,11 @@ public class StaffService
 		return tableBean;
 	}
 
+	/**
+	 * 查询离职人员数据
+	 * @param condition 查询条件
+	 * @return layui表格数据对象
+	 */
 
 	public TableBean querySeparatingEmploy(ConditionBean condition){
 
@@ -38,25 +48,43 @@ public class StaffService
 		return tableBean;
 	}
 
-	public int staffdimission(AjaxInfoBean ajaxInfoBean){
+	/**
+	 * 职员离职处理
+	 * @param ajaxInfoBean ajax数据对象
+	 * @return 执行结果
+	 */
+	public int staffDimission(AjaxInfoBean ajaxInfoBean){
 
 		mapper.delRoleStaff(ajaxInfoBean.getTargetId());
 		mapper.updateJobNumber(ajaxInfoBean.getJobNumber());
-		return mapper.staffdimission(ajaxInfoBean);
+		return mapper.staffDimission(ajaxInfoBean);
 
 	}
 
+	/**
+	 * 删除离职人员数据
+	 * @param staffId 目标职员id
+	 * @return 执行结果
+	 */
 
 	public int delSeparatingEmploy(String staffId){
 		return mapper.delSeparatingEmploy(staffId);
 	}
 
-
-
+	/**
+	 * 获取岗位对象集合
+	 * @return 岗位对象集合
+	 */
 	public List<RoleBean> getRoleList(){
 
 		return mapper.getRoleList();
 	}
+
+	/**
+	 * 新增工号
+	 * @param ajaxInfoBean ajax数据对象
+	 * @return ajax对象
+	 */
 
 	public String addNewStaff(AjaxInfoBean ajaxInfoBean){
 
@@ -81,6 +109,11 @@ public class StaffService
 		return msg;
 	}
 
+	/**
+	 * 更新职员信息
+	 * @param ajaxInfoBean ajax对象
+	 * @return 字符串
+	 */
 
 	public String updateStaffInfo(AjaxInfoBean ajaxInfoBean){
 
@@ -93,8 +126,21 @@ public class StaffService
 		return str;
 	}
 
+	/**
+	 * 统计岗位人数对象集合
+	 * @return 岗位人数对象集合
+	 */
 	public List<PostCountBean> postCountBeanList(){
 		return mapper.postCountBeanList();
+	}
+
+	/**
+	 * 统计岗位男女人数对象集合
+	 * @return 岗位男女人数对象集合
+	 */
+
+	public List<PostSexCountBean> postSexCountBeanList(){
+		return mapper.postSexCountBeanList();
 	}
 }
 

@@ -17,6 +17,11 @@ public class JobNumberStaffService
 	@Resource
 	private JobNumberMapper jobNumberMapper;
 
+	/**
+	 * 查询工号数据
+	 * @param condition 查询条件对象
+	 * @return 符合查询条件的工号对象结果集
+	 */
 	public TableBean queryJobNumber(ConditionBean condition){
 
 		TableBean tableBean = new TableBean();
@@ -28,18 +33,30 @@ public class JobNumberStaffService
 		return tableBean;
 	}
 
+	/**
+	 * 删除工号记录
+	 * @param jobNumberId 目标工号的id
+	 * @return 删除工号的执行结果
+	 */
 	public int delJobNumberById(String jobNumberId){
 
 		return jobNumberMapper.delJobNumberById(jobNumberId);
 
 	}
-
+	/**
+	 * 获取没有分配工号的职员对象集合
+	 * @return 没有分配的职员对象集合
+	 */
 	public List<StaffBean> getNoJobNumberStaffList()
 	{
 		return jobNumberMapper.getNoJobNumberStaffList();
 	}
 
-
+	/**、
+	 * 分配工号
+	 * @param ajaxInfoBean ajax交互数据对象
+	 * @return 执行结果
+	 */
 	public String jobNumberSetting(AjaxInfoBean ajaxInfoBean){
 
 		int n=jobNumberMapper.setStaffJobNumberByStaffId(ajaxInfoBean);
@@ -53,7 +70,10 @@ public class JobNumberStaffService
 
 	}
 
-
+	/**
+	 * 获取最新的起始工号
+	 * @return 最新记录的工号
+	 */
 	public String getLastJobNumber(){
 
 		String lastJobNumber=null;
@@ -66,12 +86,16 @@ public class JobNumberStaffService
 		else {
 			lastJobNumber=jobNumberMapper.getTheLastJobNumber();
 			lastJobNumber=CodeTool.toAdd0(Integer.parseInt(lastJobNumber)+1);
-			System.out.println("获取到最新的一条工号为："+lastJobNumber);
 		}
 
 		return lastJobNumber;
 	}
 
+	/**
+	 * 批量增加工号
+	 * @param list 需要增加的工号集合
+	 * @return 执行结果
+	 */
 	public int addJobNumber(List<String> list){
 
 		return jobNumberMapper.addJobNumber(list);

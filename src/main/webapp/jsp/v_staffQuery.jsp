@@ -83,6 +83,17 @@
 			})
 		});
 
+
+		$('#addNew').on('click', function () {
+			layer.open({
+				type: 2
+				, title: '职员信息登记'
+				, content: <%=path%>+'jsp/v_staffInfoAdd.jsp'
+				, area: ['450px', '600px']
+
+			});
+		});
+
 		$(function () {
 			var today = new Date();//声明变量today 获取当前的时间日期
 			var nowMonthStartDate =getMonthStartDate(today);

@@ -56,7 +56,7 @@ function getNowDate(date)
 	return formatDate(date);
 }
 
-//获取时间
+//获取当前时间
 function getTime(date) {
 	var h = date.getHours();
 	var m = date.getMinutes();

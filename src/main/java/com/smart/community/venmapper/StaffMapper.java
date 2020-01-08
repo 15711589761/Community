@@ -60,7 +60,7 @@ public interface StaffMapper
 	 * @param ajaxInfoBean ajax参数对象
 	 * @return 结果集
 	 */
-	public int staffdimission(AjaxInfoBean ajaxInfoBean);
+	public int staffDimission(AjaxInfoBean ajaxInfoBean);
 
 	/**
 	 * 更新离职人员的工号信息
@@ -101,5 +101,11 @@ public interface StaffMapper
 	 * @return 职位人数对象集合
 	 */
 	public List<PostCountBean> postCountBeanList();
+
+	/**
+	 * 职位人数统计
+	 * @return 职位人数对象集合
+	 */
+	public List<PostSexCountBean> postSexCountBeanList();
 
 }
