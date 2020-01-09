@@ -18,7 +18,10 @@
 	<script src=<%=path+"/layui/layui.js"%> charset="utf-8"></script>
 </head>
 <body>
-<div class="demoTable">
+<br>
+<br>
+
+<div class="demoTable" style="text-align: center">
 	<div class="layui-inline">
 		时间:
 		<div class="layui-input-inline">
@@ -37,7 +40,6 @@
 </div>
 
 <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
-
 <script>
 	layui.use('table', function () {
 		var table = layui.table;
@@ -47,12 +49,12 @@
 			, cols: [[ //表头
 				{checkbox: true, fixed: true}
 				, {field: 'billid', title: '票据ID', hide: true}
-				, {field: 'payee', title: '收款人'}
-				, {field: 'payer', title: '付款人'}
-				, {field: 'billDate', title: '日期时间'}
-				, {field: 'details', title: '详细信息'}
-				, {field: 'money', title: '金额/元'}
-				, {field: 'orderNo', title: '订单号'}
+				, {field: 'payee', title: '收款人', align: 'center'}
+				, {field: 'payer', title: '付款人', align: 'center'}
+				, {field: 'billDate', title: '日期时间', align: 'center'}
+				, {field: 'details', title: '详细信息', align: 'center'}
+				, {field: 'money', title: '金额/元', align: 'center'}
+				, {field: 'orderNo', title: '订单号', align: 'center'}
 				, {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
 			]]
 			, page: true //开启分页

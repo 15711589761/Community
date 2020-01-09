@@ -6,14 +6,15 @@
 %>
 <html>
 <head>
-	<title>添加角色</title>
+	<title>修改角色权限</title>
 	<script src=<%=path+"/js/jQuery.js"%>></script>
 
 	<link rel="stylesheet" href=<%=path+"/layui/css/layui.css"%>>
 
 </head>
 <body>
-
+<br>
+<br>
 <div class="layui-form" lay-filter="layuiadmin-form-role" id="layuiadmin-form-role" style="padding: 20px 30px 0 0;">
 	<div class="layui-form-item">
 <%--		<label class="layui-form-label">拥有权限</label>--%>

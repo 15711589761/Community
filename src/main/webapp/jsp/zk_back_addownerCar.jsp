@@ -18,7 +18,8 @@
 	<script type="text/javascript" src=<%=path + "/layui/layui.js"%>></script>
 </head>
 <body>
-
+<br>
+<br>
 <form class="layui-form layui-form-pane" action="">
 	<div class="layui-form-item">
 		<label class="layui-form-label">车牌</label>
@@ -32,9 +33,9 @@
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">楼栋号</label>
-<%--		<div class="layui-input-block">--%>
-<%--			<input type="text" class="layui-input" id="roomNum" lay-verify="required" autocomplete="off">--%>
-<%--		</div>--%>
+		<%--		<div class="layui-input-block">--%>
+		<%--			<input type="text" class="layui-input" id="roomNum" lay-verify="required" autocomplete="off">--%>
+		<%--		</div>--%>
 		<select class="layui-select" id="roomNum" lay-verify="required" lay-filter="lay-filter">
 			<option value=""></option>
 			<c:forEach items="${requestScope.roomNum}" begin="0" step="1" var="roomNum">
@@ -57,7 +58,6 @@
 		</div>
 	</div>
 </form>
-
 <script>
 	layui.use(['upload', 'form', 'layer'], function () {
 		var $ = layui.jquery
@@ -67,24 +67,24 @@
 
 		form.on('select(lay-filter)', function (data) {
 			var roomNum = $("#roomNum").val();
-				if (roomNum!=null&&roomNum.length>0) {
-					$.ajax({
-						type: "POST",
-						url: "/Community/getOwnerName",
-						data: "msg=" + roomNum,
-						dataType: "json",
-						async: true,
-						success: function (res) {
-							if (res != null) {
-								$("#oName").val(res.ownerName);
-								layer.msg(roomNum + "的业主为：" + res.ownerName)
-							}
-						},
-						error: function () {
-							layer.msg("服务器正忙")
+			if (roomNum != null && roomNum.length > 0) {
+				$.ajax({
+					type: "POST",
+					url: "/Community/getOwnerName",
+					data: "msg=" + roomNum,
+					dataType: "json",
+					async: true,
+					success: function (res) {
+						if (res != null) {
+							$("#oName").val(res.ownerName);
+							layer.msg(roomNum + "的业主为：" + res.ownerName)
 						}
-					});
-				}
+					},
+					error: function () {
+						layer.msg("服务器正忙")
+					}
+				});
+			}
 		});
 		upload.render({
 			elem: '#test8'
@@ -114,8 +114,8 @@
 			var carNum = $("#carNum").val();
 			var roomNum = $("#roomNum").val();
 			var ownerName = $("#oName").val();
-			var ob={carNum:carNum,name:ownerName,roomNum:roomNum};
-			if (carNum!=null&&roomNum!=null&&ownerName!=null&&carNum.length>0&&roomNum.length>0&&ownerName.length>0) {
+			var ob = {carNum: carNum, name: ownerName, roomNum: roomNum};
+			if (carNum != null && roomNum != null && ownerName != null && carNum.length > 0 && roomNum.length > 0 && ownerName.length > 0) {
 				$.ajax({
 					type: "POST",
 					url: "/Community/addOwnerCar",

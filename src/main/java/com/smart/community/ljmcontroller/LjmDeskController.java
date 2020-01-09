@@ -3,6 +3,7 @@ package com.smart.community.ljmcontroller;
 import com.smart.community.activiti.Activiti;
 import com.smart.community.ljmbean.*;
 import com.smart.community.ljmservice.LjmDeskService;
+import com.smart.community.tool.Md5;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -83,7 +84,7 @@ public class LjmDeskController
 					stringBuilder.append(objectError.getDefaultMessage()).append(";");
 				}
 				modelAndView.addObject("isEmpty", stringBuilder.toString());
-				modelAndView.setViewName("ljm_desk_login.jsp");
+				modelAndView.setViewName("ljm_desk_login");
 			} else {
 				//service验证业主登入信息
 				loginBean.setLoginName(loginBean.getLoginName().toUpperCase());
@@ -335,5 +336,18 @@ public class LjmDeskController
 			layuiTableBean.setMsg("删除失败，请重试");
 		}
 		return layuiTableBean;
+	}
+
+	@RequestMapping("/WeChatLogin.action")
+	@ResponseBody
+	public LoginBean WeChatLogin(LoginBean loginBean){
+		String pass=loginBean.getLoginPassWord();
+		loginBean.setLoginPassWord(Md5.toMD5(pass));
+		List<OwnerBean> ownerBeans = deskService.deskLoginService(loginBean);
+		if (null != ownerBeans && ownerBeans.size() > 0)
+		{
+			return loginBean;
+		}
+		return null;
 	}
 }

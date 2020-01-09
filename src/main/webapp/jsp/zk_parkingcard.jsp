@@ -18,11 +18,14 @@
 	<script type="text/javascript" src=<%=path + "/layui/layui.js"%>></script>
 </head>
 <body>
+<br>
+<br>
 <form class="layui-form layui-form-pane" action="alipay" id="alipayForm">
 	<div class="layui-form-item">
 		<label class="layui-form-label">车牌</label>
 		<div class="layui-input-block">
-			<input type="text" class="layui-input" id="carNum" readonly="readonly" lay-verify="required" placeholder="请识别车牌"
+			<input type="text" class="layui-input" id="carNum" readonly="readonly" lay-verify="required"
+			       placeholder="请识别车牌"
 			       autocomplete="off">
 		</div>
 		<div class="layui-upload">
@@ -33,7 +36,8 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">缴费金额</label>
 		<div class="layui-input-block">
-			<input type="text" name="money" id="money" lay-verify="required|number" placeholder="请输入缴费金额" autocomplete="off" class="layui-input">
+			<input type="text" name="money" id="money" lay-verify="required|number" placeholder="请输入缴费金额"
+			       autocomplete="off" class="layui-input">
 		</div>
 	</div>
 
@@ -84,14 +88,14 @@
 		$('#btn').on('click', function () {
 			var carNum = $("#carNum").val();
 			var money = $("#money").val();
-			if (carNum!=null&&carNum.length>0) {
-				if (money!=null&money.length>0){
-				$("#alipayForm").attr("action", $("#alipayForm").attr("action") + "?money=")+money;
-				$("#alipayForm").submit();
-				}else{
+			if (carNum != null && carNum.length > 0) {
+				if (money != null & money.length > 0) {
+					$("#alipayForm").attr("action", $("#alipayForm").attr("action") + "?money=") + money;
+					$("#alipayForm").submit();
+				} else {
 					layer.msg("请输入缴费金额")
 				}
-			}else{
+			} else {
 				layer.msg("请先识别车牌")
 			}
 		});
