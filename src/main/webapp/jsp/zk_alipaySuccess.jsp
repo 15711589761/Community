@@ -11,38 +11,42 @@
 	<script type="text/javascript" src=<%=path + "/layui/layui.js"%>></script>
 </head>
 <body>
-<form class="layui-form layui-form-pane" action="deskLogin.action">
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			<h1 style="color: green;">购买成功</h1>
+<br>
+<br>
+<div class="demoTable" style="text-align: center">
+	<form class="layui-form layui-form-pane" action="deskLogin.action">
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<h1 style="color: green;">购买成功</h1>
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			订单编号：${out_trade_no }
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				订单编号：${out_trade_no }
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			支付宝交易号：${trade_no }
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				支付宝交易号：${trade_no }
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			实付金额：${total_amount }
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				实付金额：${total_amount }
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			购买产品：停车卡缴费
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				购买产品：停车卡缴费
+			</div>
 		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			<button class="layui-btn">返回首页</button>
+		<div class="layui-form-item">
+			<div class="layui-input-block">
+				<button class="layui-btn">返回首页</button>
+			</div>
 		</div>
-	</div>
-</form>
+	</form>
+</div>
 </body>
 </html>
 

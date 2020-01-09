@@ -15,13 +15,17 @@
 <head>
 	<meta charset="UTF-8">
 	<title>票据统计</title>
-	<script src=<%=path + "/js/jquery-3.4.1.js" %>></script>
+	<script src=<%=path + "/js/jquery-3.4.1.min.js" %>></script>
 	<script src=<%=path + "/js/echarts.js" %>></script>
 	<script src=<%=path + "/js/json2.js" %>></script>
 </head>
 <body>
+<br>
+<br>
+<div class="demoTable" style="text-align: center">
 <div id="echarts" style="width: 1000px;height:400px;"></div>
 <div id="echarts-rose" style="width: 1000px;height:400px;"></div>
+</div>
 </body>
 <script>
 	var nameArr = [];
