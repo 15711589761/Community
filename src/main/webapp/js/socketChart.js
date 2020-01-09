@@ -40,7 +40,7 @@ websocket.onopen = function () {
 				//列表
 				for (var i = 0; i < data.length; i++) {
 					var userName = data[i];
-					$("#hz-group-body").append("<div class=\"hz-group-list\"><span><img src='../image/header.png' alt='' style='width: 20px;height: 20px'> <span class='hz-group-list-username' style='color: #0C0C0C; font-size: 15px'>" + userName + "</span><span id=\"" + userName + "-status\" style='color: #00FF00; font-size: 15px'>[在线]</span><div id=\"hz-badge-" + userName + "\" class='hz-badge'>0</div></div>");
+					$("#hz-group-body").append("<div class=\"hz-group-list\"><span><span class='hz-group-list-username' style='color: #0C0C0C; font-size: 15px'>" + userName + "</span><span id=\"" + userName + "-status\" style='color: #00FF00; font-size: 15px'>[在线]</span><div id=\"hz-badge-" + userName + "\" class='hz-badge'>0</div></div>");
 				}
 				//在线人数
 				$("#onlineCount").text(data.length);

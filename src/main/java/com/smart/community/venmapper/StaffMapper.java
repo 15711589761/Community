@@ -3,7 +3,7 @@ package com.smart.community.venmapper;
 import com.smart.community.venjavabean.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Ven
