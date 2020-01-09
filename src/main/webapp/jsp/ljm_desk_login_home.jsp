@@ -16,7 +16,9 @@
 	<title>智慧社区服务平台</title>
 	<link rel="stylesheet" type="text/css" href=<%=path + "css/deskbase.css"%>>
 	<link rel="stylesheet" type="text/css" href=<%=path + "css/main.css"%>/>
+	<link href="css/css.css" rel="stylesheet" media="screen">
 	<script type="text/javascript" src=<%=path + "js/jquery-1.8.3.min.js"%>></script>
+	<script type="text/javascript" src=<%=path+"js/jquery-1.7.1.min.js"%>></script>
 	<link rel="stylesheet" type="text/css" href=<%=path + "css/jquery.slideBox.css"%>/>
 	<script type="text/javascript" src=<%=path + "js/jquery.slideBox.min.js"%>></script>
 	<script type="text/javascript" src=<%=path + "js/nav.js"%>></script>
@@ -108,6 +110,17 @@
 		</div>
 	</div>
 </div>
+
+<div class="livechat-girl animated"> <img class="girl" src="images/en_3.png">
+	<div class="livechat-hint rd-notice-tooltip rd-notice-type-success rd-notice-position-left single-line show_hint">
+		<div class="rd-notice-content">嘿，我来帮您！</div>
+	</div>
+	<div class="animated-circles">
+		<div class="circle c-1"></div>
+		<div class="circle c-2"></div>
+		<div class="circle c-3"></div>
+	</div>
+</div>
 <!--轮播-->
 <script type="text/javascript" src="<%=path%>js/jquery.flexslider-min.js"></script>
 <script type="text/javascript">
@@ -128,6 +141,33 @@
 			//console.log(p);
 		}
 	});
+</script>
+
+<script>
+
+	$(function () {
+		setInterval(function(){
+			if($(".animated-circles").hasClass("animated")){
+				$(".animated-circles").removeClass("animated");
+			}else{
+				$(".animated-circles").addClass('animated');
+			}
+		},3000);
+		var wait = setInterval(function(){
+			$(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+			clearInterval(wait);
+		},4500);
+		$(".livechat-girl").hover(function(){
+			clearInterval(wait);
+			$(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
+		},function(){
+			$(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+		}).click(function(){
+			//当前人员在线显示弹窗
+			alert("开始聊天")
+		});
+	});
+
 </script>
 </body>
 </html>

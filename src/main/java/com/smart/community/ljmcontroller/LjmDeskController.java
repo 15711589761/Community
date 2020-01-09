@@ -95,6 +95,7 @@ public class LjmDeskController
 					modelAndView.addObject("menu",deskMenuBeans);
 					modelAndView.setViewName("ljm_desk_home");
 					modelAndView.addObject("loginSuccess",ownerBeans);
+					modelAndView.addObject("room",ownerBeans.get(0).getOwnerRoom());
 					request.getSession().setAttribute("owners",ownerBeans);
 					request.getSession().setAttribute("menus",deskMenuBeans);
 				} else {

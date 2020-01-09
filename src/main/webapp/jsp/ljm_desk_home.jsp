@@ -17,10 +17,14 @@
 	<title>智慧社区服务平台</title>
 	<link rel="stylesheet"  type="text/css" href=<%=path + "css/deskbase.css"%>>
 	<link rel="stylesheet" type="text/css" href=<%=path + "css/main.css"%>  />
+	<link href="css/css.css" rel="stylesheet" media="screen">
+	<link rel="stylesheet" href=<%=path+"css/socketChart.css"%>>
 	<script type="text/javascript" src=<%=path + "js/jquery-1.8.3.min.js"%>></script>
+	<script type="text/javascript" src=<%=path+"js/jquery-1.7.1.min.js"%>></script>
 	<link rel="stylesheet" type="text/css" href=<%=path + "css/jquery.slideBox.css"%>  />
 	<script type="text/javascript" src=<%=path + "js/jquery.slideBox.min.js"%>></script>
 	<script type="text/javascript"  src=<%=path + "js/nav.js"%>></script>
+	<script src=<%=path + "layui/layui.js"%>></script>
 	<script>
 		jQuery(function($){
 			$('#newspic').slideBox({
@@ -178,6 +182,59 @@
 	</div>
 </div>
 
+<div class="livechat-girl animated" >
+	<img class="girl" src="images/en_3.png">
+	<div class="livechat-hint rd-notice-tooltip rd-notice-type-success rd-notice-position-left single-line show_hint">
+		<div class="rd-notice-content">嘿，我来帮您！</div>
+	</div>
+	<div class="animated-circles">
+		<div class="circle c-1"></div>
+		<div class="circle c-2"></div>
+		<div class="circle c-3"></div>
+	</div>
+</div>
+
+
+<%-- -----------------------------------------------------------%>
+<%-- ---------------------在线人数显示弹窗--------------------------------------%>
+<div id="mytalk" style="display: none">
+	<div id="hz-group">
+		<%--		<input type="hidden" id="talks" value="${sessionScope.pName}">--%>
+		<input type="hidden" id="talks" value="${requestScope.room}">
+		<%--		<div style="color: #0C0C0C; font-size:20px">登录用户：--%>
+		<%--			<span id="talks">${sessionScope.pName}</span></div>--%>
+		<%--		<br/>--%>
+		<div style="color: #0C0C0C; font-size:15px">当前在线人数:<span id="onlineCount">0</span></div>
+		<!-- 主体 -->
+		<div id="hz-group-body">
+
+		</div>
+	</div>
+</div>
+<%-- -----------------------------------------------------------%>
+<%-- -----------------------------------------------------------%>
+
+<%-- -----------------------------------------------------------%>
+<%-- ----------------------聊天窗口-------------------------------------%>
+<div id="hz-message" style="display: none">
+	<!-- 头部 -->
+	<div style="display: none;">正在与<span id="toUserName"></span>聊天</div>
+	<hr style="margin: 0px;"/>
+	<!-- 主体 -->
+	<div id="hz-message-body">
+	</div>
+	<!-- 功能条 -->
+	<div id="">
+		<button>表情</button>
+		<button>图片</button>
+		<button id="videoBut">视频</button>
+		<button onclick="send()" style="float: right;">发送</button>
+	</div>
+	<!-- 输入框 -->
+	<div contenteditable="true" id="hz-message-input">
+	</div>
+</div>
+
 <!--轮播-->
 <script type="text/javascript" src="<%=path%>js/jquery.flexslider-min.js"></script>
 <script type="text/javascript">
@@ -220,5 +277,74 @@
 		});
 	});
 </script>
+
+<script>
+
+	$(function () {
+
+		var userName=$('#talks').val();
+
+			setInterval(function(){
+				if($(".animated-circles").hasClass("animated")){
+					$(".animated-circles").removeClass("animated");
+				}else{
+					$(".animated-circles").addClass('animated');
+				}
+			},3000);
+			var wait = setInterval(function(){
+				$(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+				clearInterval(wait);
+			},4500);
+			$(".livechat-girl").hover(function(){
+				clearInterval(wait);
+				$(".livechat-hint").removeClass("hide_hint").addClass("show_hint");
+			},function(){
+				$(".livechat-hint").removeClass("show_hint").addClass("hide_hint");
+			}).click(function(){
+				//当前人员在线显示弹窗
+
+				if (userName.length>0){
+
+					layui.use('layer',function () {
+						var layer = layui.layer;
+						var loginName = $("#talks").val();
+						layer.open({
+							title: loginName
+							, type: 1
+							, content: $('#mytalk')
+							, shade: 0
+							, maxmin: true
+							, offset: 'r'
+							, min: function (layero) {
+								setTimeout(function () {
+									layero.css({
+										left: 'auto'
+										, right: 0
+										, bottom: 0
+									})
+								}, 0);
+							}
+							, max: function (layerro) {
+								$(window).resize(function () {
+									$(".layui-layer-maxmin").parents(".layui-layer").width($(window).width()).height($(window).height());
+								});
+							}
+						});
+					});
+
+				}
+				else {
+					alert("请先登录！");
+
+				}
+			});
+
+
+
+	});
+
+</script>
+<script src=<%=path + "/js/socketChart.js"%>></script>
+
 </body>
 </html>
