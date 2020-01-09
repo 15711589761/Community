@@ -101,7 +101,6 @@ public class StaffController
 	public TableBean queryStaff(String startDate, String endDate, String userName, String page, String limit)
 	{
 
-		System.out.println("------------获取用户数据");
 
 		ConditionBean conditionBean = new ConditionBean();
 

@@ -114,7 +114,6 @@ public class AccendantController
 	@ResponseBody
 	public AjaxInfoBean updateAccendant(AjaxInfoBean ajaxInfoBean)
 	{
-		System.out.println(ajaxInfoBean.getAccendantId());
 
 		AjaxInfoBean msg=new AjaxInfoBean();
 

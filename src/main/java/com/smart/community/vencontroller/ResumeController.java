@@ -86,7 +86,6 @@ public class ResumeController
 	@RequestMapping("/resumeDownload.action")
 	public ResponseEntity<byte[]> downLoadFile (HttpServletRequest request, HttpServletResponse response,String resumeId) throws IOException
 	{
-		System.out.println("resumeId = " + resumeId);
 
 		int id = Integer.parseInt(resumeId);
 

@@ -45,7 +45,6 @@ public class WebSocketServer {
 	@OnOpen
 	public void onOpen(Session session, @PathParam("username") String username) {
 
-		System.out.println(username);
 		//在webSocketMap新增上线用户
 		sessionMap.put(username, session);
 		System.out.println("---------链接上了---------------");
@@ -64,7 +63,6 @@ public class WebSocketServer {
 	public void onClose(Session session) {
 		//下线用户名
 		String logoutUserName = "";
-		System.out.println("---------退掉了---------------");
 		//从webSocketMap删除下线用户
 		for (Entry<String, Session> entry : sessionMap.entrySet()) {
 			if (entry.getValue() == session) {
@@ -88,7 +86,6 @@ public class WebSocketServer {
 	@RequestMapping("/login/{username}")
 	public ModelAndView login(HttpServletRequest request, @PathVariable String username) {
 
-		System.out.println("---------username-------------"+username);
 		ModelAndView ma=new ModelAndView();
 		ma.setViewName("socketChart");
 		ma.addObject("username", username);
