@@ -1,23 +1,30 @@
-﻿<!doctype html>
+﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%
+    String jsPath = application.getContextPath() + "/shops_model/js/";
+    String imgPath = application.getContextPath() + "/shops_model/img/";
+    String cssPath = application.getContextPath() + "/shops_model/css/";
+    String Path = application.getContextPath()+"/shops_model/";
+%>
 <html class="no-js" lang="zxx">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Payne - Backpack eCommerce HTML Template</title>
+    <title>社区商店</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicons -->
-    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
-    <link rel="apple-touch-icon" href="assets/img/icon.png">
+    <link rel="shortcut icon" href=<%=imgPath+"favicon.ico"%> type="image/x-icon">
+    <link rel="apple-touch-icon" href=<%=imgPath+"icon.png"%>>
 
     <!-- ************************* CSS Files ************************* -->
 
     <!-- Vendor CSS -->
-    <link rel="stylesheet" href="assets/css/vendor.css">
+    <link rel="stylesheet" href=<%=cssPath+"vendor.css"%>>
 
     <!-- style css -->
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href=<%=cssPath+"main.css"%>>
 </head>
 
 <body>
@@ -43,10 +50,10 @@
                         <div class="header__col header__left">
                             <a href="index.html" class="logo">
                                 <figure class="logo--normal">
-                                    <img src="assets/img/logo/logo.png" alt="Logo">
+                                    <img src=<%=imgPath+"logo/logo.png"%> alt="Logo">
                                 </figure>
                                 <figure class="logo--transparency">
-                                    <img src="assets/img/logo/logo.png" alt="Logo">
+                                    <img src=<%=imgPath+"logo/logo.png"%> alt="Logo">
                                 </figure>
                             </a>
                         </div>
@@ -59,91 +66,8 @@
                                         </div>
                                     </li>
                                     <li class="mainmenu__item menu-item-has-children position-static">
-                                        <a href="#" class="mainmenu__link">Shop</a>
-                                        <div class="inner-menu megamenu-holder">
-                                            <ul class="megamenu">
-                                                <li>
-                                                    <a class="megamenu-title" href="#">Shop Grid</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="shop-fullwidth.html">Full Width</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop.html">Left Sidebar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-right-sidebar.html">Right Sidebar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-three-columns.html">Three Columns</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-four-columns.html">Four Columns</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a class="megamenu-title" href="#">Shop List</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="shop-list.html">Full Width</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-list-sidebar.html">Left Sidebar</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-list-right-sidebar.html">Right Sidebar</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a class="megamenu-title" href="#">Product Details</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="product-details.html">Tab Style 1</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-tab-style-2.html">Tab Style 2</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-tab-style-3.html">Tab Style 3</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-gallery-left.html">Gallery Left</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-gallery-right.html">Gallery Right</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-sticky-left.html">Sticky Left</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a class="megamenu-title" href="#">Product Details</a>
-                                                    <ul>
-                                                        <li>
-                                                            <a href="product-details-sticky-right.html">Sticky Right</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-slider-box.html">Slider Box</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-slider-full-width.html">Slider Box Full Width</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-affiliate.html">Affiliate Proudct</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-variable.html">Variable Proudct</a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="product-details-group.html">Group Product</a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
+                                        <a href="toShopItems.view" class="mainmenu__link">Shop</a>
+
                                     </li>
                                     <li class="mainmenu__item menu-item-has-children position-relative">
                                         <a href="#" class="mainmenu__link">Pages</a>
@@ -175,9 +99,21 @@
                         </div>
                         <div class="header__col header__right">
                             <div class="toolbar-item d-none d-lg-block">
-                                <a href="sx_store_login.html" class="toolbar-btn">
-                                    <span>Login</span>
-                                </a>
+                                <c:choose>
+                                    <c:when test="${sessionScope.user !=null }" >
+
+                                            <span>欢迎你：${sessionScope.user}</span>
+
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="toShopLogin.view" class="toolbar-btn">
+                                            <span>Login</span>
+                                        </a>
+                                    </c:otherwise>
+
+                                </c:choose>
+
+
                             </div>
                             <div class="toolbar-item d-block d-lg-none">
                                 <a href="#offcanvasnav" class="hamburger-icon js-toolbar menu-btn">
@@ -200,7 +136,7 @@
                                             <i class="flaticon-bag"></i>
                                         </span>
                                     <sup class="mini-cart-btn__count">
-                                        02
+                                        0
                                     </sup>
                                 </a>
                             </div>
@@ -221,23 +157,21 @@
                     "slidesToShow": 1,
                     "dots": true
                 }'>
+                <c:forEach var="x" step="1" begin="0" items="${requestScope.viewShops}">
                 <div class="item">
                     <div class="single-slide d-flex align-items-center bg-image"
-                         data-bg-image="assets/img/slider/slider-bg-01.jpg">
+                         data-bg-image=<%=imgPath+"slider/slider-bg-01.jpg"%>>
                         <div class="container">
                             <div class="row align-items-center no-gutters w-100">
                                 <div class="col-lg-6 col-md-8">
                                     <div class="slider-content">
                                         <div class="slider-content__text mb--95 md-lg--80 mb-md--40 mb-sm--15">
                                             <h3 class="text-uppercase font-weight-light" data-animation="fadeInUp"
-                                                data-duration=".3s" data-delay=".3s">AMAZING PRODUCT!</h3>
+                                                data-duration=".3s" data-delay=".3s">潮流开学季！</h3>
                                             <h1 class="heading__primary mb--40 mb-md--20" data-animation="fadeInUp"
-                                                data-duration=".3s" data-delay=".3s">BACKPACK</h1>
+                                                data-duration=".3s" data-delay=".3s">买它，就现在！</h1>
                                             <p class="font-weight-light" data-animation="fadeInUp"
-                                               data-duration=".3s" data-delay=".3s">Neque porro quisquam est, qui
-                                                dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-                                                quia non numquam eius modi
-                                                tempora Neque porro quisquam est, qui dolorem ipsum</p>
+                                               data-duration=".3s" data-delay=".3s">${x.goodsContext}</p>
                                         </div>
                                         <div class="slider-content__btn">
                                             <a href="shop.html" class="btn-link" data-animation="fadeInUp"
@@ -247,46 +181,15 @@
                                 </div>
                                 <div class="col-lg-4 offset-lg-2 col-md-4">
                                     <figure class="slider-image d-none d-md-block">
-                                        <img src="assets/img/slider/slider-image-01.png" alt="Slider Image">
+
+                                        <img src="${x.goodsImage}" alt="Slider Image">
                                     </figure>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="item">
-                    <div class="single-slide d-flex align-items-center bg-image"
-                         data-bg-image="assets/img/slider/slider-bg-01.jpg">
-                        <div class="container">
-                            <div class="row align-items-center no-gutters w-100">
-                                <div class="col-lg-6 col-md-8">
-                                    <div class="slider-content py-0">
-                                        <div class="slider-content__text mb--95 md-lg--80 mb-md--40 mb-sm--15">
-                                            <h3 class="text-uppercase font-weight-light" data-animation="fadeInUp"
-                                                data-duration=".3s" data-delay=".3s">AMAZING PRODUCT!</h3>
-                                            <h1 class="heading__primary mb--40 mb-md--20" data-animation="fadeInUp"
-                                                data-duration=".3s" data-delay=".3s">BACKPACK</h1>
-                                            <p class="font-weight-light" data-animation="fadeInUp"
-                                               data-duration=".3s" data-delay=".3s">Neque porro quisquam est, qui
-                                                dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed
-                                                quia non numquam eius modi
-                                                tempora Neque porro quisquam est, qui dolorem ipsum</p>
-                                        </div>
-                                        <div class="slider-content__btn">
-                                            <a href="shop.html" class="btn-link" data-animation="fadeInUp"
-                                               data-duration=".3s" data-delay=".6s">Shop Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 offset-lg-2 col-md-4">
-                                    <figure class="slider-image d-none d-md-block">
-                                        <img src="assets/img/slider/slider-image-02.png" alt="Slider Image">
-                                    </figure>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                </c:forEach>
             </div>
         </section>
         <!-- Slider area End -->
@@ -304,12 +207,12 @@
                         <div class="featured-product">
                             <div class="featured-product__inner info-center">
                                 <figure class="featured-product__image">
-                                    <img src="assets/img/products/product-01-500x466.jpg" alt="Featured Product">
+                                    <img src=<%=imgPath+"products/product-01-500x466.jpg"%> alt="Featured Product">
                                 </figure>
                                 <div class="featured-product__info wow pbounceInLeft" data-wow-delay=".3s" data-wow-duration="1s">
                                     <div class="featured-product__info-inner">
-                                        <h4 class="featured-product__text">Amazing Product!</h4>
-                                        <h2 class="featured-product__name">Bisco Bag</h2>
+                                        <h4 class="featured-product__text">潮流前线，引爆全场！</h4>
+                                        <h2 class="featured-product__name">${requestScope.hotOne.goodsName}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -319,12 +222,12 @@
                         <div class="featured-product">
                             <div class="featured-product__inner info-left-bottom">
                                 <figure class="featured-product__image">
-                                    <img src="assets/img/products/product-02-500x575.jpg" alt="Featured Product">
+                                    <img src=<%=imgPath+"products/product-02-500x575.jpg"%> alt="Featured Product">
                                 </figure>
                                 <div class="featured-product__info wow pbounceInDown" data-wow-duration="1s">
                                     <div class="featured-product__info-inner rotated-info">
-                                        <h4 class="featured-product__text">Special Offer <strong>39%</strong> Off</h4>
-                                        <h2 class="featured-product__name">Feedo Bag</h2>
+                                        <h5 class="featured-product__text">冰点折扣，震撼来袭！ <strong>${requestScope.hotTwo.goodsOff}%</strong> Off</h5>
+                                        <h2 class="featured-product__name">${requestScope.hotTwo.goodsName}</h2>
                                     </div>
                                 </div>
                             </div>
@@ -352,54 +255,11 @@
                                     }'>
                                     <div class="item">
                                         <figure>
-                                            <img src="assets/img/products/product-11-321x450.png"
+                                                <img src="${requestScope.offShops.goodsImage}"
                                                  alt="Countdown Product">
                                         </figure>
                                     </div>
-                                    <div class="item">
-                                        <figure>
-                                            <img src="assets/img/products/product-12-321x450.png"
-                                                 alt="Countdown Product">
-                                        </figure>
-                                    </div>
-                                    <div class="item">
-                                        <figure>
-                                            <img src="assets/img/products/product-13-321x450.png"
-                                                 alt="Countdown Product">
-                                        </figure>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="limited-product__nav-image">
-                                <div class="element-carousel nav-slider" data-slick-options='{
-                                        "spaceBetween": 25,
-                                        "slidesToShow": 3,
-                                        "vertical": true,
-                                        "focusOnSelect": true,
-                                        "asNavFor": ".main-slider"
-                                    }'
-                                     data-slick-responsive='[
-                                        {"breakpoint": 576, "settings": { "vertical": false }}
-                                    ]'
-                                >
-                                    <div class="item">
-                                        <figure>
-                                            <img src="assets/img/products/product-11-123x127.jpg"
-                                                 alt="Product Nav Image">
-                                        </figure>
-                                    </div>
-                                    <div class="item">
-                                        <figure>
-                                            <img src="assets/img/products/product-12-123x127.jpg"
-                                                 alt="Product Nav Image">
-                                        </figure>
-                                    </div>
-                                    <div class="item">
-                                        <figure>
-                                            <img src="assets/img/products/product-13-123x127.jpg"
-                                                 alt="Product Nav Image">
-                                        </figure>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -407,14 +267,15 @@
                     <div class="col-xl-5 offset-xl-1 col-lg-6">
                         <div class="limited-product__info">
                             <h2 class="limited-product__name">
-                                <a href="product-details.html">BLINGO BACKPACK</a>
+                                <a href="product-details.html">${requestScope.offShops.goodsName}</a>
                             </h2>
                             <p class="limited-product__desc">Neque porro quisquam est, qui dolorem ipsum quia dolor
                                 ipisci velit, sed quia non numquam eius modi </p>
                             <div class="d-flex align-items-center">
                                 <div class="limited-product__price">
-                                    <span class="money">162</span>
-                                    <span class="sign">$</span>
+                                    <span class="sign">￥</span>
+                                    <span class="money">${requestScope.offShops.goodsPrice}</span>
+
                                 </div>
                                 <span class="limited-product__rating">
                                         <i class="fa fa-star"></i>
@@ -427,7 +288,7 @@
                             <h3 class="limited-product__subtitle">BEST DEAL, LIMITED TIME OFFER GET YOUR’S NOW!</h3>
                             <div class="limited-product__countdown">
                                 <div class="countdown-wrap">
-                                    <div class="countdown" data-countdown="2020/01/03" data-format="short">
+                                    <div class="countdown" data-countdown="2020/02/01" data-format="short">
                                         <div class="countdown__item">
                                             <span class="countdown__time daysLeft"></span>
                                             <span class="countdown__text daysText"></span>
@@ -468,15 +329,15 @@
                         <div class="featured-product">
                             <div class="featured-product__inner info-right-bottom">
                                 <figure class="featured-product__image">
-                                    <img src="assets/img/products/product-14-500x575.jpg" alt="Featured Product">
+                                    <img src=<%=imgPath+"products/product-14-500x575.jpg"%> alt="Featured Product">
                                 </figure>
                                 <div class="featured-product__info wow pbounceInDown" data-wow-delay=".6s" data-wow-duration=".8s">
                                     <div class="featured-product__info-inner rotated-info">
-                                        <h4 class="featured-product__text">Special Offer <strong>39%</strong> Off</h4>
-                                        <h2 class="featured-product__name">Feedo Bag</h2>
+                                        <h4 class="featured-product__text">Special Offer <strong>${requestScope.hotThree.goodsOff}%</strong> Off</h4>
+                                        <h2 class="featured-product__name">${requestScope.hotThree.goodsName}</h2>
                                     </div>
                                 </div>
-                                <span class="featured-product__badge badge-top-left">53% off</span>
+                                <span class="featured-product__badge badge-top-left">${requestScope.hotThree.goodsOff}% off</span>
                             </div>
                         </div>
                     </div>
@@ -484,15 +345,15 @@
                         <div class="featured-product">
                             <div class="featured-product__inner info-center">
                                 <figure class="featured-product__image">
-                                    <img src="assets/img/products/product-15-500x466.jpg" alt="Featured Product">
+                                    <img src=<%=imgPath+"products/product-15-500x466.jpg"%> alt="Featured Product">
                                 </figure>
                                 <div class="featured-product__info wow pbounceInLeft" data-wow-delay=".3s" data-wow-duration=".8s">
                                     <div class="featured-product__info-inner">
-                                        <h4 class="featured-product__text">Mega Sale Offer</h4>
-                                        <h2 class="featured-product__name">Maxica Bag</h2>
+                                        <h4 class="featured-product__text">办公销售之冠</h4>
+                                        <h2 class="featured-product__name">${requestScope.hotFour.goodsName}</h2>
                                     </div>
                                 </div>
-                                <span class="featured-product__badge">53% off</span>
+                                <span class="featured-product__badge">${requestScope.hotFour.goodsOff}% off</span>
                             </div>
                         </div>
                     </div>
@@ -530,10 +391,10 @@
 <!-- ************************* JS Files ************************* -->
 
 <!-- jQuery JS -->
-<script src="assets/js/vendor.js"></script>
+<script src=<%=jsPath+"vendor.js"%>></script>
 
 <!-- Main JS -->
-<script src="assets/js/main.js"></script>
+<script src=<%=jsPath+"main.js"%>></script>
 </body>
 
 </html>

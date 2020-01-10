@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smart.community.sxdao.SxShopsBuyMapper">
+    <resultMap id="shopsBuyMap" type="com.smart.community.sxbean.ShopsInfo">
+        <result property="goodsId" column="goods_id"/>
+        <result property="goodsName" column="goods_name"/>
+        <result property="goodsPrice" column="goods_price"/>
+        <result property="goodsImage" column="goods_image"/>
+        <result property="goodsSortId" column="goods_sort_id"/>
+        <result property="goodsShopTypeId" column="goods_shops_type"/>
+        <result property="goodsShopsNumber" column="goods_shops_number"/>
+        <result property="goodsOff" column="goods_off"/>
+        <result property="goodsContext" column="goods_context"/>
+
+    </resultMap>
+
+    <select id="HotShowShops" resultMap="shopsBuyMap">
+        select * from tbl_goods where tbl_goods.goods_shops_type = #{goods_shops_type}
+    </select>
+    <select id="ViewShowShops" resultMap="shopsBuyMap">
+        select * from tbl_goods where tbl_goods.goods_shops_type = 8
+    </select>
+
+
+    <resultMap id="shopLogin" type="com.smart.community.sxbean.ShopUserLogin">
+        <result property="roomNumber" column="room_number"/>
+        <result property="roomPassword" column="room_password"/>
+        <result property="uid" column="goods_user_id"/>
+    </resultMap>
+    <select id="UserLoginToShop" resultMap="shopLogin" >
+       select u.goods_user_id,r.room_number,r.room_password
+       from tbl_goods_user u ,tbl_room r
+       where r.room_number = u.room_number
+       and r.room_number = #{user}
+       and r.room_password = #{pass}
+    </select>
+
+
+</mapper>

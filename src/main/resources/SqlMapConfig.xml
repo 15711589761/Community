@@ -40,5 +40,7 @@
         <mapper resource="sxmappers/SxSaferFullcalendarMapper.xml"/>
         <mapper resource="sxmappers/SxStoreManageMapper.xml"/>
         <mapper resource="sxmappers/SxCheckQueryMapper.xml"/>
+        <mapper resource="sxmappers/SxShopBuyMapper.xml"/>
+
     </mappers>
 </configuration>
