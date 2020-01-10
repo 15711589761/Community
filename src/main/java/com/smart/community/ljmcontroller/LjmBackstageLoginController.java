@@ -20,6 +20,7 @@ import java.util.Map;
 
 /**
  * 后台登入
+ *
  * @author LJM
  */
 @Controller
@@ -31,7 +32,7 @@ public class LjmBackstageLoginController
 	/**
 	 * 登入界面跳转
 	 *
-	 * @param request request
+	 * @param request  request
 	 * @param response response
 	 * @return 页面
 	 */
@@ -106,7 +107,8 @@ public class LjmBackstageLoginController
 					modelAndView.addObject("verification", "验证码错误");
 				}
 			}
-		} else {
+		} else
+		{
 			Map<String, List<BackstageMenuBean>> menuMap = backstageLoginService.backstageMenuTake(isHad.getStaffId());
 			modelAndView.setViewName("ljm_backstage_main_view");
 			modelAndView.addObject("staff", isHad);
@@ -117,6 +119,7 @@ public class LjmBackstageLoginController
 
 	/**
 	 * 跳转到修改密码的界面
+	 *
 	 * @return 界面
 	 */
 	@RequestMapping("/toUpdatePassWord.view")
@@ -127,34 +130,37 @@ public class LjmBackstageLoginController
 
 	/**
 	 * 跳转到基本资料的界面
+	 *
 	 * @return 界面
 	 */
 	@RequestMapping("/toLookPersonMessage.view")
-	public ModelAndView toLookPersonMessage(HttpServletRequest request)
+	public ModelAndView toLookPersonMessage( HttpServletRequest request )
 	{
 		StaffBean staffBean = (StaffBean) request.getSession().getAttribute("staffBean");
 		ModelAndView modelAndView = new ModelAndView("ljm_backstage_staff_message");
-		modelAndView.addObject("staff",staffBean);
+		modelAndView.addObject("staff", staffBean);
 		return modelAndView;
 	}
 
 	@RequestMapping("/updateBackstagePassWord.action")
 	@ResponseBody
-	public LayuiTableBean updateBackstagePassWord(String oldPass,String newPass,HttpServletRequest request)
+	public LayuiTableBean updateBackstagePassWord( String oldPass, String newPass, HttpServletRequest request )
 	{
 		StaffBean staffBean = (StaffBean) request.getSession().getAttribute("staffBean");
 		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		int isExist = backstageLoginService.selectForExistStaff(staffBean.getStaffJobNum(),oldPass);
-		if (isExist>0)
+		int isExist = backstageLoginService.selectForExistStaff(staffBean.getStaffJobNum(), oldPass);
+		if (isExist > 0)
 		{
-			int result = backstageLoginService.updateForUpPassword(newPass,staffBean.getStaffId());
-			if (result>0)
+			int result = backstageLoginService.updateForUpPassword(newPass, staffBean.getStaffId());
+			if (result > 0)
 			{
 				layuiTableBean.setMsg("修改成功");
-			} else {
+			} else
+			{
 				layuiTableBean.setMsg("系统忙，请重试");
 			}
-		} else {
+		} else
+		{
 			layuiTableBean.setMsg("原密码错误");
 		}
 		return layuiTableBean;

@@ -110,4 +110,11 @@ public interface LjmDeskMapper
 	 * @return 集合
 	 */
 	public List<ApplyRecordBean> selectForGetLastApply(@Param("roomNum")String roomNum);
+
+	/**
+	 * 查询这个业主所有的投诉
+	 * @param roomNum 房间号
+	 * @return 集合
+	 */
+	public List<SuggestBean> selectForGetLastComplaint(@Param("roomNum")String roomNum);
 }

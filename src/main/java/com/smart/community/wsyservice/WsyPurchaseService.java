@@ -1,9 +1,11 @@
 package com.smart.community.wsyservice;
 
+import com.smart.community.tool.LjmTool;
 import com.smart.community.wsydao.WsyPurchaseMapper;
 import com.smart.community.wsyjavabean.TableBean;
 import com.smart.community.wsyjavabean.Tbl_owner;
 import com.smart.community.wsyjavabean.Tbl_purchase;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -46,10 +48,47 @@ public class WsyPurchaseService
 		int delpur = wsyPurchaseMapper.deletePurchase(purchase_id);
 		return delpur;
 	}
-	//修改参数信息
-	public int updatePurchase(Tbl_purchase tbl_purchase){
-		int updatePur = wsyPurchaseMapper.updatePurchase(tbl_purchase);
-		return updatePur;
+
+	/**
+	 * 添加采购记录
+	 * @param applyName 申请人
+	 * @param purchaseModel 商品型号
+	 * @param purchaseQuantity 商品数量
+	 * @param purchasePrice 商品价格
+	 * @return
+	 */
+	public int insertForPurchaseApply(String staff ,String purchaseName, String purchaseModel , String purchaseQuantity, String purchasePrice)
+	{
+		Tbl_purchase purchase = new Tbl_purchase();
+		purchase.setApplicant(staff);
+		purchase.setPurchase_name(purchaseName);
+		purchase.setPurchase_model(purchaseModel);
+		purchase.setPurchase_quantity(purchaseQuantity);
+		purchase.setPurchase_price(purchasePrice);
+		purchase.setApplicant_time(LjmTool.getTodayDate());
+		return wsyPurchaseMapper.insertForPurchaseApply(purchase);
 	}
 
+	/**
+	 * 获取新添加的采购记录id
+	 * @param applicant 申请人
+	 * @return int
+	 */
+	public int selectForGetPurchaseId(String applicant)
+	{
+		List<Tbl_purchase> list = wsyPurchaseMapper.selectForGetPurchaseId(applicant);
+		int purchaseId = list.get(list.size()-1).getPurchase_id();
+		return purchaseId;
+	}
+
+	/**
+	 * 修改采购申请记录
+	 * @param status 状态
+	 * @param purchaseId 采购id
+	 * @return int
+	 */
+	public int updateForPurchaseApply(String status,String purchaseId,String reviewer)
+	{
+		return wsyPurchaseMapper.updateForPurchaseApply(status,purchaseId,reviewer);
+	}
 }

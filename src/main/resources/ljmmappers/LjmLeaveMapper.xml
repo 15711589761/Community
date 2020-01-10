@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.ljmdao.LjmLeaveMapper">
+   <resultMap id="returnLeaveBean" type="com.smart.community.ljmbean.AskForLeaveBean">
+      <result column="leave_id" property="leaveId"/>
+      <result column="apply_name" property="applyName"/>
+      <result column="start_date" property="startDate"/>
+      <result column="leave_day" property="leaveDay"/>
+      <result column="content" property="content"/>
+      <result column="feedback" property="feedback"/>
+   </resultMap>
+   <select id="selectForShowLeaveTable" resultMap="returnLeaveBean">
+      select * from tbl_ask_leave where apply_name = #{applyName}
+   </select>
+   <update id="updateForUpLeaveFeedback">
+      update tbl_ask_leave set feedback = #{feedback} where leave_id = #{leaveId}
+   </update>
+   <select id="selectForGetLastRecord" resultMap="returnLeaveBean">
+      select * from tbl_ask_leave where apply_name = #{applyName}
+   </select>
+   <delete id="deleteForDelLeaveRecord">
+      delete from tbl_ask_leave where leave_id = ${leaveId}
+   </delete>
+   <insert id="insertForAddLeaveRecord" parameterType="com.smart.community.ljmbean.AskForLeaveBean">
+      insert into tbl_ask_leave (apply_name,start_date,leave_day,content)
+      values (#{applyName},#{startDate},#{leaveDay},#{content})
+   </insert>
+</mapper>

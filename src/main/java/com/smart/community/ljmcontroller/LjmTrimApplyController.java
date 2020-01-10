@@ -4,6 +4,7 @@ import com.smart.community.activiti.Activiti;
 import com.smart.community.ljmbean.*;
 import com.smart.community.ljmservice.LjmBackstageLoginService;
 import com.smart.community.ljmservice.LjmDeskService;
+import com.smart.community.ljmservice.ActivitiService;
 import com.smart.community.tool.LjmTool;
 import com.smart.community.tool.MessageSend;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,8 @@ public class LjmTrimApplyController
 	private LjmBackstageLoginService backstageLoginService;
 	@Resource
 	private LjmDeskService deskService;
+	@Resource
+	private ActivitiService trimApplyService;
 
 	/**
 	 * 业主装修申请页面
@@ -88,37 +90,8 @@ public class LjmTrimApplyController
 	@ResponseBody
 	public LayuiTableBean findOwnerProcessesForTrim(HttpServletRequest request , String taskName)
 	{
-		System.out.println("tasKnAME:"+taskName);
-		List<ActivityTaskBean> activityTaskBeans;
-		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		List<OwnerBean> list = (List<OwnerBean>) request.getSession().getAttribute("owners");
-		StaffBean staffBean = (StaffBean) request.getSession().getAttribute("staffBean");
-		if (staffBean!=null){
-			RoleBean roleBean = backstageLoginService.getPersonRole(staffBean.getStaffId());
-			System.out.println(roleBean.getRoleName());
-			activityTaskBeans = trimActiviti.findPersonTask(roleBean.getRoleName());
-			List<ActivityTaskBean> results = new ArrayList<>();
-			for (ActivityTaskBean activityTaskBean : activityTaskBeans)
-			{
-				if (taskName.equals(activityTaskBean.getServiceName()))
-				{
-					results.add(activityTaskBean);
-				}
-			}
-			layuiTableBean.setData(results);
-		} else if (list!=null&&list.size()>0){
-			String room = list.get(0).getOwnerRoom();
-			activityTaskBeans = trimActiviti.findPersonTask(room);
-			List<ActivityTaskBean> results = new ArrayList<>();
-			for (ActivityTaskBean activityTaskBean : activityTaskBeans)
-			{
-				if (taskName.equals(activityTaskBean.getServiceName()))
-				{
-					results.add(activityTaskBean);
-				}
-			}
-			layuiTableBean.setData(results);
-		}
+		List<ActivityTaskBean> activityTaskBeans = null;
+		LayuiTableBean layuiTableBean = trimApplyService.filterTask(request,taskName);
 		layuiTableBean.setCode(0);
 		return layuiTableBean;
 	}
@@ -147,28 +120,27 @@ public class LjmTrimApplyController
 	}
 
 	/**
-	 * 完成任务
-	 * @param taskId 任务id
-	 * @return layui接口
-	 */
-	@RequestMapping("/submitProcessesTask.action")
-	@ResponseBody
-	public LayuiTableBean submitOwnerProcessesTask(String taskId,HttpServletRequest request)
+ * 完成任务
+ * @param taskId 任务id
+ * @return layui接口
+ */
+@RequestMapping("/submitProcessesTask.action")
+@ResponseBody
+public LayuiTableBean submitOwnerProcessesTask(String taskId,HttpServletRequest request)
+{
+	String status = "待受理";
+	Map<String,Object> map = trimActiviti.getVariables(taskId);
+	String applyId = (String) map.get("applyId");
+	int result = deskService.updateForApplyStatus(status,applyId);
+	if (result>0)
 	{
-		List<OwnerBean> owners = (List) request.getSession().getAttribute("owners");
-		String status = "待受理";
-		Map<String,Object> map = trimActiviti.getVariables(taskId);
-		String applyId = (String) map.get("applyId");
-		int result = deskService.updateForApplyStatus(status,applyId);
-		if (result>0)
-		{
-			trimActiviti.completePersonTask(taskId);
-			LayuiTableBean layuiTableBean = new LayuiTableBean();
-			layuiTableBean.setMsg("提交成功");
-			return layuiTableBean;
-		}
-		return null;
+		trimActiviti.completePersonTask(taskId);
+		LayuiTableBean layuiTableBean = new LayuiTableBean();
+		layuiTableBean.setMsg("提交成功");
+		return layuiTableBean;
 	}
+	return null;
+}
 
 	/**
 	 * 装修审核页面跳转
@@ -195,22 +167,7 @@ public class LjmTrimApplyController
 		if (staff!=null)
 		{
 			RoleBean roleBean = backstageLoginService.getPersonRole(staff.getStaffId());
-			if ("客服".equals(roleBean.getRoleName()))
-			{
-				if ("同意".equals(isAgree))
-				{
-					status = "已受理，待审核";
-				} else {
-					status = "已受理，驳回，时间不合适";
-				}
-			} else if ("后勤".equals(roleBean.getRoleName())){
-				if ("同意".equals(isAgree))
-				{
-					status = "同意申请";
-				} else {
-					status = "否决申请";
-				}
-			}
+			status = trimApplyService.getStatus(roleBean.getRoleName(),isAgree);
 		}
 		Map<String,Object> map = trimActiviti.getVariables(taskId);
 		String applyId = (String) map.get("applyId");

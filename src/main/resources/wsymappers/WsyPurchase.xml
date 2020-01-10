@@ -55,40 +55,18 @@
             </if>
         </where>
     </select>
-    <!--添加治安事件-->
-<!--    <insert id="insetAddEvent" parameterType="com.smart.community.wsyjavabean.Tbl_safeEvent">-->
-<!--        insert into tbl_safe_event(safe_event_title,safe_event_context,safe_event_date,safe_event_recorder)-->
-<!--values(#{safe_event_title},#{safe_event_context},#{safe_event_date},#{safe_event_recorder})-->
-<!--    </insert>-->
-
-    <!--修改采购信息-->
-    <update id="updatePurchase" parameterType="com.smart.community.wsyjavabean.Tbl_purchase">
-        update tbl_purchase
-        <set>
-            purchase_name = #{purchase_name},
-            purchase_model = #{purchase_model},
-            purchase_quantity = #{purchase_quantity},
-            purchase_price = #{purchase_price}
-         </set>
-        <where>
-            <if test="purchase_name != null and purchase_name != '' ">
-                and purchase_id = #{purchase_id}
-            </if>
-            <if test="purchase_model != null and purchase_model != '' ">
-                and purchase_id = #{purchase_id}
-            </if>
-            <if test="purchase_quantity != null and purchase_quantity != '' ">
-                and purchase_id = #{purchase_id}
-            </if>
-            <if test="purchase_price != null and purchase_price != '' ">
-                and purchase_id = #{purchase_id}
-            </if>
-        </where>
-    </update>
-
     <!--删除采购信息-->
     <delete id="deletePurchase">
         delete from tbl_purchase where purchase_id = #{purchase_id}
     </delete>
-
+    <select id="selectForGetPurchaseId" resultMap="PurchaseMap">
+        select * from tbl_purchase where applicant = #{applicant}
+    </select>
+    <insert id="insertForPurchaseApply" parameterType="com.smart.community.wsyjavabean.Tbl_purchase">
+        insert into tbl_purchase (purchase_name,purchase_model,purchase_quantity,purchase_price,applicant,applicant_time,reviewer_status)
+        values (#{purchase_name},#{purchase_model},#{purchase_quantity},#{purchase_price},#{applicant},#{applicant_time},#{reviewer_status})
+    </insert>
+    <update id="updateForPurchaseApply">
+        update tbl_purchase set reviewer_status = #{status} , reviewer = #{reviewer} where purchase_id = #{purchaseId}
+    </update>
 </mapper>

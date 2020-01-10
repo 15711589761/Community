@@ -34,8 +34,6 @@
 			       autocomplete="off" class="layui-input">
 		</div>
 	</div>
-
-
 	<div class="layui-form-item layui-form-text">
 		<label class="layui-form-label">商品型号:</label>
 		<div class="layui-input-inline">
@@ -57,36 +55,6 @@
 			       autocomplete="off" class="layui-input">
 		</div>
 	</div>
-	<div class="layui-form-item layui-form-text">
-		<label class="layui-form-label">申请人:</label>
-		<div class="layui-input-inline">
-			<input type="text" name="applicant" id="applicant" lay-verify="required" placeholder="请输入操作人"
-			       autocomplete="off" class="layui-input">
-		</div>
-	</div>
-	<div class="layui-form-item layui-form-text">
-		<label class="layui-form-label">申请时间:</label>
-		<div class="layui-input-inline">
-			<input type="text" name="applicant_time" id="applicant_time" lay-verify="required" placeholder="请输入操作人"
-			       autocomplete="off" class="layui-input">
-		</div>
-	</div>
-
-
-	<div class="layui-form-item layui-hide" style="text-align: center">
-		<input type="button" lay-submit lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" value="确认">
-	</div>
 </div>
-
-<script src="<%=path+"layui/layui.js"%>"></script>
-<script>
-	layui.use('form', function () {
-		var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-
-
-		form.render();
-	});
-</script>
-
 </body>
 </html>

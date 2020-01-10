@@ -223,50 +223,6 @@ public class LjmDeskController
 	}
 
 	/**
-	 * 跳转到用户投诉界面
-	 * @return 业主投诉和建议界面
-	 */
-	@RequestMapping("/toComplaintOwner.view")
-	public ModelAndView toComplaintTable(String remark)
-	{
-		return new ModelAndView("ljm_owner_complaint_table");
-	}
-
-	/**
-	 * 业主投诉表显示查询
-	 * @param tableSearchBean 搜索信息
-	 * @param request request
-	 * @return layui表格接口
-	 */
-	@RequestMapping("/fotGetComplaintTable.action")
-	@ResponseBody
-	public LayuiTableBean fotGetComplaintTable(TableSearchBean tableSearchBean,HttpServletRequest request)
-	{
-		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		List<OwnerBean> list = (List<OwnerBean>) request.getSession().getAttribute("owners");
-		String roomNum = list.get(0).getOwnerRoom();
-		tableSearchBean.setRoomNum(roomNum);
-		List<SuggestBean> suggestBeans = deskService.forGetSuggestTable(tableSearchBean);
-		List<SuggestBean> showTable = new ArrayList<>();
-		if (suggestBeans!=null&&suggestBeans.size()>0)
-		{
-			layuiTableBean.setCode(0);
-			for (SuggestBean suggestBean : suggestBeans)
-			{
-				if ("投诉".equals(suggestBean.getSuggestRemark()))
-				{
-					showTable.add(suggestBean);
-				}
-			}
-			layuiTableBean.setData(showTable);
-		} else {
-			layuiTableBean.setCode(1);
-			layuiTableBean.setMsg("没有过投诉或建议");
-		}
-		return layuiTableBean;
-	}
-
-	/**
 	 * 前端修改界面
 	 * @return 界面
 	 */
