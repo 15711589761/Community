@@ -110,7 +110,7 @@
         </where>
     </select>
 
-    <update id="staffdimission" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+    <update id="staffDimission" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
     update tbl_staff set  staff_status=2,staff_job_number='',staff_termdate = #{staffTermDate} where staff_id=#{targetId}
     </update>
 
@@ -195,5 +195,28 @@
      ORDER BY roleNumber
     </select>
 
+
+    <select id="postSexCountBeanList" resultType="com.smart.community.venjavabean.PostSexCountBean">
+    SELECT
+     a.role_name AS roleName,
+     sum(case
+             when d.staff_sex = '男' then
+              1
+             else
+              0
+           end) maleNumber,
+       sum(case
+             when d.staff_sex = '女' then
+              1
+             else
+              0
+           end) femaleNumber
+     FROM
+     tbl_role a
+     LEFT JOIN tbl_role_staff b ON a.role_id = b.role_id
+     LEFT JOIN tbl_staff d ON d.staff_id = b.staff_id and d.staff_status=1
+     GROUP BY  roleName
+     ORDER BY  roleName
+    </select>
 
 </mapper>

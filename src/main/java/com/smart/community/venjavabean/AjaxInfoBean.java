@@ -104,6 +104,55 @@ public class AjaxInfoBean
 	
 	private int endNumber;
 
+	/**公告标题*/
+	private String noticeTitle;
+	/**公告内容*/
+	private String noticeDetails;
+	/**发布者的id*/
+	private int issuerId;
+	/**发布日期*/
+	private String issuedDate;
+
+
+	public String getNoticeTitle()
+	{
+		return noticeTitle;
+	}
+
+	public void setNoticeTitle(String noticeTitle)
+	{
+		this.noticeTitle = noticeTitle;
+	}
+
+	public String getNoticeDetails()
+	{
+		return noticeDetails;
+	}
+
+	public void setNoticeDetails(String noticeDetails)
+	{
+		this.noticeDetails = noticeDetails;
+	}
+
+	public int getIssuerId()
+	{
+		return issuerId;
+	}
+
+	public void setIssuerId(int issuerId)
+	{
+		this.issuerId = issuerId;
+	}
+
+	public String getIssuedDate()
+	{
+		return issuedDate;
+	}
+
+	public void setIssuedDate(String issuedDate)
+	{
+		this.issuedDate = issuedDate;
+	}
 
 	public int getQuantity()
 	{

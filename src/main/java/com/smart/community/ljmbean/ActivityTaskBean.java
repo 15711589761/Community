@@ -34,6 +34,126 @@ public class ActivityTaskBean
 	private String workPersonPhone;
 	//服务名称
 	private String serviceName;
+	//内容/事由
+	private String content;
+	//投诉人
+	private String complaintName;
+	//投诉电话
+	private String complaintPhone;
+	//商品型号
+	private String purchaseModel;
+	//商品数量
+	private String purchaseQuantity;
+	//商品价格
+	private String purchasePrice;
+	//商品名称
+	private String purchaseName;
+	//申请人
+	private String applyName;
+	//请假天数
+	private String leaveDay;
+	//请假开始日期
+	private String startDate;
+
+	public String getLeaveDay()
+	{
+		return leaveDay;
+	}
+
+	public void setLeaveDay( String leaveDay )
+	{
+		this.leaveDay = leaveDay;
+	}
+
+	public String getStartDate()
+	{
+		return startDate;
+	}
+
+	public void setStartDate( String startDate )
+	{
+		this.startDate = startDate;
+	}
+
+	public String getApplyName()
+	{
+		return applyName;
+	}
+
+	public void setApplyName( String applyName )
+	{
+		this.applyName = applyName;
+	}
+
+	public String getPurchaseQuantity()
+	{
+		return purchaseQuantity;
+	}
+
+	public void setPurchaseQuantity( String purchaseQuantity )
+	{
+		this.purchaseQuantity = purchaseQuantity;
+	}
+
+	public String getPurchasePrice()
+	{
+		return purchasePrice;
+	}
+
+	public void setPurchasePrice( String purchasePrice )
+	{
+		this.purchasePrice = purchasePrice;
+	}
+
+	public String getPurchaseName()
+	{
+		return purchaseName;
+	}
+
+	public void setPurchaseName( String purchaseName )
+	{
+		this.purchaseName = purchaseName;
+	}
+
+	public String getPurchaseModel()
+	{
+		return purchaseModel;
+	}
+
+	public void setPurchaseModel( String purchaseModel )
+	{
+		this.purchaseModel = purchaseModel;
+	}
+
+	public String getComplaintName()
+	{
+		return complaintName;
+	}
+
+	public void setComplaintName( String complaintName )
+	{
+		this.complaintName = complaintName;
+	}
+
+	public String getComplaintPhone()
+	{
+		return complaintPhone;
+	}
+
+	public void setComplaintPhone( String complaintPhone )
+	{
+		this.complaintPhone = complaintPhone;
+	}
+
+	public String getContent()
+	{
+		return content;
+	}
+
+	public void setContent( String content )
+	{
+		this.content = content;
+	}
 
 	public String getServiceName()
 	{

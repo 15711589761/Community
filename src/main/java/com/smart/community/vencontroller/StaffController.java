@@ -27,7 +27,6 @@ public class StaffController
 	 * 跳转到职员管理界面
 	 */
 
-
 	@RequestMapping(value = "/toStaffQuery")
 	public ModelAndView toStaffQuery(HttpSession session)
 	{
@@ -61,6 +60,17 @@ public class StaffController
 		return mv;
 	}
 
+	/**
+	 * 跳转到在职人员-岗位男女人数统计界面
+	 */
+	@RequestMapping(value = "/toStaffPostSexCount")
+	public ModelAndView toPostCount()
+	{
+		ModelAndView mv=new ModelAndView();
+		mv.setViewName("v_staffPostSexCount");
+		return mv;
+	}
+
 	/**获取离职人员数据*/
 
 	@RequestMapping("/getSeparatingEmployData.action")
@@ -91,7 +101,6 @@ public class StaffController
 	public TableBean queryStaff(String startDate, String endDate, String userName, String page, String limit)
 	{
 
-		System.out.println("------------获取用户数据");
 
 		ConditionBean conditionBean = new ConditionBean();
 
@@ -136,7 +145,7 @@ public class StaffController
 
 		ajaxInfoBean.setStaffTermDate(CodeTool.getDate());
 
-		int num = staffService.staffdimission(ajaxInfoBean);
+		int num = staffService.staffDimission(ajaxInfoBean);
 
 		if (num > 0)
 		{
@@ -165,7 +174,7 @@ public class StaffController
 
 	}
 
-
+	/**在职人员数据更新*/
 	@RequestMapping("/updateStaffInfo.action")
 	@ResponseBody
 	public AjaxInfoBean updateStaffInfo(AjaxInfoBean ajaxInfoBean)
@@ -180,6 +189,7 @@ public class StaffController
 
 	}
 
+	/**岗位人员数据统计*/
 
 	@RequestMapping("/postCount.action")
 	@ResponseBody
@@ -189,5 +199,14 @@ public class StaffController
 
 	}
 
+	/**岗位人员性别数据统计*/
+
+	@RequestMapping("/postSexCount.action")
+	@ResponseBody
+	public List<PostSexCountBean> postSexCountBeanList( )
+	{
+		return staffService.postSexCountBeanList();
+
+	}
 
 }

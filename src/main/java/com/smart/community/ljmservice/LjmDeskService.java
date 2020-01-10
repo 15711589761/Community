@@ -169,14 +169,26 @@ public class LjmDeskService
 	}
 
 	/**
-	 * 查询此人的所有申请
+	 * 查询最新的一条申请记录
 	 * @param roomNum 房间号
-	 * @return 集合
+	 * @return id
 	 */
 	public String selectForGetLastApply(String roomNum)
 	{
 		List<ApplyRecordBean> list = deskMapper.selectForGetLastApply(roomNum);
 		String applyId = list.get(list.size()-1).getApplyId();
 		return applyId;
+	}
+
+	/**
+	 * 查询最新一条投诉记录
+	 * @param roomNum 房间号
+	 * @return id
+	 */
+	public int selectForGetLastComplaint(String roomNum)
+	{
+		List<SuggestBean> list = deskMapper.selectForGetLastComplaint(roomNum);
+		int suggestId = list.get(list.size()-1).getSuggestId();
+		return suggestId;
 	}
 }

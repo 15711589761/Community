@@ -38,8 +38,7 @@ public class ResumeController
 		mv.setViewName("v_resumeManagement");
 		return mv;
 	}
-	/** 获取建立信息*/
-
+	/** 获取简历信息*/
 
 	@RequestMapping("/getResumeData.action")
 	@ResponseBody
@@ -60,7 +59,7 @@ public class ResumeController
 		return resumeService.queryResumeDate(bean);
 	}
 
-	/** 检查建立是否存在*/
+	/** 检查简历是否存在*/
 
 	@RequestMapping("checkFileExists.action")
 	@ResponseBody
@@ -84,11 +83,9 @@ public class ResumeController
 
 	}
 	/** 下载简历*/
-
 	@RequestMapping("/resumeDownload.action")
 	public ResponseEntity<byte[]> downLoadFile (HttpServletRequest request, HttpServletResponse response,String resumeId) throws IOException
 	{
-		System.out.println("resumeId = " + resumeId);
 
 		int id = Integer.parseInt(resumeId);
 
@@ -106,7 +103,6 @@ public class ResumeController
 	}
 
 	/** 删除简历*/
-
 
 	@RequestMapping("/delResume.action")
 	@ResponseBody

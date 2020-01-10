@@ -52,7 +52,6 @@
 				{field: 'suggestId', title: '编号', sort: true}
 				, {field: 'suggestDate', title: '建议日期'}
 				, {field: 'suggestContent', title: '建议内容'}
-				, {field: 'suggestResult', title: '反馈'}
 				, {fixed: 'right', title: '操作', toolbar: '#barDemo'}
 			]]
 			, page: true

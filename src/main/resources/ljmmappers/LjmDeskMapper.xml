@@ -103,4 +103,7 @@
     <select id="selectForGetLastApply" resultType="com.smart.community.ljmbean.ApplyRecordBean">
         select apply_id applyId from tbl_apply_record where apply_room = #{roomNum}
     </select>
+    <select id="selectForGetLastComplaint" resultType="com.smart.community.ljmbean.SuggestBean">
+        select suggest_id suggestId from tbl_suggest where suggest_room = #{roomNum} and suggest_remark = '投诉'
+    </select>
 </mapper>

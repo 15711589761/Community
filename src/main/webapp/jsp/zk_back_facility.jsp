@@ -18,7 +18,9 @@
 	<script src=<%=path+"/layui/layui.js"%> charset="utf-8"></script>
 </head>
 <body>
-<div class="demoTable">
+<br>
+<br>
+<div class="demoTable" style="text-align: center">
 	<div class="layui-inline">
 		购买时间:
 		<div class="layui-input-inline">
@@ -38,7 +40,6 @@
 </div>
 
 <table class="layui-hide" id="LAY_table_user" lay-filter="user"></table>
-
 <script>
 	layui.use('table', function () {
 		var table = layui.table;
@@ -47,10 +48,10 @@
 			, url: '/Community/findFacility' //数据接口
 			, cols: [[ //表头
 				{checkbox: true, fixed: true}
-				, {field: 'facilityID', title: '设备ID'}
-				, {field: 'facilityName', title: '设备名称'}
-				, {field: 'facilityNum', title: '数量', event: 'setNum'}
-				, {field: 'facilityBuyDate', title: '购入日期'}
+				, {field: 'facilityID', title: '设备ID', align: 'center'}
+				, {field: 'facilityName', title: '设备名称', align: 'center'}
+				, {field: 'facilityNum', title: '数量', event: 'setNum', align: 'center'}
+				, {field: 'facilityBuyDate', title: '购入日期', align: 'center'}
 				, {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
 			]]
 			, page: true //开启分页

@@ -42,6 +42,15 @@
 			,$=layui.$
 			,form=layui.form;
 
+
+		$(function () {
+			var today = new Date();//声明变量today 获取当前的时间日期
+			var nowMonthStartDate =getMonthStartDate(today);
+			var nowDate=getNowDate(today);
+			$('#startDate').val(nowMonthStartDate);
+			$('#endDate').val(nowDate);
+		});
+
 		table.render({
 			elem: '#staffData'
 			,url:<%=path%>+'/getSeparatingEmployData.action'
@@ -53,7 +62,6 @@
 			,cols: [[
 				{field:'staffId', title: 'id', sort: true,align:'center'}
 				,{field:'staffName', title: '姓名',align:'center',templet:'#staffNameTpl'}
-				,{field:'jobNumber', title: '工号',align:'center'}
 				,{field:'staffSex',  title: '性别',align:'center',templet: '#sexTpl'}
 				,{field:'staffAge', title: '年龄',align:'center'}
 				,{field:'staffBirthday', title: '出生日期',align:'center'}

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.venmapper.NoticeMapper">
+
+    <resultMap type="com.smart.community.venjavabean.NoticeBean" id="noticeBeanMap">
+        <result column="notice_id" property="noticeId"/>
+        <result column="notice_title" property="noticeTitle"/>
+        <result column="notice_details" property="noticeDetails"/>
+        <result column="issuer_id" property="issuerId"/>
+        <result column="issuer" property="issuer"/>
+        <result column="issued_date" property="issuedDate"/>
+
+    </resultMap>
+
+    <select id="getNoticeData" parameterType="com.smart.community.venjavabean.ConditionBean" resultMap="noticeBeanMap">
+
+        SELECT a.*,b.staff_name as issuer FROM tbl_notice a,tbl_staff b
+        <where>
+            a.issuer_id=b.staff_id
+            <if test="staffId!=null and staffId!=''">
+                and a.issuer_id =#{staffId}
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and a.issued_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and a.issued_date &lt;=#{endDate}
+            </if>
+            <if test="noticeTitle!=null and noticeTitle!=''">
+                and a.notice_title like '%${noticeTitle}%'
+            </if>
+        </where>
+    </select>
+
+    <select id="countNoticeData" parameterType="com.smart.community.venjavabean.ConditionBean"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tbl_notice
+        <where>
+            <if test="staffId!=null and staffId!=''">
+                and issuer_id =#{staffId}
+            </if>
+            <if test="startDate!=null and startDate!=''">
+                and issued_date &gt;=#{startDate}
+            </if>
+            <if test="endDate!=null and endDate!=''">
+                and issued_date &lt;=#{endDate}
+            </if>
+            <if test="noticeTitle!=null and noticeTitle!=''">
+                and notice_title like '%${noticeTitle}%'
+            </if>
+        </where>
+    </select>
+
+    <delete id="delNoticeById" >
+        delete  from tbl_notice where notice_id=${noticeId}
+    </delete>
+
+    <insert id="addNewNotice" parameterType="com.smart.community.venjavabean.AjaxInfoBean" >
+        insert into tbl_notice
+        (notice_title,notice_details,issuer_id,issued_date)
+        values(#{noticeTitle},#{noticeDetails},#{issuerId},#{issuedDate})
+    </insert>
+
+    <update id="updateNotice" parameterType="com.smart.community.venjavabean.AjaxInfoBean">
+
+        UPDATE tbl_notice
+        <set>
+            <if test="noticeTitle!= null and noticeTitle != '' ">
+                notice_title = #{noticeTitle},
+            </if>
+            <if test="noticeDetails!= null and noticeDetails!= '' ">
+                notice_details = #{noticeDetails},
+            </if>
+            <if test="issuedDate != null and issuedDate!=''">
+                issued_date = #{issuedDate},
+            </if>
+        </set>
+        WHERE notice_id = #{targetId};
+    </update>
+
+</mapper>

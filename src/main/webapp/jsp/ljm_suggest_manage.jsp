@@ -41,7 +41,6 @@
 <table class="layui-hide" id="suggestTable" lay-filter="test"></table>
 
 <script type="text/html" id="barDemo">
-	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="edit">反馈</a>
 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 

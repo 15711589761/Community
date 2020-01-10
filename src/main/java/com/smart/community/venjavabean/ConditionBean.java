@@ -16,6 +16,29 @@ public class ConditionBean
 
 	private String userSex;
 
+	private String noticeTitle;
+
+	private String staffId;
+
+	public String getStaffId()
+	{
+		return staffId;
+	}
+
+	public void setStaffId(String staffId)
+	{
+		this.staffId = staffId;
+	}
+
+	public String getNoticeTitle()
+	{
+		return noticeTitle;
+	}
+
+	public void setNoticeTitle(String noticeTitle)
+	{
+		this.noticeTitle = noticeTitle;
+	}
 
 	public String getUserSex()
 	{

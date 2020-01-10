@@ -10,6 +10,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 	<link rel="stylesheet" href=<%=path+"layui/css/layui.css"%>>
 	<script src=<%=path+"layui/layui.js"%>></script>
+	<script src=<%=path+"js/venTool.js"%>></script>
 </head>
 <body>
 
@@ -40,6 +41,14 @@
 		var table=layui.table
 			,$=layui.$
 			,form=layui.form;
+
+		$(function () {
+			var today = new Date();//声明变量today 获取当前的时间日期
+			var nowMonthStartDate =getMonthStartDate(today);
+			var nowDate=getNowDate(today);
+			$('#startDate').val(nowMonthStartDate);
+			$('#endDate').val(nowDate);
+		});
 
 		table.render({
 			elem: '#resumeData'

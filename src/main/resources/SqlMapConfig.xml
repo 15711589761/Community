@@ -21,10 +21,13 @@
         <mapper resource="ljmmappers/LjmDeskMapper.xml"/>
         <mapper resource="ljmmappers/LjmCustomerMapper.xml"/>
         <mapper resource="ljmmappers/LjmBackstageMapper.xml"/>
+        <mapper resource="ljmmappers/LjmLeaveMapper.xml"/>
+        <!--@auto:ven-->
         <mapper resource="venMappers/AccendantSql.xml"/>
         <mapper resource="venMappers/JobNumber.xml"/>
         <mapper resource="venMappers/ResumeSqlMapper.xml"/>
         <mapper resource="venMappers/StaffSqlMapper.xml"/>
+        <mapper resource="venMappers/NoticeSql.xml"/>
         <mapper resource="zkmapper/zk_FacilitySqlMap.xml"/>
         <mapper resource="zkmapper/zk_owner_CarSqlMapper.xml"/>
         <mapper resource="zkmapper/zk_RoleSqlMap.xml"/>

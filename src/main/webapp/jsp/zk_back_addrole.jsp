@@ -18,11 +18,14 @@
 	<script src=<%=path+"/layui/layui.js"%> charset="utf-8"></script>
 </head>
 <body>
+<br>
+<br>
 <form class="layui-form layui-form-pane" action="">
 	<div class="layui-form-item">
 		<label class="layui-form-label">角色名称</label>
 		<div class="layui-input-block">
-			<input type="text" name="name" id="roleName" lay-verify="required" autocomplete="off" placeholder="请输入角色名称" class="layui-input">
+			<input type="text" name="name" id="roleName" lay-verify="required" autocomplete="off"
+			       placeholder="请输入角色名称" class="layui-input">
 		</div>
 	</div>
 </form>

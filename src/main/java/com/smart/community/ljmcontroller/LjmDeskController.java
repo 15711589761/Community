@@ -3,6 +3,7 @@ package com.smart.community.ljmcontroller;
 import com.smart.community.activiti.Activiti;
 import com.smart.community.ljmbean.*;
 import com.smart.community.ljmservice.LjmDeskService;
+import com.smart.community.tool.Md5;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -83,7 +84,7 @@ public class LjmDeskController
 					stringBuilder.append(objectError.getDefaultMessage()).append(";");
 				}
 				modelAndView.addObject("isEmpty", stringBuilder.toString());
-				modelAndView.setViewName("ljm_desk_login.jsp");
+				modelAndView.setViewName("ljm_desk_login");
 			} else {
 				//service验证业主登入信息
 				loginBean.setLoginName(loginBean.getLoginName().toUpperCase());
@@ -95,6 +96,7 @@ public class LjmDeskController
 					modelAndView.addObject("menu",deskMenuBeans);
 					modelAndView.setViewName("ljm_desk_home");
 					modelAndView.addObject("loginSuccess",ownerBeans);
+					modelAndView.addObject("room",ownerBeans.get(0).getOwnerRoom());
 					request.getSession().setAttribute("owners",ownerBeans);
 					request.getSession().setAttribute("menus",deskMenuBeans);
 				} else {
@@ -221,50 +223,6 @@ public class LjmDeskController
 	}
 
 	/**
-	 * 跳转到用户投诉界面
-	 * @return 业主投诉和建议界面
-	 */
-	@RequestMapping("/toComplaintOwner.view")
-	public ModelAndView toComplaintTable(String remark)
-	{
-		return new ModelAndView("ljm_owner_complaint_table");
-	}
-
-	/**
-	 * 业主投诉表显示查询
-	 * @param tableSearchBean 搜索信息
-	 * @param request request
-	 * @return layui表格接口
-	 */
-	@RequestMapping("/fotGetComplaintTable.action")
-	@ResponseBody
-	public LayuiTableBean fotGetComplaintTable(TableSearchBean tableSearchBean,HttpServletRequest request)
-	{
-		LayuiTableBean layuiTableBean = new LayuiTableBean();
-		List<OwnerBean> list = (List<OwnerBean>) request.getSession().getAttribute("owners");
-		String roomNum = list.get(0).getOwnerRoom();
-		tableSearchBean.setRoomNum(roomNum);
-		List<SuggestBean> suggestBeans = deskService.forGetSuggestTable(tableSearchBean);
-		List<SuggestBean> showTable = new ArrayList<>();
-		if (suggestBeans!=null&&suggestBeans.size()>0)
-		{
-			layuiTableBean.setCode(0);
-			for (SuggestBean suggestBean : suggestBeans)
-			{
-				if ("投诉".equals(suggestBean.getSuggestRemark()))
-				{
-					showTable.add(suggestBean);
-				}
-			}
-			layuiTableBean.setData(showTable);
-		} else {
-			layuiTableBean.setCode(1);
-			layuiTableBean.setMsg("没有过投诉或建议");
-		}
-		return layuiTableBean;
-	}
-
-	/**
 	 * 前端修改界面
 	 * @return 界面
 	 */
@@ -335,5 +293,18 @@ public class LjmDeskController
 			layuiTableBean.setMsg("删除失败，请重试");
 		}
 		return layuiTableBean;
+	}
+
+	@RequestMapping("/WeChatLogin.action")
+	@ResponseBody
+	public LoginBean WeChatLogin(LoginBean loginBean){
+		String pass=loginBean.getLoginPassWord();
+		loginBean.setLoginPassWord(Md5.toMD5(pass));
+		List<OwnerBean> ownerBeans = deskService.deskLoginService(loginBean);
+		if (null != ownerBeans && ownerBeans.size() > 0)
+		{
+			return loginBean;
+		}
+		return null;
 	}
 }

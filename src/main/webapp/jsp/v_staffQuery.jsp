@@ -43,7 +43,7 @@
 		var table=layui.table
 			,$=layui.$
 			,form=layui.form;
-
+		
 		table.render({
 			elem: '#staffData'
 			,url:<%=path%>+'/getStaffData.action'
@@ -83,15 +83,25 @@
 			})
 		});
 
+
 		$('#addNew').on('click', function () {
 			layer.open({
 				type: 2
-				,title: '职员信息登记'
-				,content: <%=path%>+'jsp/v_staffInfoAdd.jsp'
-				,area: ['500px', '500px']
+				, title: '职员信息登记'
+				, content: <%=path%>+'jsp/v_staffInfoAdd.jsp'
+				, area: ['450px', '600px']
 
 			});
 		});
+
+		$(function () {
+			var today = new Date();//声明变量today 获取当前的时间日期
+			var nowMonthStartDate =getMonthStartDate(today);
+			var nowDate=getNowDate(today);
+			$('#startDate').val(nowMonthStartDate);
+			$('#endDate').val(nowDate);
+		});
+
 		//监听事件
 		table.on('tool(saffData)', function(obj){
 			var data = obj.data;
@@ -171,17 +181,8 @@
 		});
 
 
+
 	});
-
-	function showContent(d) {
-		layui.use(['table','form'],function(){
-			var table=layui.table
-				,$=layui.$;
-			layer.msg("id:"+d.staffId)
-		});
-
-	}
-
 
 </script>
 

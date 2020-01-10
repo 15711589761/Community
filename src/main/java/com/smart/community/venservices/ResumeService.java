@@ -16,6 +16,11 @@ public class ResumeService
 	@Resource
 	private ResumeMapper resumeMapper;
 
+	/**
+	 * 查询简历
+	 * @param condition 查询条件对象
+	 * @return layui表格数据对象
+	 */
 	public TableBean queryResumeDate(ConditionBean condition)
 	{
 		TableBean tableBean = new TableBean();
@@ -26,10 +31,21 @@ public class ResumeService
 		return tableBean;
 	}
 
+	/**
+	 * 获取简历目标对象
+	 * @param resumeId 简历id
+	 * @return 执行结果
+	 */
 	public ResumeBean getResumeById(int resumeId){
 
 		return resumeMapper.getResumeById(resumeId);
 	}
+
+	/**
+	 * 删除目标简历记录
+	 * @param resumeId 简历id
+	 * @return 执行结果
+	 */
 
 	public int delResume(int resumeId){
 

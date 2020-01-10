@@ -1,6 +1,7 @@
 package com.smart.community.activiti;
 
-import com.smart.community.ljmbean.ActivityTaskBean;
+import com.smart.community.ljmbean.*;
+import com.smart.community.ljmservice.LjmBackstageLoginService;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.repository.Deployment;
@@ -12,6 +13,7 @@ import org.testng.annotations.Test;
 import javax.annotation.ManagedBean;
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -96,6 +98,16 @@ public class Activiti
 				activityTaskBean.setWorkPerson((String)map.get("workPerson"));
 				activityTaskBean.setWorkPersonPhone((String)map.get("workTel"));
 				activityTaskBean.setServiceName((String)map.get("serviceName"));
+				activityTaskBean.setContent((String) map.get("complaintContext"));
+				activityTaskBean.setComplaintName((String)map.get("complaintName"));
+				activityTaskBean.setComplaintPhone((String)map.get("complaintPhone"));
+				activityTaskBean.setPurchaseName((String)map.get("purchaseName"));
+				activityTaskBean.setPurchaseModel((String)map.get("purchaseModel"));
+				activityTaskBean.setPurchaseQuantity((String)map.get("purchaseQuantity"));
+				activityTaskBean.setPurchasePrice((String)map.get("purchasePrice"));
+				activityTaskBean.setApplyName((String)map.get("applyName"));
+				activityTaskBean.setLeaveDay((String)map.get("leaveDay"));
+				activityTaskBean.setStartDate((String)map.get("startDate"));
 				activityTaskBeans.add(activityTaskBean);
 			}
 		}

@@ -19,18 +19,22 @@
 	<script src=<%=path + "/layuiadmin/layui/layui.js"%>></script>
 </head>
 <body>
-<div class="demoTable">
-	<div class="layui-inline">
-		角色名:
-		<div class="layui-input-inline">
-			<input type="text" name="roleName" id="roleName" autocomplete="off" class="layui-input">
+<br>
+<br>
+<div style="text-align: center">
+	<div class="demoTable">
+		<div class="layui-inline">
+			角色名:
+			<div class="layui-input-inline">
+				<input type="text" name="roleName" id="roleName" autocomplete="off" class="layui-input">
+			</div>
+			<button class="layui-btn" data-type="reload" id="search">搜索</button>
+			<button data-method="notice" class="layui-btn" id="add">新增</button>
 		</div>
-		<button class="layui-btn" data-type="reload" id="search">搜索</button>
-		<button data-method="notice" class="layui-btn" id="add">新增</button>
 	</div>
-</div>
 
-<table class="layui-hide" id="LAY_table_user" lay-filter="role"></table>
+	<table class="layui-hide" id="LAY_table_user" lay-filter="role"></table>
+</div>
 </body>
 
 <script type="text/html" id="barDemo">
@@ -47,8 +51,8 @@
 			, url: '/Community/findRole' //数据接口
 			, cols: [[ //表头
 				{checkbox: true, fixed: true}
-				, {field: 'roleId', title: '角色id'}
-				, {field: 'roleName', title: '角色名称', event: 'setName'}
+				, {field: 'roleId', title: '角色id',align: 'center'}
+				, {field: 'roleName', title: '角色名称', event: 'setName',align: 'center'}
 				, {fixed: 'right', title: '操作', align: 'center', toolbar: '#barDemo'}
 			]]
 			, page: true //开启分页

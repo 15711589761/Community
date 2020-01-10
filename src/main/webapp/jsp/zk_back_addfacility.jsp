@@ -22,13 +22,15 @@
 	<div class="layui-form-item">
 		<label class="layui-form-label">设备名称</label>
 		<div class="layui-input-block">
-			<input type="text" name="name" id="facilityName" lay-verify="required" autocomplete="off" placeholder="请输入设备名称" class="layui-input">
+			<input type="text" name="name" id="facilityName" lay-verify="required" autocomplete="off"
+			       placeholder="请输入设备名称" class="layui-input">
 		</div>
 	</div>
 	<div class="layui-form-item">
 		<label class="layui-form-label">数量</label>
 		<div class="layui-input-block">
-			<input type="text" name="num" id="facilityNum" lay-verify="required|number" placeholder="请输入数量" autocomplete="off" class="layui-input">
+			<input type="text" name="num" id="facilityNum" lay-verify="required|number" placeholder="请输入数量"
+			       autocomplete="off" class="layui-input">
 		</div>
 	</div>
 
@@ -36,13 +38,11 @@
 		<div class="layui-inline">
 			<label class="layui-form-label">购入日期</label>
 			<div class="layui-input-block">
-				<input type="date" name="date" id="facilityDate" lay-verify="required" autocomplete="off" class="layui-input">
+				<input type="date" name="date" id="facilityDate" lay-verify="required" autocomplete="off"
+				       class="layui-input">
 			</div>
 		</div>
 	</div>
 </form>
-<script>
-
-</script>
 </body>
 </html>
