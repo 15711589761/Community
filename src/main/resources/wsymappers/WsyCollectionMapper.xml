@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.community.wsydao.WsyCollectionMapper">
+    <!--收入记录-->
+    <resultMap id="collectionMap" type="com.smart.community.wsyjavabean.Tbl_receivables">
+        <result property="receivables_Id" column="receivables_Id"/>
+        <result property="receivables_name" column="receivables_name"/>
+        <result property="receivables_type" column="receivables_type"/>
+        <result property="receivables_money" column="receivables_money"/>
+        <result property="receivables_time" column="receivables_time"/>
+        <result property="receivables_remarks" column="receivables_remarks"/>
+
+    </resultMap>
+    <select id="findByCollection" parameterType="com.smart.community.wsyjavabean.TableBean" resultMap="collectionMap">
+        select
+        receivables_Id,
+        receivables_name,
+        receivables_type,
+        receivables_money,
+        receivables_time,
+        receivables_remarks
+        from
+        tbl_receivables
+        <where>
+
+            <if test=" receivables_type != null and receivables_type != '' ">
+                and receivables_type = #{receivables_type}
+            </if>
+            <if test=" receivables_time != null and receivables_time != '' ">
+                and receivables_time like '%${receivables_time}%'
+            </if>
+            <if test=" receivables_remarks != null and receivables_remarks != '' ">
+                and receivables_remarks like '%${receivables_remarks}%'
+            </if>
+
+
+        </where>
+        limit #{page} ,5
+    </select>
+    <select id="findCollectionPage" parameterType="com.smart.community.wsyjavabean.TableBean" resultType="java.lang.Integer">
+        select count(*) from tbl_receivables
+        <where>
+
+            <if test=" receivables_type != null and receivables_type != '' ">
+                and receivables_type = #{receivables_type}
+            </if>
+            <if test=" receivables_time != null and receivables_time != '' ">
+                and receivables_time like '%${receivables_time}%'
+            </if>
+            <if test=" receivables_remarks != null and receivables_remarks != '' ">
+                and receivables_remarks like '%${receivables_remarks}%'
+            </if>
+
+        </where>
+
+    </select>
+    <!--添加日志-->
+<!--    <insert id="saveLog" parameterType="com.smart.community.wsyjavabean.Tbl_systemlog">-->
+<!--        insert into tbl_system_log(operation_matter,operation_person,-->
+<!--        operation_date,operation_time)-->
+<!--        values(#{operation_matter},#{operation_person},#{operation_date},#{operation_time})-->
+<!--    </insert>-->
+
+
+    <!--删除收款-->
+    <delete id="delCollection">
+    delete from tbl_receivables where receivables_Id = #{receivables_Id}
+
+    </delete>
+
+    <!--添加付款记录-->
+    <insert id="addCollection" parameterType="com.smart.community.wsyjavabean.Tbl_receivables">
+            insert into tbl_receivables(receivables_name,receivables_type,
+            receivables_money,receivables_time,receivables_remarks)
+            values(#{receivables_name},#{receivables_type},#{receivables_money},#{receivables_time},#{receivables_remarks})
+        </insert>
+
+
+
+    <!--修改收款记录-->
+    <update id="updateCollection" parameterType="com.smart.community.wsyjavabean.Tbl_receivables">
+        update tbl_receivables
+        <set>
+            receivables_type = #{receivables_type},
+            receivables_money = #{receivables_money},
+            receivables_remarks = #{receivables_remarks}
+
+        </set>
+        <where>
+            <if test="receivables_type != null and receivables_type != '' ">
+                and receivables_Id = #{receivables_Id}
+            </if>
+            <if test="receivables_type != null and receivables_type != '' ">
+                and receivables_Id = #{receivables_Id}
+            </if>
+            <if test="receivables_remarks != null and receivables_remarks != '' ">
+                and receivables_Id = #{receivables_Id}
+            </if>
+        </where>
+    </update>
+
+
+<!--收款扇形统计图-->
+    <select id="collectionCountMap" resultType="com.smart.community.wsyjavabean.Wsy_EcharsBean">
+        select receivables_type collectionName,SUM(receivables_money) collectionMoney
+        from tbl_receivables GROUP BY receivables_type
+    </select>
+
+</mapper>
