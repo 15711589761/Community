@@ -67,8 +67,8 @@
     </delete>
     <!--增加业主-->
     <insert id="addOwner" parameterType="com.smart.community.wsyjavabean.Tbl_owner">
-        insert into tbl_owner(owner_name,owner_room,owner_tel,owner_affiliation,owner_status,owner_identity)
-        values(#{owner_name},#{owner_room},#{owner_tel},#{owner_affiliation},#{owner_status},#{owner_identity})
+        insert into tbl_owner(owner_name,owner_room,owner_tel,owner_affiliation,owner_status,owner_identity,savePhotos)
+        values(#{owner_name},#{owner_room},#{owner_tel},#{owner_affiliation},#{owner_status},#{owner_identity},#{savePhotos})
     </insert>
     <!--修改业主信息-->
     <update id="updateOwner" parameterType="com.smart.community.wsyjavabean.Tbl_owner">

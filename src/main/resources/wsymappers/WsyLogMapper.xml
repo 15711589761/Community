@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.smart.community.wsydao.WsyLogMapper">
-    <!--仓库管理-->
+    <!--日志管理-->
     <resultMap id="logMap" type="com.smart.community.wsyjavabean.Tbl_systemlog">
         <result property="operation_id" column="operation_id"/>
         <result property="operation_matter" column="operation_matter"/>

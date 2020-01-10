@@ -62,9 +62,16 @@ public class WsyOntractController
 	@RequestMapping(value = "delOntract.action")
 	@ResponseBody
 	@Log(operationType="AAA",operationName="删除合同")
-	public TableBean delOntract(Tbl_ontract tbl_ontract){
+	public TableBean delOntract(Tbl_ontract tbl_ontract,@RequestParam(value = "file") MultipartFile multipartFile,HttpServletRequest request){
 		int delOnt = wsyOntractService.delOntract(tbl_ontract);
+
 		TableBean tableBean = new TableBean();
+		String ontract_name = request.getParameter("ontract_name");
+		String orginalFilename = multipartFile.getOriginalFilename();
+		String suffix = orginalFilename.substring(orginalFilename.lastIndexOf(".") + 1);
+		String newFile = ontract_name + "." + suffix;
+		String uploadPath = System.getProperty("user.dir") + ONTRACT_PATH + newFile ;
+		//File oldFile = new File();
 		if (delOnt > 0){
 			tableBean.setMsg("1");
 			System.out.println("合同删除成功！");

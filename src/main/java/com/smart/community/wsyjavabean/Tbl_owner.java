@@ -1,5 +1,7 @@
 package com.smart.community.wsyjavabean;
 
+import java.util.Arrays;
+
 public class Tbl_owner
 {
 	private int owner_id;
@@ -9,13 +11,16 @@ public class Tbl_owner
 	private String owner_affiliation; //户主
 	private String owner_status; //状态
 	private String owner_identity; //身份证
-	private Tbl_room tbl_room;
+	//private String base;
+	private byte[] savePhotos;
+	private Tbl_room tbl_room;//房号表
+
 
 	public Tbl_owner()
 	{
 	}
 
-	public Tbl_owner(int owner_id, String owner_name, String owner_room, String owner_tel, String owner_affiliation, String owner_status, String owner_identity, Tbl_room tbl_room)
+	public Tbl_owner(int owner_id, String owner_name, String owner_room, String owner_tel, String owner_affiliation, String owner_status, String owner_identity, byte[] savePhotos, Tbl_room tbl_room)
 	{
 		this.owner_id = owner_id;
 		this.owner_name = owner_name;
@@ -24,13 +29,14 @@ public class Tbl_owner
 		this.owner_affiliation = owner_affiliation;
 		this.owner_status = owner_status;
 		this.owner_identity = owner_identity;
+		this.savePhotos = savePhotos;
 		this.tbl_room = tbl_room;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "Tbl_owner{" + "owner_id=" + owner_id + ", owner_name='" + owner_name + '\'' + ", owner_room='" + owner_room + '\'' + ", owner_tel='" + owner_tel + '\'' + ", owner_affiliation='" + owner_affiliation + '\'' + ", owner_status='" + owner_status + '\'' + ", owner_identity='" + owner_identity + '\'' + ", tbl_room=" + tbl_room + '}';
+		return "Tbl_owner{" + "owner_id=" + owner_id + ", owner_name='" + owner_name + '\'' + ", owner_room='" + owner_room + '\'' + ", owner_tel='" + owner_tel + '\'' + ", owner_affiliation='" + owner_affiliation + '\'' + ", owner_status='" + owner_status + '\'' + ", owner_identity='" + owner_identity + '\'' + ", savePhotos=" + Arrays.toString(savePhotos) + ", tbl_room=" + tbl_room + '}';
 	}
 
 	public int getOwner_id()
@@ -101,6 +107,16 @@ public class Tbl_owner
 	public void setOwner_identity(String owner_identity)
 	{
 		this.owner_identity = owner_identity;
+	}
+
+	public byte[] getSavePhotos()
+	{
+		return savePhotos;
+	}
+
+	public void setSavePhotos(byte[] savePhotos)
+	{
+		this.savePhotos = savePhotos;
 	}
 
 	public Tbl_room getTbl_room()

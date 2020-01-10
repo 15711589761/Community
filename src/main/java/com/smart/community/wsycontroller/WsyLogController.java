@@ -22,6 +22,7 @@ public class WsyLogController
 	private WsyLogService wsyLogService;
 
 	@RequestMapping("/log.action")
+	@Log(operationType="AAA",operationName="查看日志表")
 	public ModelAndView owner(HttpServletRequest request, HttpServletResponse response)
 	{
 		return new ModelAndView("wsy_loginlist");

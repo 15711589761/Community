@@ -16,6 +16,11 @@
         <mapper resource="wsymappers/WsyPurchase.xml"/>
         <mapper resource="wsymappers/WsyOntractMapper.xml"/>
         <mapper resource="wsymappers/WsyDeviceMapper.xml"/>
+        <mapper resource="wsymappers/WsyCollectionMapper.xml"/>
+        <mapper resource="wsymappers/WsyPaymentMapper.xml"/>
+
+
+
         <mapper resource="ljmmappers/LjmBackstageLoginMapper.xml"/>
         <mapper resource="ljmmappers/LjmVisitorMapper.xml"/>
         <mapper resource="ljmmappers/LjmDeskMapper.xml"/>

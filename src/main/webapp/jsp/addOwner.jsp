@@ -84,6 +84,11 @@
 		</div>
 	</div>
 
+	<div class="layui-inline">
+		<button class="layui-btn" data-type="demo" id="demo">业主人脸</button>
+	</div>
+
+
 	<div class="layui-form-item layui-hide" style="text-align: center">
 		<input type="button" lay-submit lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" value="确认">
 	</div>
@@ -91,6 +96,26 @@
 
 <script src="<%=path+"layui/layui.js"%>"></script>
 <script>
+	layui.use(['layer'], function() {
+		var  layer = layui.layer;
+		var object;
+		var $ = layui.$, active = {
+
+		};
+		$('#demo').on('click', function () {
+			alert("录入");
+			layer.open({
+				type: 2,
+				title: '业主人脸录入',
+				content: '/Community/add_owner.action',
+				maxmin: true,
+				area: ['500px', '400px'],
+				btn: ['关闭']
+
+			});
+		});
+
+	});
 	layui.use('form', function () {
 		var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
 

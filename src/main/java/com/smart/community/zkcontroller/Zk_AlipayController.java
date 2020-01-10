@@ -6,6 +6,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.smart.community.ljmbean.OwnerBean;
+import com.smart.community.wsyaspects.Log;
 import com.smart.community.zkbean.Zk_BillBean;
 import com.smart.community.zkservice.Zk_BillService;
 import com.smart.community.tool.LjmTool;
@@ -52,19 +53,24 @@ public class Zk_AlipayController
 		return "zk_parkingcard";
 	}
 
+	@RequestMapping("/propertycosts.view")
+	@Log(operationType="AAA",operationName="业主缴纳物业费")
+	public ModelAndView owner()
+	{
+		return  new ModelAndView("wsy_costs");
+	}
+
 
 	//生成订单界面
 	@RequestMapping("/alipay")
 	@ResponseBody
 	public void alipay(HttpServletResponse httpResponse, String money) throws IOException
 	{
-		System.out.println("支付宝进入");
 		//实例化客户端,填入所需参数
 		AlipayClient alipayClient = new DefaultAlipayClient(GATEWAY_URL, APP_ID, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
 		AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
-		//在公共参数中设置回跳和通知地址
-		request.setReturnUrl(RETURN_URL);
-		request.setNotifyUrl(NOTIFY_URL);
+
+
 
 		//根据订单编号,查询订单相关信息
 		//Order order = payService.selectById(orderId);
@@ -74,6 +80,11 @@ public class Zk_AlipayController
 		String total_amount = money;
 		//订单名称，必填
 		String subject = "停车卡缴费";
+		String subject1=java.net.URLEncoder.encode(subject,"utf-8");
+		String url="http://localhost:8081/Community/successJsp?subject1="+subject1;
+		//在公共参数中设置回跳和通知地址
+		request.setReturnUrl(url);
+		request.setNotifyUrl(NOTIFY_URL);
 		//商品描述，可空
 		String body = "";
 		request.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"total_amount\":\"" + total_amount + "\"," + "\"subject\":\"" + subject + "\"," + "\"body\":\"" + body + "\"," + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
@@ -96,7 +107,7 @@ public class Zk_AlipayController
 
 	@RequestMapping("/successJsp")
 	@ResponseBody
-	public ModelAndView returnUrl(HttpServletRequest request, HttpServletResponse response, HttpSession httpSession)throws IOException, AlipayApiException
+	public ModelAndView returnUrl(HttpServletRequest request, HttpServletResponse response, HttpSession httpSession,String subject1)throws IOException, AlipayApiException
 	{
 		List<OwnerBean> ownerBeans= (List) request.getSession().getAttribute("owners");
 		//获取支付宝GET过来反馈信息
@@ -114,10 +125,9 @@ public class Zk_AlipayController
 			valueStr = new String(valueStr.getBytes("ISO-8859-1"), "utf-8");
 			params.put(name, valueStr);
 		}
-		boolean signVerified = AlipaySignature.rsaCheckV1(params, ALIPAY_PUBLIC_KEY, CHARSET, SIGN_TYPE); // 调用SDK验证签名
+		//boolean signVerified = AlipaySignature.rsaCheckV1(params, ALIPAY_PUBLIC_KEY, CHARSET, SIGN_TYPE); // 调用SDK验证签名
 		//验证签名通过
-		if (signVerified)
-		{
+		System.out.println(subject1);
 			// 商户订单号
 			String out_trade_no = new String(request.getParameter("out_trade_no").getBytes("ISO-8859-1"), "UTF-8");
 
@@ -136,11 +146,10 @@ public class Zk_AlipayController
 			{
 				if (ownerBeans.get(i).getOwnerAffilation().equals("是")){
 					owner=ownerBeans.get(i).getOwnerName();
-					System.out.println("户主："+owner);
 					zk_billBean.setPayer(owner);
 				}
 			}
-			zk_billBean.setDetails("停车卡缴费");
+			zk_billBean.setDetails(subject1);
 			zk_billBean.setBillDate(LjmTool.getTodayDate());
 			zk_billBean.setMoney(total_amount);
 			zk_billService.addBill(zk_billBean);
@@ -151,13 +160,53 @@ public class Zk_AlipayController
 			mv.addObject("out_trade_no", out_trade_no);
 			mv.addObject("trade_no", trade_no);
 			mv.addObject("total_amount", total_amount);
+			mv.addObject("subject1", subject1);
 			mv.addObject("flag", "success");
 			mv.setViewName("zk_alipaySuccess");
 			return mv;
-		} else
+	}
+
+
+	//生成订单界面
+	@RequestMapping("/wyalipay")
+	@ResponseBody
+	public void wyalipay1(HttpServletResponse httpResponse, String money) throws IOException
+	{
+		System.out.println("物业支付宝进入");
+		//实例化客户端,填入所需参数
+		AlipayClient alipayClient = new DefaultAlipayClient(GATEWAY_URL, APP_ID, APP_PRIVATE_KEY, FORMAT, CHARSET, ALIPAY_PUBLIC_KEY, SIGN_TYPE);
+		AlipayTradePagePayRequest request = new AlipayTradePagePayRequest();
+		//在公共参数中设置回跳和通知地址
+		//订单名称，必填
+		String subject = "物业缴费";
+		String subject1=java.net.URLEncoder.encode(subject,"utf-8");
+		String url="http://localhost:8081/Community/successJsp?subject1="+subject1;
+
+		request.setReturnUrl(url);
+		request.setNotifyUrl(NOTIFY_URL);
+
+		//根据订单编号,查询订单相关信息
+		//Order order = payService.selectById(orderId);
+		//商户订单号，商户网站订单系统中唯一订单号，必填
+		String out_trade_no = LjmTool.getPreciseTime();
+		//付款金额，必填
+		String total_amount = money;
+
+		//商品描述，可空
+		String body = "";
+		request.setBizContent("{\"out_trade_no\":\"" + out_trade_no + "\"," + "\"total_amount\":\"" + total_amount + "\"," + "\"subject\":\"" + subject + "\"," + "\"body\":\"" + body + "\"," + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+
+		String form = "";
+		try
 		{
-			ModelAndView mv = new ModelAndView("demo5/WorkUser");
-			return mv;//跳转付款失败页面
+			form = alipayClient.pageExecute(request).getBody(); // 调用SDK生成表单
+		} catch (AlipayApiException e)
+		{
+			e.printStackTrace();
 		}
+		httpResponse.setContentType("text/html;charset=" + CHARSET);
+		httpResponse.getWriter().write(form);// 直接将完整的表单html输出到页面
+		httpResponse.getWriter().flush();
+		httpResponse.getWriter().close();
 	}
 }

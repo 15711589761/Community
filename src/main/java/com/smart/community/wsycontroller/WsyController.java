@@ -19,12 +19,23 @@ public class WsyController
 	@Resource
 	private WsyService wsyService;
 
+	private String base1=null;
+
 	@RequestMapping("/owner.action")
 	@Log(operationType="AAA",operationName="查看业主表")
 	public ModelAndView owner(HttpServletRequest request, HttpServletResponse response)
 	{
 		return new ModelAndView("ownerlist");
 	}
+
+	@RequestMapping("/add_owner.action")
+	@Log(operationType="AAA",operationName="查看业主表")
+	public ModelAndView add_owner(HttpServletRequest request, HttpServletResponse response)
+	{
+		return new ModelAndView("wsy_addowner");
+	}
+
+
 
 
 	//获取业主表
@@ -63,16 +74,32 @@ public class WsyController
 		return tableBean;
 	}
 
+
+	//录入业主人脸
+	@RequestMapping("/addOwnerList.action")
+	@ResponseBody
+	@Log(operationType="AAA",operationName="录入业主人脸")
+	public int babyface(String base) {
+		base1 = base;
+
+		System.out.println("base"+base);
+		if(base1 != null){
+			int flag=1;
+			return flag;
+		}
+
+		return 0;
+	}
 	//增加业主
 	@RequestMapping(value = "addOwner.action")
 	@ResponseBody
 	@Log(operationType="AAA",operationName="增加业主")
 	public TableBean addOwner(Tbl_owner tbl_owner)
 	{
-
+		System.out.println("base。。。"+base1.getBytes());
+        tbl_owner.setSavePhotos(base1.getBytes());
         int ownerAdd = wsyService.addOwner(tbl_owner);
-
-		TableBean tableBean = new TableBean();
+        TableBean tableBean = new TableBean();
 		if (ownerAdd > 0)
 		{
 			tableBean.setMsg("1");

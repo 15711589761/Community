@@ -145,7 +145,7 @@
 							dataType: "json",//希望返回的数据类型
 							async: true,//异步操作
 							success: function (tablebean) {  //提交成功的方法， （）为返回的数据类型
-								alert(tablebean)
+								alert(tablebean);
 								if (tablebean.msg == 1) {
 									alert("添加成功！")
 									table.reload('testReload');
@@ -233,7 +233,7 @@
 					success: function (layero, index) {
 						var body = layer.getChildFrame('body', index);
 						body.find("#safe_event_title").val(data.safe_event_title),
-						body.find("#safe_event_context").val(data.safe_event_context)
+						body.find("#safe_event_context").val(data.safe_event_context),
 						body.find("#safe_event_date").val(data.safe_event_date),
 						body.find("#safe_event_recorder").val(data.safe_event_recorder)
 

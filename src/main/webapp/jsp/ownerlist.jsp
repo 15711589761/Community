@@ -55,6 +55,7 @@
 	<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </script>
 <script>
+
 	layui.use('table', function () {
 		var table = layui.table;
 
@@ -141,7 +142,7 @@
 							dataType: "json",//希望返回的数据类型
 							async: true,//异步操作
 							success: function (tablebean) {  //提交成功的方法， （）为返回的数据类型
-								alert(tablebean)
+								alert(tablebean);
 								if (tablebean.msg == 1) {
 									alert("增加成功！")
 									table.reload('testReload');
