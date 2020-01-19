@@ -42,15 +42,13 @@ public class WsyLogAspect
 	 */
 	@Before("recordLog()")
 	public void doBefore(JoinPoint joinPoint) {
-		System.out.println("==========执行controller前置通知===============");
 
-		System.out.println("----------joinPoint----------------"+joinPoint);
 	}
 
 	@After("recordLog()")
 	public void afterLog(JoinPoint joinPoint) throws Throwable
 	{
-		System.out.println("进入记录日志方法");
+
 		String className = joinPoint.getTarget().getClass().getName();
 		String mothodName = joinPoint.getSignature().getName();
 		Object[] logParams = joinPoint.getArgs();
@@ -119,10 +117,10 @@ public class WsyLogAspect
 						int insertlog = wsyLogService.addLog(tbl_systemlog);
 						if (insertlog > 0)
 						{
-							System.out.println("日志添加成功");
+
 						} else
 						{
-							System.out.println("日志添加失败");
+
 						}
 					}
 //					System.out.println("操作日志..." + operation_matter);

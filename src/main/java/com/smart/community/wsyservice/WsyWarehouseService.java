@@ -18,16 +18,13 @@ public class WsyWarehouseService
 	//业主表格数据回显和查询
 	public TableBean WarehouseTable(int page, String manifest_number, String manifest_name)
 	{
-		System.out.println("当前页条数.." + page);
+
 		int i = (page - 1) * 5;
 		TableBean tableBean = new TableBean();
 		tableBean.setPage(i);//获取当前页数
 		tableBean.setManifest_number(manifest_number);
 		tableBean.setManifest_name(manifest_name);
-
-
-
-		List<Tbl_warehouse> list = wsyWarehouseMapper.findByWarehouse(tableBean);
+        List<Tbl_warehouse> list = wsyWarehouseMapper.findByWarehouse(tableBean);
 
 		tableBean.setCount(0);
 		tableBean.setCount(wsyWarehouseMapper.findWarehousePage(tableBean));//计算页数

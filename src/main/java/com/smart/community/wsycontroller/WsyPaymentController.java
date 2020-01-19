@@ -3,6 +3,7 @@ package com.smart.community.wsycontroller;
 import com.smart.community.tool.LjmTool;
 import com.smart.community.wsyaspects.Log;
 import com.smart.community.wsyjavabean.TableBean;
+import com.smart.community.wsyjavabean.Tbl_account;
 import com.smart.community.wsyjavabean.Tbl_payment;
 import com.smart.community.wsyjavabean.Wsy_EcharsBean;
 import com.smart.community.wsyservice.WsyPaymentService;
@@ -75,15 +76,14 @@ public class WsyPaymentController
    @RequestMapping(value = "/addPayment.action")
 	@ResponseBody
 	@Log(operationType="出纳员",operationName="增加付款记录")
-	public TableBean addPayment(Tbl_payment tbl_payment){
-		System.out.println("进入增加付款");
+	public TableBean addPayment(Tbl_payment tbl_payment, Tbl_account tbl_account){
+
 		tbl_payment.setPayment_time(LjmTool.getTodayDate());
-	  // System.out.println(LjmTool.getTodayDate());
-	   TableBean tableBean = new TableBean();
-
-
-		int add_payment = wsyPaymentService.addPayment(tbl_payment);
-		if (add_payment > 0){
+	    tbl_account.setAccountTime(LjmTool.getTodayDate());
+        TableBean tableBean = new TableBean();
+	    int add_payment = wsyPaymentService.addPayment(tbl_payment);
+	    int add_Account = wsyPaymentService.addAcount(tbl_account);//对账
+		if (add_payment > 0 && add_Account > 0){
 			tableBean.setMsg("1");
 			System.out.println("增加付款成功");
 		}else {
@@ -113,9 +113,10 @@ public class WsyPaymentController
    //支出统计
    @RequestMapping(value = "paymentCount.action")
    @ResponseBody
-   @Log(operationType="出纳员",operationName="查看收款统计")
+   @Log(operationType="出纳员",operationName="查看支出统计")
    public List<Wsy_EcharsBean> collectionCount(){
-	   return wsyPaymentService.payMeneyCount();
+
+		return wsyPaymentService.payMeneyCount();
    }
 
 

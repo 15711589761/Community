@@ -56,12 +56,6 @@
         </where>
 
     </select>
-    <!--添加日志-->
-<!--    <insert id="saveLog" parameterType="com.smart.community.wsyjavabean.Tbl_systemlog">-->
-<!--        insert into tbl_system_log(operation_matter,operation_person,-->
-<!--        operation_date,operation_time)-->
-<!--        values(#{operation_matter},#{operation_person},#{operation_date},#{operation_time})-->
-<!--    </insert>-->
 
 
     <!--删除收款-->
@@ -107,5 +101,43 @@
         select receivables_type collectionName,SUM(receivables_money) collectionMoney
         from tbl_receivables GROUP BY receivables_type
     </select>
+
+    <insert id="addAcount" parameterType="com.smart.community.wsyjavabean.Tbl_account">
+            insert into tbl_account(accountMoney,accountTime,accountType,accountRemark)
+            values(#{accountMoney},#{accountTime},#{accountType},#{accountRemark})
+        </insert>
+
+    <!--删除收款-->
+    <delete id="delAccount">
+    delete from tbl_account where accountId = #{accountId}
+
+    </delete>
+
+    <!--修改收款记录-->
+    <update id="updateAccount" parameterType="com.smart.community.wsyjavabean.Tbl_account">
+        update tbl_account
+        <set>
+            accountMoney = #{accountMoney},
+            accountType = #{accountType},
+            accountRemark = #{accountRemark}
+
+        </set>
+        <where>
+            <if test="accountMoney != null and accountMoney != '' ">
+                and accountId = #{accountId}
+            </if>
+            <if test="accountType != null and accountType != '' ">
+                and accountId = #{accountId}
+            </if>
+            <if test="accountRemark != null and accountRemark != '' ">
+                and accountId = #{accountId}
+            </if>
+        </where>
+    </update>
+
+
+
+
+
 
 </mapper>

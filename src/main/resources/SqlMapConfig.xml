@@ -18,6 +18,7 @@
         <mapper resource="wsymappers/WsyDeviceMapper.xml"/>
         <mapper resource="wsymappers/WsyCollectionMapper.xml"/>
         <mapper resource="wsymappers/WsyPaymentMapper.xml"/>
+        <mapper resource="wsymappers/WsyAccountMapper.xml"/>
 
 
 

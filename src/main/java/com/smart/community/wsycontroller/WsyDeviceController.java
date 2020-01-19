@@ -51,17 +51,17 @@ public class WsyDeviceController
 		return tableBean;
 	}
 
-	@RequestMapping(value = "addDevice.action")
+@RequestMapping(value = "addDevice.action")
 @ResponseBody
-@Log(operationType="AAA",operationName="删除设备")
+@Log(operationType="AAA",operationName="增加设备")
 public TableBean addDevice(Tbl_fire_tools tbl_fire_tools){
 	int addDeviceId = wsyDeviceService.addDevice(tbl_fire_tools);
 	TableBean tableBean = new TableBean();
 	if (addDeviceId > 0){
 		tableBean.setMsg("1");
-		System.out.println("设备删除成功！");
+
 	}else {
-		System.out.println("设备删除失败！");
+
 	}
 	return tableBean;
 }
@@ -73,9 +73,9 @@ public TableBean addDevice(Tbl_fire_tools tbl_fire_tools){
 		TableBean tableBean = new TableBean();
 		if (updateDeviceId > 0){
 			tableBean.setMsg("1");
-			System.out.println("设备删除成功！");
+
 		}else {
-			System.out.println("设备删除失败！");
+
 		}
 		return tableBean;
 	}

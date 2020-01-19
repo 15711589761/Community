@@ -71,6 +71,33 @@
 			<input type="text" name="receivables_remarks" id="receivables_remarks" lay-verify="required" placeholder="备注"
 			       autocomplete="off" class="layui-input">
 		</div>
+		<hr>
+		<label class="layui-form-label">收支类型:</label>
+		<div class="layui-inline">
+			<select name="accountType"  id="accountType" lay-filter="LAY-user-adminrole-type">
+				<option value="请选择收支类型">请选择收支类型</option>
+				<option value="收入">收入</option>
+
+			</select>
+			<br/>
+		</div>
+
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">收支金额(元):</label>
+			<div class="layui-input-inline">
+				<input type="text" name="accountMoney" id="accountMoney" lay-verify="required" placeholder="请输入收支金额"
+				       autocomplete="off" class="layui-input">
+			</div>
+		</div>
+
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">收支备注:</label>
+			<div class="layui-input-inline">
+				<input type="text" name="accountRemark" id="accountRemark" lay-verify="required" placeholder="请输入备注"
+				       autocomplete="off" class="layui-input">
+			</div>
+		</div>
+
 	</div>
 
 

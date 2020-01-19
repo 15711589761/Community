@@ -20,7 +20,7 @@ public class WsyPurchaseService
 	//采购信息回显和查询
 	public TableBean findPurchase(int page, String startDate,String endDate,String purchase_name,String purchase_model)
 	{
-		System.out.println("当前页条数.." + page);
+
 		int i = (page - 1) * 5;
 		TableBean tableBean = new TableBean();
 		tableBean.setPage(i);//获取当前页数
@@ -28,13 +28,8 @@ public class WsyPurchaseService
 		tableBean.setEndDate(endDate);
 		tableBean.setPurchase_name(purchase_name);
 		tableBean.setPurchase_model(purchase_model);
-
-		List<Tbl_purchase> list = wsyPurchaseMapper.findPurchase(tableBean);
-         for (Tbl_purchase tbl_purchase : list){
-	         System.out.println(tbl_purchase.toString());
-         }
-
-		tableBean.setCount(0);
+       List<Tbl_purchase> list = wsyPurchaseMapper.findPurchase(tableBean);
+          tableBean.setCount(0);
 		tableBean.setCount(wsyPurchaseMapper.findPurchasePage(tableBean));//计算页数
 
 		tableBean.setData(list);//将list（表格数据）传到界面

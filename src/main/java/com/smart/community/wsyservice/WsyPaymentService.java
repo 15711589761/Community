@@ -1,10 +1,7 @@
 package com.smart.community.wsyservice;
 
 import com.smart.community.wsydao.WsyPaymentMapper;
-import com.smart.community.wsyjavabean.TableBean;
-import com.smart.community.wsyjavabean.Tbl_payment;
-import com.smart.community.wsyjavabean.Tbl_receivables;
-import com.smart.community.wsyjavabean.Wsy_EcharsBean;
+import com.smart.community.wsyjavabean.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,7 +16,7 @@ public class WsyPaymentService
 	//获取收入记录表，and 查询功能
 	public TableBean findByPayment(int page, String payment_type, String payment_time, String payment_remarks)
 	{
-		System.out.println("当前页条数.." + page);
+
 		int i = (page - 1) * 5;
 		TableBean tableBean = new TableBean();
 		tableBean.setPage(i);//获取当前页数
@@ -30,8 +27,7 @@ public class WsyPaymentService
 		List<Tbl_payment> list = wsyPaymentMapper.findByPayment(tableBean);
 		tableBean.setCount(0);
 		tableBean.setCount(wsyPaymentMapper.findPaymentPage(tableBean));//计算页数
-
-		tableBean.setData(list);//将list（表格数据）传到界面
+        tableBean.setData(list);//将list（表格数据）传到界面
 
 		return tableBean;
 
@@ -53,6 +49,12 @@ public class WsyPaymentService
 	public int updatePayment(Tbl_payment tbl_payment){
 		int update_Payment = wsyPaymentMapper.updatePayment(tbl_payment);
 		return update_Payment;
+	}
+
+	//增加对账记录
+	public int addAcount(Tbl_account tbl_account){
+		int add_account = wsyPaymentMapper.addAcount(tbl_account);
+		return add_account;
 	}
 
 	//支出统计

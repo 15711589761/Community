@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Administrator
+  User: wsy
   Date: 2019/11/19
   Time: 16:11
   To change this template use File | Settings | File Templates.
@@ -44,16 +44,7 @@
 		</div>
 	</div>
 
-
-	<%--	<div class="layui-form-item" style="text-align: center">--%>
-	<%--		<label class="layui-form-label">发生时间:</label>--%>
-	<%--		<div class="layui-input-inline">--%>
-	<%--			<input type="text" name="safe_event_date" id="safe_event_date" lay-verify="phone" placeholder="请输入时间"--%>
-	<%--			       autocomplete="off" class="layui-input">--%>
-	<%--		</div>--%>
-	<%--	</div>--%>
-
-	<div class="layui-form">
+ <div class="layui-form">
 		<div class="layui-form-item">
 			<div class="layui-inline">
 				<label class="layui-form-label">发生时间:</label>

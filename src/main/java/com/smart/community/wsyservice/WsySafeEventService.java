@@ -19,7 +19,7 @@ public class WsySafeEventService
 
   public TableBean findByEvent(int page,String safe_event_title,String startDate,String endDate){
 
-	  System.out.println("当前页条数.." + page);
+
 	  int i = (page - 1) * 5;
 	  TableBean tableBean = new TableBean();
 	  tableBean.setPage(i);

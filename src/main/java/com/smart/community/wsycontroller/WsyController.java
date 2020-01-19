@@ -63,11 +63,11 @@ public class WsyController
 		if (ownerId > 0)
 		{
 			tableBean.setMsg("1");
-			System.out.println("删除成功");
+
 		} else
 		{
 			tableBean.setMsg("2");
-			System.out.println("删除失败");
+
 		}
 
 
@@ -103,10 +103,10 @@ public class WsyController
 		if (ownerAdd > 0)
 		{
 			tableBean.setMsg("1");
-			System.out.println("添加业主成功");
+
 		} else
 		{
-			System.out.println("添加业主失败");
+
 		}
 		return tableBean;
 	}
@@ -122,10 +122,10 @@ public class WsyController
 		if (upOwner > 0)
 		{
 			tableBean.setMsg("1");
-			System.out.println("修改成功");
+
 		} else
 		{
-			System.out.println("修改失败");
+
 		}
 
 

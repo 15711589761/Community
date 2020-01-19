@@ -74,9 +74,9 @@ public class WsyOntractController
 		//File oldFile = new File();
 		if (delOnt > 0){
 			tableBean.setMsg("1");
-			System.out.println("合同删除成功！");
+
 		}else {
-			System.out.println("合同删除失败！");
+
 		}
 		return tableBean;
 	}
@@ -122,7 +122,7 @@ public class WsyOntractController
 					multipartFile.transferTo(new File(uploadPath));
 					//tableBean.setMsg("1");
 					map.put("msg","ok");
-					System.out.println("合同上传成功！");
+
 				}else {
 					map.put("msg","error");
 				}

@@ -7,7 +7,7 @@
 %>
 <html>
 <head>
-	<title>停车卡缴费</title>
+	<title>物业缴费</title>
 	<link rel="stylesheet" href=<%=path+"/layui/css/layui.css"%> media="all">
 	<script type="text/javascript" src=<%=path + "/layui/layui.js"%>></script>
 </head>

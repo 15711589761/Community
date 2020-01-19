@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: lenovo
+  User: wsy
   Date: 2020/1/5
   Time: 19:51
   To change this template use File | Settings | File Templates.
@@ -135,16 +135,25 @@
 					area: ['500px', '500px'],
 					btn: ['确定','关闭'],
 					yes: function (index, layero) {
+						//收入
 						var receivables_name = $(layero).find('iframe')[0].contentWindow.receivables_name.value;
 						var receivables_type = $(layero).find('iframe')[0].contentWindow.receivables_type.value;
 						var receivables_money = $(layero).find('iframe')[0].contentWindow.receivables_money.value;
 						var receivables_remarks = $(layero).find('iframe')[0].contentWindow.receivables_remarks.value;
+                       //对账
+						var accountMoney = $(layero).find('iframe')[0].contentWindow.accountMoney.value;
+						var accountType = $(layero).find('iframe')[0].contentWindow.accountType.value;
+						var accountRemark = $(layero).find('iframe')[0].contentWindow.accountRemark.value;
+
 
 						var ob = {
 							receivables_name: receivables_name,
 							receivables_type: receivables_type,
 							receivables_money: receivables_money,
-							receivables_remarks: receivables_remarks
+							receivables_remarks: receivables_remarks,
+							accountMoney: accountMoney,
+							accountType: accountType,
+							accountRemark: accountRemark
 
 						};
 						$.ajax({
@@ -154,7 +163,7 @@
 							dataType: "json",//希望返回的数据类型
 							async: true,//异步操作
 							success: function (tablebean) {  //提交成功的方法， （）为返回的数据类型
-								alert(tablebean)
+								alert(tablebean);
 								if (tablebean.msg == 1) {
 									alert("添加成功！");
 									table.reload('testReload');
@@ -206,10 +215,11 @@
 
 			} else if (obj.event === 'del') {
 				var receivables_Id = data['receivables_Id'];
+				//var accountId = data['accountId'];
 				layer.confirm('真的删除行么', function (index) {
 					$.ajax({
 						type: "POST",//提交方式
-						url: "/Community/deleteCollection.action?receivables_Id=" + receivables_Id,//提交的地址
+						url: "/Community/deleteCollection.action?receivables_Id=" + receivables_Id, //提交的地址
 						dataType: "json",//希望返回的数据类型
 						async: true,//异步操作
 						success: function (tableBean) {  //提交成功的方法， （）为返回的数据类型
@@ -237,14 +247,18 @@
 					title: '编辑',
 					content: 'jsp/wsy_update_collection.jsp',
 					maxmin: true,
-					area: ['500px', '400px'],
+					area: ['500px', '650px'],
 					btn: ['修改', '取消'],
 					success: function (layero, index) {
 						var body = layer.getChildFrame('body', index);
 						body.find("#receivables_name").val(data.receivables_name),
 						body.find("#receivables_money").val(data.receivables_money),
-						body.find("#receivables_type").val(data.receivables_type),
-						body.find("#receivables_remarks").val(data.receivables_remarks)
+							body.find("#receivables_type").val(data.receivables_type),
+							body.find("#receivables_remarks").val(data.receivables_remarks),
+
+							body.find("#accountMoney").val(data.accountMoney),
+							body.find("#accountType").val(data.accountType),
+							body.find("#accountRemark").val(data.accountRemark)
 
 
 					},
@@ -254,12 +268,23 @@
 						var receivables_type = $(layero).find('iframe')[0].contentWindow.receivables_type.value;
 						var receivables_remarks = $(layero).find('iframe')[0].contentWindow.receivables_remarks.value;
 						var receivables_Id = data.receivables_Id;
+
+						// var accountMoney = $(layero).find('iframe')[0].contentWindow.accountMoney.value;
+						// var accountType = $(layero).find('iframe')[0].contentWindow.accountType.value;
+						// var accountRemark = $(layero).find('iframe')[0].contentWindow.accountRemark.value;
+						// var accountId = data.accountId;
+
 						var ob = {
 							receivables_Id:receivables_Id,
 							receivables_name: receivables_name,
 							receivables_type: receivables_type,
 							receivables_money: receivables_money,
-							receivables_remarks: receivables_remarks
+							receivables_remarks: receivables_remarks,
+
+							// accountId:accountId,
+							// accountMoney: accountMoney,
+							// accountType: accountType,
+							// accountRemark: accountRemark
 
 
 						};

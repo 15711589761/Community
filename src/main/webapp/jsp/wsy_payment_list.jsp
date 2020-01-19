@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: lenovo
+  User: wsy
   Date: 2020/1/5
   Time: 19:51
   To change this template use File | Settings | File Templates.
@@ -129,15 +129,23 @@
 						var payment_name = $(layero).find('iframe')[0].contentWindow.payment_name.value;
 						var payment_money = $(layero).find('iframe')[0].contentWindow.payment_money.value;
 						var payment_type = $(layero).find('iframe')[0].contentWindow.payment_type.value;
+                        var payment_remarks = $(layero).find('iframe')[0].contentWindow.payment_remarks.value;
 
-						var payment_remarks = $(layero).find('iframe')[0].contentWindow.payment_remarks.value;
+						//对账
+						var accountMoney = $(layero).find('iframe')[0].contentWindow.accountMoney.value;
+						var accountType = $(layero).find('iframe')[0].contentWindow.accountType.value;
+						var accountRemark = $(layero).find('iframe')[0].contentWindow.accountRemark.value;
+
 
 						var ob = {
 							payment_name: payment_name,
 							payment_money: payment_money,
 							payment_type: payment_type,
+                            payment_remarks: payment_remarks,
 
-							payment_remarks: payment_remarks
+							accountMoney: accountMoney,
+							accountType: accountType,
+							accountRemark: accountRemark
 
 						};
 						$.ajax({

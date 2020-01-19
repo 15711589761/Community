@@ -16,7 +16,7 @@ public class WsyCollectionService
 	//获取收入记录表，and 查询功能
 	public TableBean findByCollection(int page, String receivables_type, String receivables_time, String receivables_remarks)
 	{
-		System.out.println("当前页条数.." + page);
+
 		int i = (page - 1) * 5;
 		TableBean tableBean = new TableBean();
 		tableBean.setPage(i);//获取当前页数
@@ -25,9 +25,7 @@ public class WsyCollectionService
 		tableBean.setReceivables_remarks(receivables_remarks);
 
 		List<Tbl_receivables> list = wsyCollectionMapper.findByCollection(tableBean);
-		for (Tbl_receivables tbl_receivables : list){
-			System.out.println("收入记录..."+tbl_receivables.toString());
-		}
+
 		tableBean.setCount(0);
 		tableBean.setCount(wsyCollectionMapper.findCollectionPage(tableBean));//计算页数
 
@@ -47,7 +45,9 @@ public class WsyCollectionService
 	public int addCollection(Tbl_receivables tbl_receivables){
 
 		int add_Collection = wsyCollectionMapper.addCollection(tbl_receivables);
+
 		return add_Collection;
+
 	}
 	//修改收款记录
 	public int updateCollection(Tbl_receivables tbl_receivables){
@@ -57,6 +57,26 @@ public class WsyCollectionService
 
 	//统计收款记录
 	public List<Wsy_EcharsBean> collectionCountMap(){
+
 		return wsyCollectionMapper.collectionCountMap();
 	}
+
+	//增加对账记录
+	public int addAcount(Tbl_account tbl_account){
+		int add_account = wsyCollectionMapper.addAcount(tbl_account);
+		return add_account;
+	}
+
+	//删除对账
+	public int delAccount(int accountId){
+      int del_account = wsyCollectionMapper.delAccount(accountId);
+      return del_account;
+	}
+
+	//修改对账
+	public int updateAccount(Tbl_account tbl_account){
+       int update_Account = wsyCollectionMapper.updateAccount(tbl_account);
+       return update_Account;
+	}
+
 }

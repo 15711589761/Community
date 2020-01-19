@@ -40,7 +40,7 @@ public class TableBean
     //合同管理
 	private String ontract_name;//合同名称
 	private String ontract_time;//合同上传时间
-  //设备管理
+    //设备管理
 	private String fire_tools_name;//设备名称
 	private String fire_tools_classification;//设备分类
 	private String buy_date;//设备购买时间
@@ -48,18 +48,23 @@ public class TableBean
 	private String payment_type;//付款类型
 	private String payment_time;//付款时间
 	private String payment_remarks;//付款备注
-
-	//收款
+    //收款
 	private String receivables_type; //收款类型
 	private String receivables_remarks;//收款金额
 	private String receivables_time;//收款时间
-
+	//对账
+	private String accountMoney; //收支金额
+	private String accountTime;  //收支时间
+	private String accountType; //收支类型
+	private String accountRemark; //收支备注
+	private String startMonry;//起始金额
+	private String endMoney; //结束金额
 
 	public TableBean()
 	{
 	}
 
-	public TableBean(int code, String msg, int count, Object data, int start, int limit, int page, List list, String owner_name, String owner_tel, String owner_status, String owner_identity, String safe_event_title, String safe_event_date, String startDate, String endDate, String parameter_name, String manifest_number, String manifest_name, int manifest_quantity, String counNum, String operation_person, String operation_date, String operation_time, String startTime, String endTime, String purchase_name, String purchase_model, String ontract_name, String ontract_time, String fire_tools_name, String fire_tools_classification, String buy_date, String payment_type, String payment_time, String payment_remarks, String receivables_type, String receivables_remarks, String receivables_time)
+	public TableBean(int code, String msg, int count, Object data, int start, int limit, int page, List list, String owner_name, String owner_tel, String owner_status, String owner_identity, String safe_event_title, String safe_event_date, String startDate, String endDate, String parameter_name, String manifest_number, String manifest_name, int manifest_quantity, String counNum, String operation_person, String operation_date, String operation_time, String startTime, String endTime, String purchase_name, String purchase_model, String ontract_name, String ontract_time, String fire_tools_name, String fire_tools_classification, String buy_date, String payment_type, String payment_time, String payment_remarks, String receivables_type, String receivables_remarks, String receivables_time, String accountMoney, String accountTime, String accountType, String accountRemark, String startMonry, String endMoney)
 	{
 		this.code = code;
 		this.msg = msg;
@@ -100,12 +105,18 @@ public class TableBean
 		this.receivables_type = receivables_type;
 		this.receivables_remarks = receivables_remarks;
 		this.receivables_time = receivables_time;
+		this.accountMoney = accountMoney;
+		this.accountTime = accountTime;
+		this.accountType = accountType;
+		this.accountRemark = accountRemark;
+		this.startMonry = startMonry;
+		this.endMoney = endMoney;
 	}
 
 	@Override
 	public String toString()
 	{
-		return "TableBean{" + "code=" + code + ", msg='" + msg + '\'' + ", count=" + count + ", data=" + data + ", start=" + start + ", limit=" + limit + ", page=" + page + ", list=" + list + ", owner_name='" + owner_name + '\'' + ", owner_tel='" + owner_tel + '\'' + ", owner_status='" + owner_status + '\'' + ", owner_identity='" + owner_identity + '\'' + ", safe_event_title='" + safe_event_title + '\'' + ", safe_event_date='" + safe_event_date + '\'' + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", parameter_name='" + parameter_name + '\'' + ", manifest_number='" + manifest_number + '\'' + ", manifest_name='" + manifest_name + '\'' + ", manifest_quantity=" + manifest_quantity + ", counNum='" + counNum + '\'' + ", operation_person='" + operation_person + '\'' + ", operation_date='" + operation_date + '\'' + ", operation_time='" + operation_time + '\'' + ", startTime='" + startTime + '\'' + ", endTime='" + endTime + '\'' + ", purchase_name='" + purchase_name + '\'' + ", purchase_model='" + purchase_model + '\'' + ", ontract_name='" + ontract_name + '\'' + ", ontract_time='" + ontract_time + '\'' + ", fire_tools_name='" + fire_tools_name + '\'' + ", fire_tools_classification='" + fire_tools_classification + '\'' + ", buy_date='" + buy_date + '\'' + ", payment_type='" + payment_type + '\'' + ", payment_time='" + payment_time + '\'' + ", payment_remarks='" + payment_remarks + '\'' + ", receivables_type='" + receivables_type + '\'' + ", receivables_remarks='" + receivables_remarks + '\'' + ", receivables_time='" + receivables_time + '\'' + '}';
+		return "TableBean{" + "code=" + code + ", msg='" + msg + '\'' + ", count=" + count + ", data=" + data + ", start=" + start + ", limit=" + limit + ", page=" + page + ", list=" + list + ", owner_name='" + owner_name + '\'' + ", owner_tel='" + owner_tel + '\'' + ", owner_status='" + owner_status + '\'' + ", owner_identity='" + owner_identity + '\'' + ", safe_event_title='" + safe_event_title + '\'' + ", safe_event_date='" + safe_event_date + '\'' + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", parameter_name='" + parameter_name + '\'' + ", manifest_number='" + manifest_number + '\'' + ", manifest_name='" + manifest_name + '\'' + ", manifest_quantity=" + manifest_quantity + ", counNum='" + counNum + '\'' + ", operation_person='" + operation_person + '\'' + ", operation_date='" + operation_date + '\'' + ", operation_time='" + operation_time + '\'' + ", startTime='" + startTime + '\'' + ", endTime='" + endTime + '\'' + ", purchase_name='" + purchase_name + '\'' + ", purchase_model='" + purchase_model + '\'' + ", ontract_name='" + ontract_name + '\'' + ", ontract_time='" + ontract_time + '\'' + ", fire_tools_name='" + fire_tools_name + '\'' + ", fire_tools_classification='" + fire_tools_classification + '\'' + ", buy_date='" + buy_date + '\'' + ", payment_type='" + payment_type + '\'' + ", payment_time='" + payment_time + '\'' + ", payment_remarks='" + payment_remarks + '\'' + ", receivables_type='" + receivables_type + '\'' + ", receivables_remarks='" + receivables_remarks + '\'' + ", receivables_time='" + receivables_time + '\'' + ", accountMoney='" + accountMoney + '\'' + ", accountTime='" + accountTime + '\'' + ", accountType='" + accountType + '\'' + ", accountRemark='" + accountRemark + '\'' + ", startMonry='" + startMonry + '\'' + ", endMoney='" + endMoney + '\'' + '}';
 	}
 
 	public int getCode()
@@ -496,5 +507,65 @@ public class TableBean
 	public void setReceivables_time(String receivables_time)
 	{
 		this.receivables_time = receivables_time;
+	}
+
+	public String getAccountMoney()
+	{
+		return accountMoney;
+	}
+
+	public void setAccountMoney(String accountMoney)
+	{
+		this.accountMoney = accountMoney;
+	}
+
+	public String getAccountTime()
+	{
+		return accountTime;
+	}
+
+	public void setAccountTime(String accountTime)
+	{
+		this.accountTime = accountTime;
+	}
+
+	public String getAccountType()
+	{
+		return accountType;
+	}
+
+	public void setAccountType(String accountType)
+	{
+		this.accountType = accountType;
+	}
+
+	public String getAccountRemark()
+	{
+		return accountRemark;
+	}
+
+	public void setAccountRemark(String accountRemark)
+	{
+		this.accountRemark = accountRemark;
+	}
+
+	public String getStartMonry()
+	{
+		return startMonry;
+	}
+
+	public void setStartMonry(String startMonry)
+	{
+		this.startMonry = startMonry;
+	}
+
+	public String getEndMoney()
+	{
+		return endMoney;
+	}
+
+	public void setEndMoney(String endMoney)
+	{
+		this.endMoney = endMoney;
 	}
 }

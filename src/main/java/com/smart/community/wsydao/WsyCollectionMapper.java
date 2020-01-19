@@ -1,9 +1,6 @@
 package com.smart.community.wsydao;
 
-import com.smart.community.wsyjavabean.TableBean;
-import com.smart.community.wsyjavabean.Tbl_payment;
-import com.smart.community.wsyjavabean.Tbl_receivables;
-import com.smart.community.wsyjavabean.Wsy_EcharsBean;
+import com.smart.community.wsyjavabean.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -22,5 +19,11 @@ public interface WsyCollectionMapper
 	public int updateCollection(Tbl_receivables tbl_receivables);
 	//统计收款数据
 	public List<Wsy_EcharsBean> collectionCountMap();
+	//对账增加
+	public int addAcount(Tbl_account tbl_account);
+	//删除对账
+	public int delAccount(int accountId);
+	//修改对账
+	public int updateAccount(Tbl_account tbl_account);
 
 }

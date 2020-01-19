@@ -18,7 +18,7 @@ public class WsyDeviceService
     //获取合同管理数据
 	public TableBean findByDevice(int page, String fire_tools_name, String fire_tools_classification, String startDate,String endDate)
 	{
-		System.out.println("当前页条数.." + page);
+
 		int i = (page - 1) * 5;
 		TableBean tableBean = new TableBean();
 		tableBean.setPage(i);//获取当前页数
@@ -27,9 +27,7 @@ public class WsyDeviceService
 		tableBean.setStartDate(startDate);
 		tableBean.setEndDate(endDate);
 		List<Tbl_fire_tools> list = wsyDeviceMapper.findByDevice(tableBean);
-         for (Tbl_fire_tools tbl_fire_tools : list){
-	         System.out.println("设备管理..."+tbl_fire_tools.toString());
-         }
+
 		tableBean.setCount(0);
 		tableBean.setCount(wsyDeviceMapper.findByDevicePage(tableBean));//计算页数
 

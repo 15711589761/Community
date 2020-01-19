@@ -50,57 +50,60 @@ public class WsyCollectionController
 		return tableBean;
 	}
 
+	//删除
 	@RequestMapping(value = "/deleteCollection.action")
 	@ResponseBody
 	@Log(operationType="出纳员",operationName="删除收款记录")
 	public TableBean deleteCollection(int receivables_Id){
 		int delreceivable = wsyCollectionService.delReceivables(receivables_Id);
+		//int delAccount = wsyCollectionService.delAccount(accountId);
 		TableBean tableBean = new TableBean();
 		if (delreceivable > 0)
 		{
 			tableBean.setMsg("1");
-			System.out.println("删除收款记录成功");
+
 		} else
 		{
-			System.out.println("删除收款记录失败");
+
 		}
 		return tableBean;
 
 	}
-	//增加付款记录
+	//增加收款记录
 	@RequestMapping(value = "/addCollection.action")
 	@ResponseBody
 	@Log(operationType="出纳员",operationName="增加收款记录")
-	public TableBean addCollection(Tbl_receivables tbl_receivables){
-		System.out.println("进入增加付款");
+	public TableBean addCollection(Tbl_receivables tbl_receivables,Tbl_account tbl_account){
+
 		tbl_receivables.setReceivables_time(LjmTool.getTodayDate());
+		tbl_account.setAccountTime(LjmTool.getTodayDate());
 	    TableBean tableBean = new TableBean();
-
-
-		int add_Collection = wsyCollectionService.addCollection(tbl_receivables);
-		if (add_Collection > 0){
+        int add_Collection = wsyCollectionService.addCollection(tbl_receivables);//收入表
+		int add_Account = wsyCollectionService.addAcount(tbl_account);//对账
+		if (add_Collection > 0 && add_Account > 0){
 			tableBean.setMsg("1");
-			System.out.println("增加收款成功");
+
 		}else {
-			System.out.println("增加收款失败");
+
 		}
 
 		return tableBean;
 
 	}
-	//修改付款记录
+	//修改收款记录
 	@RequestMapping(value = "/updateCollection.action")
 	@ResponseBody
-	@Log(operationType="出纳员",operationName="修改付款记录")
+	@Log(operationType="出纳员",operationName="修改收款记录")
 	public TableBean updateCollection(Tbl_receivables tbl_receivables){
 
 		int update_Collection = wsyCollectionService.updateCollection(tbl_receivables);
+		//int updateAccount = wsyCollectionService.updateAccount(tbl_account);
 		TableBean tableBean = new TableBean();
-		if (update_Collection > 0){
+		if (update_Collection > 0 ){
 			tableBean.setMsg("1");
-			System.out.println("修改收款记录成功！");
+
 		}else {
-			System.out.println("修改收款记录失败！");
+
 		}
 		return tableBean;
 	}

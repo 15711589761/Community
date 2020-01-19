@@ -51,10 +51,10 @@ public class WsyLogController
 		if (delLog > 0)
 		{
 			tableBean.setMsg("1");
-			System.out.println("删除成功");
+
 		} else
 		{
-			System.out.println("删除失败");
+
 		}
 		return tableBean;
 
@@ -70,9 +70,9 @@ public class WsyLogController
 		TableBean tableBean = new TableBean();
 		if (upLog > 0){
 			tableBean.setMsg("1");
-			System.out.println("日志修改成功！");
+
 		}else {
-			System.out.println("日志修改失败！");
+
 		}
 		return tableBean;
 

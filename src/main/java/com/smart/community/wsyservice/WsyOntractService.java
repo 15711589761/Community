@@ -25,15 +25,9 @@ public class WsyOntractService
 		tableBean.setOntract_name(ontract_name);
 		tableBean.setStartDate(startDate);
 		tableBean.setEndDate(endDate);
-
-		List<Tbl_ontract> list = wsyOntractMapper.findByOntract(tableBean);
-for (Tbl_ontract tbl_ontract:list){
-	System.out.println("数据..."+list.toString());
-}
-		System.out.println("nnn"+wsyOntractMapper.findByOntractPage(tableBean));
-		tableBean.setCount(wsyOntractMapper.findByOntractPage(tableBean));
-
-		tableBean.setData(list);
+       List<Tbl_ontract> list = wsyOntractMapper.findByOntract(tableBean);
+        tableBean.setCount(wsyOntractMapper.findByOntractPage(tableBean));
+        tableBean.setData(list);
 
 		return tableBean;
 	}

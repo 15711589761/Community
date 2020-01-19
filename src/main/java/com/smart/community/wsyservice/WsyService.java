@@ -17,7 +17,7 @@ public class WsyService
 	//业主表格数据回显和查询
 		public TableBean findByOwner(int page, String owner_name, String owner_tel, String owner_status, String owner_identity)
 		{
-			System.out.println("当前页条数.." + page);
+
 			int i = (page - 1) * 5;
 			TableBean tableBean = new TableBean();
 			tableBean.setPage(i);//获取当前页数
@@ -26,13 +26,11 @@ public class WsyService
 			tableBean.setOwner_status(owner_status);
 			tableBean.setOwner_identity(owner_identity);
 			List<Tbl_owner> list = wsyMapper.findByOwner(tableBean);
-//			for(Tbl_owner tbl_owner : list){
-//				System.out.println("客户管理..."+tbl_owner.toString());
-//			}
+
 
 		tableBean.setCount(0);
 		tableBean.setCount(wsyMapper.findByOwnerPage(tableBean));//计算页数
-			System.out.println("客户管理。。。"+list);
+
 		tableBean.setData(list);//将list（表格数据）传到界面
 
 
