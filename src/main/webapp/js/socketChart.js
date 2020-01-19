@@ -14,7 +14,7 @@ if ('WebSocket' in window) {
 
 	username = $("#talks").val();
 
-	websocket = new WebSocket("ws://localhost:8081/Community/websocket/"+username);
+	websocket = new WebSocket("ws://localhost:8080/Community/websocket/"+username);
 
 } else {
 	console.error("不支持WebSocket");

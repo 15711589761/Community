@@ -18,13 +18,13 @@ import java.util.List;
 public interface WsyParameterMapper
 {
 
-	public List<Tbl_parameter> findByParameterId(TableBean tableBean);
-	public int findPageParameterId(TableBean tableBean);
+	public List<Tbl_parameter> findByParameterId( TableBean tableBean );
+	public int findPageParameterId( TableBean tableBean );
 	//删除参数
-	public int parmeterId(int parameter_id);
+	public int parmeterId( int parameter_id );
 	//增加参数
-	public int insertParmeter(Tbl_parameter tbl_parameter);
+	public int insertParmeter( Tbl_parameter tbl_parameter );
 	//修改参数
-	public int updateParmeter(Tbl_parameter tbl_parameter);
+	public int updateParmeter( Tbl_parameter tbl_parameter );
 
 }

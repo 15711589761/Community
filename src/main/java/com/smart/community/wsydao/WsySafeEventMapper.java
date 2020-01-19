@@ -10,14 +10,14 @@ import java.util.List;
 public interface WsySafeEventMapper
 {
 	//治安事件分页及查询
-	public List<Tbl_safeEvent> findByEvent(TableBean tableBean);
-	public int findEventPage(TableBean tableBean);
+	public List<Tbl_safeEvent> findByEvent( TableBean tableBean );
+	public int findEventPage( TableBean tableBean );
 	//添加治安事件
-	public int insetAddEvent(Tbl_safeEvent tbl_safeEvent);
+	public int insetAddEvent( Tbl_safeEvent tbl_safeEvent );
 	//修改治安事件
-	public int updateEvent(Tbl_safeEvent tbl_safeEvent);
+	public int updateEvent( Tbl_safeEvent tbl_safeEvent );
 	//删除治安事件
-	public int deleteEvent(int safe_event_id);
+	public int deleteEvent( int safe_event_id );
 
 
 }

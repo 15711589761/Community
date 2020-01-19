@@ -22,7 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @RestController
 @RequestMapping("/websocket")
-@ServerEndpoint(value = "/websocket/{username}", configurator = MyEndpointConfigure.class)
+@ServerEndpoint(value = "/websocket/{username}")//, configurator = MyEndpointConfigure.class
 public class WebSocketServer {
 
 

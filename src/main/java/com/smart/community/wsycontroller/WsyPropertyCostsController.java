@@ -1,4 +1,4 @@
-//package com.smart.community.wsycontroller;
+package com.smart.community.wsycontroller;//package com.smart.community.wsycontroller;
 //
 //import com.alipay.api.AlipayApiException;
 //import com.alipay.api.AlipayClient;

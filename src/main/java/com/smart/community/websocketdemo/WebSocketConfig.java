@@ -11,7 +11,7 @@ import javax.servlet.MultipartConfigElement;
 /**
  * WebSocket配置
  */
-@Configuration
+//@Configuration
 public class WebSocketConfig{
 
 
@@ -27,7 +27,7 @@ public class WebSocketConfig{
 	/**
 	 * 支持注入其他类
 	 */
-	@Bean
+//	@Bean
 	public MyEndpointConfigure  newMyEndpointConfigure (){
 		return new MyEndpointConfigure ();
 	}

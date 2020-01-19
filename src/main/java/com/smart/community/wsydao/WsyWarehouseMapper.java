@@ -10,10 +10,10 @@ import java.util.List;
 public interface WsyWarehouseMapper
 {
 	//获取仓库表和表分页查询
-	public List<Tbl_warehouse> findByWarehouse(TableBean tableBean);
-	public int findWarehousePage(TableBean tableBean);
+	public List<Tbl_warehouse> findByWarehouse( TableBean tableBean );
+	public int findWarehousePage( TableBean tableBean );
 	//增加货物
-	public int addWarehouse(Tbl_warehouse tbl_warehouse);
-	public int updateWarehouse(Tbl_warehouse tbl_warehouse);
-	public int findByquantity(int manifest_id);
+	public int addWarehouse( Tbl_warehouse tbl_warehouse );
+	public int updateWarehouse( Tbl_warehouse tbl_warehouse );
+	public int findByquantity( int manifest_id );
 }
