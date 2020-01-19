@@ -295,6 +295,7 @@ public class LjmDeskController
 		return layuiTableBean;
 	}
 
+	//微信小程序业主端登陆
 	@RequestMapping("/WeChatLogin.action")
 	@ResponseBody
 	public LoginBean WeChatLogin(LoginBean loginBean){
@@ -306,5 +307,26 @@ public class LjmDeskController
 			return loginBean;
 		}
 		return null;
+	}
+
+	//WX修改密码
+	@RequestMapping("/setDeskPassWord.action")
+	@ResponseBody
+	public String setDeskPassWord(String roomNum,String oldPass,String newPass)
+	{
+
+		int exist = deskService.selectForExistRoom(roomNum,Md5.toMD5(oldPass));
+		if(exist>0)
+		{
+			int result = deskService.updateForUpDeskPassword(roomNum,Md5.toMD5(newPass));
+			if (result>0)
+			{
+				return "修改密码成功";
+			} else {
+				return "服务器忙，请重试";
+			}
+		} else {
+			return "原密码错误";
+		}
 	}
 }
