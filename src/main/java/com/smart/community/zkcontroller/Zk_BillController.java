@@ -55,7 +55,6 @@ public class Zk_BillController
 		tableBean.setCount(zk_billService.countBill(parameterBean));
 		return tableBean;
 	}
-
 	@RequestMapping("billCount")
 	@ResponseBody
 	public List<Zk_EcharsBean> billCount()

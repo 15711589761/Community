@@ -14,7 +14,7 @@
     </resultMap>
     <insert id="addBill" parameterType="Zk_BillBean">
         insert tbl_bill(bill_payee,bill_payer,bill_details,bill_date,bill_money,bill_order_number,bill_state)
-        values (#{payee},#{payer},#{billDate},#{details},#{money},#{orderNo},3)
+        values (#{payee},#{payer},#{details},#{billDate},#{money},#{orderNo},3)
     </insert>
     <select id="findBill" parameterType="ParameterBean" resultMap="bill">
         select *
@@ -52,7 +52,7 @@
     </select>
 
     <select id="billCount" resultType="Zk_EcharsBean">
-        SELECT bill_date billname,SUM(bill_money) record from tbl_bill where bill_state = 3 GROUP BY bill_date
+        SELECT bill_details billname,SUM(bill_money) record from tbl_bill where bill_state = 3 GROUP BY bill_details
     </select>
 
     <update id="setBillState">

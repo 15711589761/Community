@@ -104,4 +104,10 @@ public class ParameterBean
 	{
 		this.roomNum = roomNum;
 	}
+
+	@Override
+	public String toString()
+	{
+		return "ParameterBean{" + "name='" + name + '\'' + ", beginDate='" + beginDate + '\'' + ", endDate='" + endDate + '\'' + ", carNum='" + carNum + '\'' + ", roomNum='" + roomNum + '\'' + ", limit=" + limit + ", page=" + page + '}';
+	}
 }

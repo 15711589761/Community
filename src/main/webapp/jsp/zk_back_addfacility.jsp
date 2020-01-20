@@ -18,6 +18,8 @@
 	<script src=<%=path+"/layui/layui.js"%> charset="utf-8"></script>
 </head>
 <body>
+<br>
+<br>
 <form class="layui-form layui-form-pane" action="">
 	<div class="layui-form-item">
 		<label class="layui-form-label">设备名称</label>

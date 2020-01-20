@@ -37,7 +37,7 @@
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">
-				购买产品：停车卡缴费
+				购买产品：${subject1}
 			</div>
 		</div>
 		<div class="layui-form-item">
@@ -47,38 +47,6 @@
 		</div>
 	</form>
 </div>
-<form class="layui-form layui-form-pane" action="deskLogin.action">
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			<h1 style="color: green;">购买成功</h1>
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			订单编号：${out_trade_no }
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			支付宝交易号：${trade_no }
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			实付金额：${total_amount }
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			购买产品：${subject1}
-		</div>
-	</div>
-	<div class="layui-form-item">
-		<div class="layui-input-block">
-			<button class="layui-btn">返回首页</button>
-		</div>
-	</div>
-</form>
 </body>
 </html>
 
